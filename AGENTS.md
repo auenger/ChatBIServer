@@ -13,7 +13,8 @@ Chat2DB 参考源码位于同级目录 `../Chat2DB-permission-aware-chatbi`（�
 
 ## 当前阶段与边界
 
-- **骨架 + 方言驱动阶段**（G0/P1 之间）：模块结构、装配、冒烟测试，以及 4 个方言模块的内置驱动与 Docker 连通测试。
+- **P1 核心链路已实现**：connector-spi 契约（ExecutionContext/CapabilityDescriptor/SqlDialect/SqlExecutor）、4 方言（URL/分页/探活）、HikariCP 池注册表（key = datasourceId + credentialVersion，轮换逐出）、SqlClassifier（Druid 拆分分类）、数据源管理 + 工作台 API、AES-256-GCM 凭据加密（主密钥 `MEPER_MASTER_KEY` 缺失即拒绝启动）、控制库 Flyway schema（meper_ 前缀 5 表）、React+antd 前端（webapp/，登录/数据源/工作台）。
+- **执法状态恒为 BOOTSTRAP_ADMIN_UNRESTRICTED**：阶段 1 无策略约束，响应显式携带该标记；ExecutionContext 只能由 domain 的 ExecutionContextFactory 签发，P2 接入后在 WorkbenchService/DataSourceService 的执行路径插入策略决策，不得在 Controller 层加判断。
 - 尚未迁入任何 Chat2DB 源码；迁入按实施方案 §3 的阶段推进，不要跳阶段引入半成品能力。
 - **首批目标数据库已定（2026-09-15，2026-09-16 补版本矩阵）**：MySQL 5.7/8.4.x、SQL Server 2019/2022、PostgreSQL 16、Oracle 19c/23ai。JDBC 驱动内置在对应 dialect 模块（版本：mysql-connector-j / mssql-jdbc / postgresql 由 Spring Boot BOM 管理，ojdbc17 由根 pom `ojdbc.version` 锁定）；**不做自定义驱动 JAR 上传**，若未来引入必须先满足实施方案 §4 的驱动来源/校验/隔离要求。
 - **MySQL 5.7 + mysql-connector-j 9.7.0**：官方不再声明支持 5.7，但实测连通正常（Testcontainers 验证）。方言实现里不得因此使用 5.7 独有行为；若发现协议级问题，降级驱动到 8.0.33。

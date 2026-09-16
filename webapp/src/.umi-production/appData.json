@@ -1,0 +1,2151 @@
+{
+  "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+  "pkg": {
+    "name": "meper-chatbi-webapp",
+    "version": "0.1.0",
+    "private": true,
+    "description": "MEPER ChatBI Web 前端（UmiJS 4 + React 18 + antd 5，借鉴 Chat2DB 交互与样式体系）",
+    "scripts": {
+      "dev": "umi dev",
+      "build": "umi build",
+      "preview": "umi preview"
+    },
+    "dependencies": {
+      "@ant-design/icons": "^5.3.0",
+      "@monaco-editor/react": "^4.6.0",
+      "antd": "^5.24.1",
+      "antd-style": "^3.6.1",
+      "react": "^18.3.1",
+      "react-dom": "^18.3.1",
+      "zustand": "^4.5.6"
+    },
+    "devDependencies": {
+      "@types/react": "^18.3.12",
+      "@types/react-dom": "^18.3.1",
+      "typescript": "^5.4.3",
+      "umi": "^4.0.87"
+    },
+    "engines": {
+      "node": ">=18"
+    }
+  },
+  "pkgPath": "/Users/ryan/mycode/MEPERChatBIServer/webapp/package.json",
+  "plugins": {
+    "./node_modules/.pnpm/@umijs+core@4.7.17/node_modules/@umijs/core/dist/service/servicePlugin": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "preset",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+core@4.7.17/node_modules/@umijs/core/dist/service/servicePlugin.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+core@4.7.17/node_modules/@umijs/core/dist/service/servicePlugin",
+      "key": "servicePlugin"
+    },
+    "@umijs/preset-umi": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 12
+      },
+      "enableBy": "register",
+      "type": "preset",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/index.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "@umijs/preset-umi",
+      "key": "umi"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/registerMethods": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "onStart": [
+            1
+          ]
+        },
+        "register": 6
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/registerMethods.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/registerMethods",
+      "key": "registerMethods"
+    },
+    "@umijs/did-you-know": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "onStart": [
+            6
+          ]
+        },
+        "register": 4
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+did-you-know@1.0.4/node_modules/@umijs/did-you-know/dist/plugin.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "@umijs/did-you-know",
+      "key": "umijsDidYouKnow"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/404/404": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "modifyRoutes": [
+            0
+          ]
+        },
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/404/404.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/404/404",
+      "key": "404"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/aiDev/aiDev": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 6
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/aiDev/aiDev.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/aiDev/aiDev",
+      "key": "aiDev"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/appData/appData": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "modifyAppData": [
+            13
+          ]
+        },
+        "register": 41
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/appData/appData.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/appData/appData",
+      "key": "appData"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/appData/umiInfo": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/appData/umiInfo.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/appData/umiInfo",
+      "key": "umiInfo"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/check/check": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "onCheckConfig": [
+            1
+          ],
+          "onCheck": [
+            1
+          ]
+        },
+        "register": 2
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/check/check.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/check/check",
+      "key": "check"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/check/babel722": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "onCheck": [
+            0
+          ]
+        },
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/check/babel722.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/check/babel722",
+      "key": "babel722"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/codeSplitting/codeSplitting": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/codeSplitting/codeSplitting.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/codeSplitting/codeSplitting",
+      "key": "codeSplitting"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/configPlugins/configPlugins": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "modifyConfig": [
+            0
+          ]
+        },
+        "register": 15
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/configPlugins/configPlugins.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/configPlugins/configPlugins",
+      "key": "configPlugins"
+    },
+    "virtual: config-title": {
+      "id": "virtual: config-title",
+      "key": "title",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-styles": {
+      "id": "virtual: config-styles",
+      "key": "styles",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-scripts": {
+      "id": "virtual: config-scripts",
+      "key": "scripts",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-routes": {
+      "id": "virtual: config-routes",
+      "key": "routes",
+      "config": {
+        "onChange": "regenerateTmpFiles"
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-routeLoader": {
+      "id": "virtual: config-routeLoader",
+      "key": "routeLoader",
+      "config": {
+        "default": {
+          "moduleType": "esm"
+        }
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-reactRouter5Compat": {
+      "id": "virtual: config-reactRouter5Compat",
+      "key": "reactRouter5Compat",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-presets": {
+      "id": "virtual: config-presets",
+      "key": "presets",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-plugins": {
+      "id": "virtual: config-plugins",
+      "key": "plugins",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-npmClient": {
+      "id": "virtual: config-npmClient",
+      "key": "npmClient",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-mountElementId": {
+      "id": "virtual: config-mountElementId",
+      "key": "mountElementId",
+      "config": {
+        "default": "root"
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-metas": {
+      "id": "virtual: config-metas",
+      "key": "metas",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-links": {
+      "id": "virtual: config-links",
+      "key": "links",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-historyWithQuery": {
+      "id": "virtual: config-historyWithQuery",
+      "key": "historyWithQuery",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-history": {
+      "id": "virtual: config-history",
+      "key": "history",
+      "config": {
+        "default": {
+          "type": "browser"
+        }
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-headScripts": {
+      "id": "virtual: config-headScripts",
+      "key": "headScripts",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-esbuildMinifyIIFE": {
+      "id": "virtual: config-esbuildMinifyIIFE",
+      "key": "esbuildMinifyIIFE",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-conventionRoutes": {
+      "id": "virtual: config-conventionRoutes",
+      "key": "conventionRoutes",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-conventionLayout": {
+      "id": "virtual: config-conventionLayout",
+      "key": "conventionLayout",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-base": {
+      "id": "virtual: config-base",
+      "key": "base",
+      "config": {
+        "default": "/"
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-analyze": {
+      "id": "virtual: config-analyze",
+      "key": "analyze",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-writeToDisk": {
+      "id": "virtual: config-writeToDisk",
+      "key": "writeToDisk",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-transformRuntime": {
+      "id": "virtual: config-transformRuntime",
+      "key": "transformRuntime",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-theme": {
+      "id": "virtual: config-theme",
+      "key": "theme",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-targets": {
+      "id": "virtual: config-targets",
+      "key": "targets",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-svgr": {
+      "id": "virtual: config-svgr",
+      "key": "svgr",
+      "config": {
+        "default": {}
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-svgo": {
+      "id": "virtual: config-svgo",
+      "key": "svgo",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-stylusLoader": {
+      "id": "virtual: config-stylusLoader",
+      "key": "stylusLoader",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-styleLoader": {
+      "id": "virtual: config-styleLoader",
+      "key": "styleLoader",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-srcTranspilerOptions": {
+      "id": "virtual: config-srcTranspilerOptions",
+      "key": "srcTranspilerOptions",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-srcTranspiler": {
+      "id": "virtual: config-srcTranspiler",
+      "key": "srcTranspiler",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-sassLoader": {
+      "id": "virtual: config-sassLoader",
+      "key": "sassLoader",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-runtimePublicPath": {
+      "id": "virtual: config-runtimePublicPath",
+      "key": "runtimePublicPath",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-purgeCSS": {
+      "id": "virtual: config-purgeCSS",
+      "key": "purgeCSS",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-publicPath": {
+      "id": "virtual: config-publicPath",
+      "key": "publicPath",
+      "config": {
+        "default": "/"
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-proxy": {
+      "id": "virtual: config-proxy",
+      "key": "proxy",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-postcssLoader": {
+      "id": "virtual: config-postcssLoader",
+      "key": "postcssLoader",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-outputPath": {
+      "id": "virtual: config-outputPath",
+      "key": "outputPath",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-normalCSSLoaderModules": {
+      "id": "virtual: config-normalCSSLoaderModules",
+      "key": "normalCSSLoaderModules",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-mfsu": {
+      "id": "virtual: config-mfsu",
+      "key": "mfsu",
+      "config": {
+        "default": {
+          "strategy": "eager"
+        }
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-mdx": {
+      "id": "virtual: config-mdx",
+      "key": "mdx",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-manifest": {
+      "id": "virtual: config-manifest",
+      "key": "manifest",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-lessLoader": {
+      "id": "virtual: config-lessLoader",
+      "key": "lessLoader",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-jsMinifierOptions": {
+      "id": "virtual: config-jsMinifierOptions",
+      "key": "jsMinifierOptions",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-jsMinifier": {
+      "id": "virtual: config-jsMinifier",
+      "key": "jsMinifier",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-inlineLimit": {
+      "id": "virtual: config-inlineLimit",
+      "key": "inlineLimit",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-ignoreMomentLocale": {
+      "id": "virtual: config-ignoreMomentLocale",
+      "key": "ignoreMomentLocale",
+      "config": {
+        "default": true
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-https": {
+      "id": "virtual: config-https",
+      "key": "https",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-hash": {
+      "id": "virtual: config-hash",
+      "key": "hash",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-forkTSChecker": {
+      "id": "virtual: config-forkTSChecker",
+      "key": "forkTSChecker",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-fastRefresh": {
+      "id": "virtual: config-fastRefresh",
+      "key": "fastRefresh",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-extraPostCSSPlugins": {
+      "id": "virtual: config-extraPostCSSPlugins",
+      "key": "extraPostCSSPlugins",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-extraBabelPresets": {
+      "id": "virtual: config-extraBabelPresets",
+      "key": "extraBabelPresets",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-extraBabelPlugins": {
+      "id": "virtual: config-extraBabelPlugins",
+      "key": "extraBabelPlugins",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-extraBabelIncludes": {
+      "id": "virtual: config-extraBabelIncludes",
+      "key": "extraBabelIncludes",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-externals": {
+      "id": "virtual: config-externals",
+      "key": "externals",
+      "config": {
+        "default": {}
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-esm": {
+      "id": "virtual: config-esm",
+      "key": "esm",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-devtool": {
+      "id": "virtual: config-devtool",
+      "key": "devtool",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-depTranspiler": {
+      "id": "virtual: config-depTranspiler",
+      "key": "depTranspiler",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-define": {
+      "id": "virtual: config-define",
+      "key": "define",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-deadCode": {
+      "id": "virtual: config-deadCode",
+      "key": "deadCode",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-cssPublicPath": {
+      "id": "virtual: config-cssPublicPath",
+      "key": "cssPublicPath",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-cssMinifierOptions": {
+      "id": "virtual: config-cssMinifierOptions",
+      "key": "cssMinifierOptions",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-cssMinifier": {
+      "id": "virtual: config-cssMinifier",
+      "key": "cssMinifier",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-cssLoaderModules": {
+      "id": "virtual: config-cssLoaderModules",
+      "key": "cssLoaderModules",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-cssLoader": {
+      "id": "virtual: config-cssLoader",
+      "key": "cssLoader",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-copy": {
+      "id": "virtual: config-copy",
+      "key": "copy",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-checkDepCssModules": {
+      "id": "virtual: config-checkDepCssModules",
+      "key": "checkDepCssModules",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-chainWebpack": {
+      "id": "virtual: config-chainWebpack",
+      "key": "chainWebpack",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-cacheDirectoryPath": {
+      "id": "virtual: config-cacheDirectoryPath",
+      "key": "cacheDirectoryPath",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-babelLoaderCustomize": {
+      "id": "virtual: config-babelLoaderCustomize",
+      "key": "babelLoaderCustomize",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-autoprefixer": {
+      "id": "virtual: config-autoprefixer",
+      "key": "autoprefixer",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-autoCSSModules": {
+      "id": "virtual: config-autoCSSModules",
+      "key": "autoCSSModules",
+      "config": {
+        "default": true
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-alias": {
+      "id": "virtual: config-alias",
+      "key": "alias",
+      "config": {
+        "default": {
+          "umi": "@@/exports",
+          "react": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/react",
+          "react-dom": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/react-dom",
+          "react-router": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/react-router@6.3.0_react@18.3.1/node_modules/react-router",
+          "react-router-dom": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/react-router-dom@6.3.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/react-router-dom"
+        }
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/crossorigin/crossorigin": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/crossorigin/crossorigin.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/crossorigin/crossorigin",
+      "key": "crossorigin"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/depsOnDemand/depsOnDemand": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "onStart": [
+            1
+          ]
+        },
+        "register": 2
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/depsOnDemand/depsOnDemand.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/depsOnDemand/depsOnDemand",
+      "key": "depsOnDemand"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/devTool/devTool": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 2
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/devTool/devTool.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/devTool/devTool",
+      "key": "devTool"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/esbuildHelperChecker/esbuildHelperChecker": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 171
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/esbuildHelperChecker/esbuildHelperChecker.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/esbuildHelperChecker/esbuildHelperChecker",
+      "key": "esbuildHelperChecker"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/esmi/esmi": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 71
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/esmi/esmi.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/esmi/esmi",
+      "key": "esmi"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/exportStatic/exportStatic": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 20
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/exportStatic/exportStatic.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/exportStatic/exportStatic",
+      "key": "exportStatic"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/favicons/favicons": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "modifyAppData": [
+            0
+          ]
+        },
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/favicons/favicons.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/favicons/favicons",
+      "key": "favicons"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/helmet/helmet": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/helmet/helmet.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/helmet/helmet",
+      "key": "helmet"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/icons/icons": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 3
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/icons/icons.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/icons/icons",
+      "key": "icons"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/mock/mock": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 57
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/mock/mock",
+      "key": "mock"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/mpa/mpa": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 2
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/mpa/mpa.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/mpa/mpa",
+      "key": "mpa"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/okam/okam": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/okam/okam.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/okam/okam",
+      "key": "okam"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/overrides/overrides": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/overrides/overrides.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/overrides/overrides",
+      "key": "overrides"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/phantomDependency/phantomDependency": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/phantomDependency/phantomDependency.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/phantomDependency/phantomDependency",
+      "key": "phantomDependency"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/polyfill/polyfill": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "modifyConfig": [
+            1
+          ]
+        },
+        "register": 3
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/polyfill/polyfill.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/polyfill/polyfill",
+      "key": "polyfill"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/polyfill/publicPathPolyfill": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/polyfill/publicPathPolyfill.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/polyfill/publicPathPolyfill",
+      "key": "publicPathPolyfill"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/prepare/prepare": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/prepare/prepare.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/prepare/prepare",
+      "key": "prepare"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/routePrefetch/routePrefetch": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/routePrefetch/routePrefetch.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/routePrefetch/routePrefetch",
+      "key": "routePrefetch"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/stagewise/stagewise": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/stagewise/stagewise.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/stagewise/stagewise",
+      "key": "stagewise"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/terminal/terminal": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/terminal/terminal.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/terminal/terminal",
+      "key": "terminal"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/tmpFiles/tmpFiles": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 7
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/tmpFiles/tmpFiles.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/tmpFiles/tmpFiles",
+      "key": "tmpFiles"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/clientLoader/clientLoader": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 2
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/clientLoader/clientLoader.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/clientLoader/clientLoader",
+      "key": "clientLoader"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/routeProps/routeProps": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/routeProps/routeProps.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/routeProps/routeProps",
+      "key": "routeProps"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/ssr/ssr": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 4
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/ssr/ssr.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/ssr/ssr",
+      "key": "ssr"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/tmpFiles/configTypes": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 4
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/tmpFiles/configTypes.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/tmpFiles/configTypes",
+      "key": "configTypes"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/transform/transform": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 5
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/transform/transform.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/transform/transform",
+      "key": "transform"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/lowImport/lowImport": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 4
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/lowImport/lowImport.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/lowImport/lowImport",
+      "key": "lowImport"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/vite/vite": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 2
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/vite/vite.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/vite/vite",
+      "key": "vite"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 7
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute",
+      "key": "apiRoute"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/monorepo/redirect": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 41
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/monorepo/redirect.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/monorepo/redirect",
+      "key": "monorepoRedirect"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/test/test": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/test/test.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/test/test",
+      "key": "test"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/clickToComponent/clickToComponent": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 2
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/clickToComponent/clickToComponent.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/clickToComponent/clickToComponent",
+      "key": "clickToComponent"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/legacy/legacy": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1139
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/legacy/legacy.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/legacy/legacy",
+      "key": "legacy"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/classPropertiesLoose/classPropertiesLoose": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/classPropertiesLoose/classPropertiesLoose.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/classPropertiesLoose/classPropertiesLoose",
+      "key": "classPropertiesLoose"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/webpack/webpack": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 2
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/webpack/webpack.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/webpack/webpack",
+      "key": "preset-umi:webpack"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/swc/swc": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "addOnDemandDeps": [
+            0
+          ]
+        },
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/swc/swc.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/swc/swc",
+      "key": "swc"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/ui/ui": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 4
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/ui/ui.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/ui/ui",
+      "key": "ui"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/mako/mako": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/mako/mako.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/mako/mako",
+      "key": "mako"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/reactCompiler/forget": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/reactCompiler/forget.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/reactCompiler/forget",
+      "key": "forget"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/reactCompiler/reactCompiler": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/reactCompiler/reactCompiler.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/reactCompiler/reactCompiler",
+      "key": "reactCompiler"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/utoopack/utoopack": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/utoopack/utoopack.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/utoopack/utoopack",
+      "key": "utoopack"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 4
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian",
+      "key": "hmrGuardian"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 47
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad",
+      "key": "routePreloadOnLoad"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/bundler/bundler": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 2
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/bundler/bundler.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/bundler/bundler",
+      "key": "preset-umi:bundler"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/build": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 6
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/build.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/build",
+      "key": "build"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/config/config": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 56
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/config/config.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/config/config",
+      "key": "config"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/dev/dev": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 45
+      },
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/dev/dev",
+      "key": "dev"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/help": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/help.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/help",
+      "key": "help"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/lint": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/lint.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/lint",
+      "key": "lint"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/setup": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/setup.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/setup",
+      "key": "setup"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/deadcode": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/deadcode.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/deadcode",
+      "key": "deadcode"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/version": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/version.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/version",
+      "key": "version"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/page": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 3
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/page.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/page",
+      "key": "generator:page"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/prettier": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/prettier.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/prettier",
+      "key": "generator:prettier"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/tsconfig": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/tsconfig.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/tsconfig",
+      "key": "generator:tsconfig"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/jest": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/jest.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/jest",
+      "key": "generator:jest"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/tailwindcss": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/tailwindcss.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/tailwindcss",
+      "key": "generator:tailwindcss"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/dva": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/dva.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/dva",
+      "key": "generator:dva"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/component": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/component.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/component",
+      "key": "generator:component"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/mock": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/mock.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/mock",
+      "key": "generator:mock"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/cypress": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/cypress.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/cypress",
+      "key": "generator:cypress"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/api": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/api.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/api",
+      "key": "generator:api"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/precommit": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/precommit.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/generators/precommit",
+      "key": "generator:precommit"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/plugin": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/plugin.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/plugin",
+      "key": "command:plugin"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/verify-commit": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/verify-commit.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/verify-commit",
+      "key": "verifyCommit"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/preview": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 3
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/preview.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/preview",
+      "key": "preview"
+    },
+    "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/mfsu/mfsu": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/mfsu/mfsu.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/mfsu/mfsu",
+      "key": "mfsu-cli"
+    },
+    "@umijs/plugin-run": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 2
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+plugin-run@4.7.17/node_modules/@umijs/plugin-run/dist/index.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "@umijs/plugin-run",
+      "key": "run"
+    },
+    "./node_modules/.pnpm/@umijs+core@4.7.17/node_modules/@umijs/core/dist/service/generatePlugin": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+core@4.7.17/node_modules/@umijs/core/dist/service/generatePlugin.js",
+      "cwd": "/Users/ryan/mycode/MEPERChatBIServer/webapp",
+      "id": "./node_modules/.pnpm/@umijs+core@4.7.17/node_modules/@umijs/core/dist/service/generatePlugin",
+      "key": "generatePlugin"
+    }
+  },
+  "presets": [],
+  "name": "build",
+  "args": {
+    "_": []
+  },
+  "userConfig": {
+    "hash": true,
+    "history": {
+      "type": "browser"
+    },
+    "routes": [
+      {
+        "path": "/login",
+        "component": "login"
+      },
+      {
+        "path": "/",
+        "component": "layouts/MainLayout",
+        "routes": [
+          {
+            "path": "/",
+            "redirect": "/datasources"
+          },
+          {
+            "path": "/datasources",
+            "component": "datasources"
+          },
+          {
+            "path": "/workbench",
+            "component": "workbench"
+          }
+        ]
+      }
+    ],
+    "proxy": {
+      "/api": {
+        "target": "http://localhost:8080",
+        "changeOrigin": true
+      }
+    }
+  },
+  "mainConfigFile": "/Users/ryan/mycode/MEPERChatBIServer/webapp/.umirc.ts",
+  "config": {
+    "routeLoader": {
+      "moduleType": "esm"
+    },
+    "mountElementId": "root",
+    "history": {
+      "type": "browser"
+    },
+    "base": "/",
+    "svgr": {},
+    "publicPath": "/",
+    "mfsu": {
+      "strategy": "eager"
+    },
+    "ignoreMomentLocale": true,
+    "externals": {},
+    "autoCSSModules": true,
+    "alias": {
+      "umi": "@@/exports",
+      "react": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/react",
+      "react-dom": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/react-dom",
+      "react-router": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/react-router@6.3.0_react@18.3.1/node_modules/react-router",
+      "react-router-dom": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/react-router-dom@6.3.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/react-router-dom",
+      "@": "/Users/ryan/mycode/MEPERChatBIServer/webapp/src",
+      "@@": "/Users/ryan/mycode/MEPERChatBIServer/webapp/src/.umi-production",
+      "regenerator-runtime": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/regenerator-runtime@0.13.11/node_modules/regenerator-runtime"
+    },
+    "hash": true,
+    "routes": [
+      {
+        "path": "/login",
+        "component": "login"
+      },
+      {
+        "path": "/",
+        "component": "layouts/MainLayout",
+        "routes": [
+          {
+            "path": "/",
+            "redirect": "/datasources"
+          },
+          {
+            "path": "/datasources",
+            "component": "datasources"
+          },
+          {
+            "path": "/workbench",
+            "component": "workbench"
+          }
+        ]
+      }
+    ],
+    "proxy": {
+      "/api": {
+        "target": "http://localhost:8080",
+        "changeOrigin": true
+      }
+    },
+    "targets": {
+      "chrome": 80
+    }
+  },
+  "routes": {
+    "1": {
+      "path": "/login",
+      "file": "@/pages/login/index.tsx",
+      "id": "1",
+      "absPath": "/login",
+      "__content": "import { useState } from 'react';\nimport { Button, Card, Form, Input, message, Typography } from 'antd';\nimport { createStyles } from 'antd-style';\nimport { history } from 'umi';\nimport { authApi, } from '@/service/api';\nimport { clearSession, savedUsername, saveSession } from '@/service/base';\n\nconst useStyles = createStyles(({ token }) => ({\n  wrapper: {\n    minHeight: '100vh',\n    display: 'flex',\n    alignItems: 'center',\n    justifyContent: 'center',\n    background: `linear-gradient(160deg, ${token.colorPrimaryBg} 0%, #f5f6f8 55%)`,\n  },\n  card: {\n    width: 380,\n    boxShadow: token.boxShadowSecondary,\n    borderRadius: token.borderRadiusLG,\n  },\n  title: {\n    textAlign: 'center',\n    marginBottom: 4,\n  },\n  subtitle: {\n    textAlign: 'center',\n    color: token.colorTextSecondary,\n    marginBottom: 24,\n  },\n}));\n\nexport default function LoginPage() {\n  const { styles } = useStyles();\n  const [loading, setLoading] = useState(false);\n  const [form] = Form.useForm();\n\n  const onFinish = async (values: { username: string; password: string }) => {\n    setLoading(true);\n    try {\n      const result = await authApi.login(values.username, values.password);\n      saveSession(result.token, result.username);\n      message.success('登录成功');\n      history.push('/datasources');\n    } catch (e) {\n      message.error((e as Error).message || '登录失败');\n      clearSession();\n    } finally {\n      setLoading(false);\n    }\n  };\n\n  return (\n    <div className={styles.wrapper}>\n      <Card className={styles.card}>\n        <Typography.Title level={3} className={styles.title}>\n          MEPER ChatBI\n        </Typography.Title>\n        <Typography.Paragraph className={styles.subtitle}>\n          以服务端为数据库能力主体的 ChatBI\n        </Typography.Paragraph>\n        <Form\n          form={form}\n          layout=\"vertical\"\n          onFinish={onFinish}\n          initialValues={{ username: savedUsername() ?? '' }}\n        >\n          <Form.Item name=\"username\" label=\"用户名\" rules={[{ required: true, message: '请输入用户名' }]}>\n            <Input placeholder=\"用户名\" autoFocus />\n          </Form.Item>\n          <Form.Item name=\"password\" label=\"密码\" rules={[{ required: true, message: '请输入密码' }]}>\n            <Input.Password placeholder=\"密码\" />\n          </Form.Item>\n          <Button type=\"primary\" htmlType=\"submit\" block loading={loading}>\n            登 录\n          </Button>\n        </Form>\n      </Card>\n    </div>\n  );\n}\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/ryan/mycode/MEPERChatBIServer/webapp/src/pages/login/index.tsx"
+    },
+    "2": {
+      "path": "/",
+      "file": "@/pages/layouts/MainLayout.tsx",
+      "id": "2",
+      "absPath": "/",
+      "__content": "import { useEffect } from 'react';\nimport { Avatar, Layout, Menu, Popconfirm, Space, Tooltip, Typography } from 'antd';\nimport { CodeOutlined, DatabaseOutlined, LogoutOutlined } from '@ant-design/icons';\nimport { createStyles } from 'antd-style';\nimport { Outlet, history, useLocation } from 'umi';\nimport { authApi } from '@/service/api';\nimport { clearSession, getToken, savedUsername } from '@/service/base';\nimport useAuthModel from '@/models/auth';\n\n// 左侧 icon 竖导航布局（借鉴 Chat2DB GlobalLayout 的导航模式，简化为两页）\nconst useStyles = createStyles(({ token }) => ({\n  sider: {\n    background: token.colorBgContainer,\n    borderRight: `1px solid ${token.colorBorderSecondary}`,\n    display: 'flex',\n    flexDirection: 'column',\n    alignItems: 'center',\n    padding: '12px 0',\n    gap: 8,\n  },\n  logo: {\n    width: 40,\n    height: 40,\n    borderRadius: token.borderRadiusLG,\n    background: token.colorPrimary,\n    color: '#fff',\n    display: 'flex',\n    alignItems: 'center',\n    justifyContent: 'center',\n    fontWeight: 700,\n    marginBottom: 12,\n  },\n  content: {\n    padding: 20,\n    overflow: 'auto',\n    height: '100vh',\n  },\n}));\n\nexport default function MainLayout() {\n  const { styles } = useStyles();\n  const location = useLocation();\n  const auth = useAuthModel();\n\n  useEffect(() => {\n    if (!getToken()) {\n      history.push('/login');\n    } else if (!auth.username) {\n      auth.bootstrap(savedUsername());\n    }\n  }, []);\n\n  const selectedKey = location.pathname.startsWith('/workbench') ? '/workbench' : '/datasources';\n\n  const logout = async () => {\n    try {\n      await authApi.logout();\n    } catch {\n      // 忽略登出接口错误，本地清理即可\n    }\n    auth.clear();\n    history.push('/login');\n  };\n\n  return (\n    <Layout style={{ minHeight: '100vh' }}>\n      <Layout.Sider width={64} className={styles.sider} trigger={null} collapsible={false}>\n        <div className={styles.logo}>M</div>\n        <Menu\n          mode=\"inline\"\n          inlineCollapsed\n          selectedKeys={[selectedKey]}\n          style={{ borderInlineEnd: 'none' }}\n          items={[\n            { key: '/datasources', icon: <DatabaseOutlined />, label: '数据源' },\n            { key: '/workbench', icon: <CodeOutlined />, label: '工作台' },\n          ]}\n          onClick={({ key }) => history.push(key)}\n        />\n        <div style={{ flex: 1 }} />\n        <Tooltip title={auth.username ?? ''}>\n          <Avatar style={{ background: '#1677ff' }}>{(auth.username ?? '?').slice(0, 1).toUpperCase()}</Avatar>\n        </Tooltip>\n        <Popconfirm title=\"退出登录？\" onConfirm={logout}>\n          <LogoutOutlined style={{ marginTop: 8, cursor: 'pointer' }} />\n        </Popconfirm>\n      </Layout.Sider>\n      <Layout.Content className={styles.content}>\n        <Outlet />\n      </Layout.Content>\n    </Layout>\n  );\n}\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/ryan/mycode/MEPERChatBIServer/webapp/src/pages/layouts/MainLayout.tsx"
+    },
+    "3": {
+      "path": "/",
+      "redirect": "/datasources",
+      "parentId": "2",
+      "id": "3",
+      "absPath": "/"
+    },
+    "4": {
+      "path": "/datasources",
+      "file": "@/pages/datasources/index.tsx",
+      "parentId": "2",
+      "id": "4",
+      "absPath": "/datasources",
+      "__content": "import { useCallback, useEffect, useState } from 'react';\nimport {\n  Button, Descriptions, Drawer, Input, message, Modal, Popconfirm, Space, Table, Tag, Tooltip, Typography,\n} from 'antd';\nimport { ApiOutlined, CodeOutlined, KeyOutlined, PlusOutlined } from '@ant-design/icons';\nimport { createStyles } from 'antd-style';\nimport { history } from 'umi';\nimport type { CapabilityDescriptor, DataSourceProfile } from '@/service/api';\nimport { datasourceApi } from '@/service/api';\nimport ConnectionForm from './ConnectionForm';\n\nconst useStyles = createStyles({\n  toolbar: { display: 'flex', justifyContent: 'space-between', marginBottom: 16 },\n});\n\nconst TYPE_COLORS: Record<string, string> = {\n  MYSQL: 'blue',\n  SQLSERVER: 'red',\n  POSTGRESQL: 'cyan',\n  ORACLE: 'orange',\n};\n\nexport default function DatasourcesPage() {\n  const { styles } = useStyles();\n  const [profiles, setProfiles] = useState<DataSourceProfile[]>([]);\n  const [loading, setLoading] = useState(false);\n  const [createOpen, setCreateOpen] = useState(false);\n  const [testingId, setTestingId] = useState<number | null>(null);\n  const [rotateTarget, setRotateTarget] = useState<DataSourceProfile | null>(null);\n  const [newPassword, setNewPassword] = useState('');\n  const [capabilities, setCapabilities] = useState<{ profile: DataSourceProfile; caps: CapabilityDescriptor } | null>(null);\n\n  const load = useCallback(async () => {\n    setLoading(true);\n    try {\n      setProfiles(await datasourceApi.list());\n    } catch (e) {\n      message.error((e as Error).message);\n    } finally {\n      setLoading(false);\n    }\n  }, []);\n\n  useEffect(() => {\n    load();\n  }, [load]);\n\n  const doTest = async (id: number) => {\n    setTestingId(id);\n    try {\n      const result = await datasourceApi.testStored(id);\n      if (result.success) {\n        message.success(`连接成功（${result.latencyMs}ms）`);\n      } else {\n        message.error(result.message);\n      }\n    } catch (e) {\n      message.error((e as Error).message);\n    } finally {\n      setTestingId(null);\n    }\n  };\n\n  const doRotate = async () => {\n    if (!rotateTarget) return;\n    try {\n      await datasourceApi.rotate(rotateTarget.id, newPassword);\n      message.success('凭据已轮换，旧连接池已逐出');\n      setRotateTarget(null);\n      setNewPassword('');\n      load();\n    } catch (e) {\n      message.error((e as Error).message);\n    }\n  };\n\n  const doDelete = async (id: number) => {\n    try {\n      await datasourceApi.remove(id);\n      message.success('已删除');\n      load();\n    } catch (e) {\n      message.error((e as Error).message);\n    }\n  };\n\n  const showCapabilities = async (profile: DataSourceProfile) => {\n    try {\n      const caps = await datasourceApi.capabilities(profile.id);\n      setCapabilities({ profile, caps });\n    } catch (e) {\n      message.error((e as Error).message);\n    }\n  };\n\n  const columns = [\n    {\n      title: '名称',\n      dataIndex: 'name',\n      render: (name: string) => <Typography.Text strong>{name}</Typography.Text>,\n    },\n    {\n      title: '类型',\n      dataIndex: 'type',\n      width: 110,\n      render: (type: string) => <Tag color={TYPE_COLORS[type]}>{type}</Tag>,\n    },\n    { title: '主机', dataIndex: 'host' },\n    { title: '端口', dataIndex: 'port', width: 80 },\n    { title: '数据库', dataIndex: 'databaseName' },\n    { title: '用户名', dataIndex: 'username' },\n    {\n      title: 'TLS',\n      dataIndex: 'sslMode',\n      width: 100,\n      render: (mode: string) => (\n        <Tag color={mode === 'DISABLED' ? 'default' : 'green'}>{mode}</Tag>\n      ),\n    },\n    {\n      title: '凭据版本',\n      dataIndex: 'credentialVersion',\n      width: 90,\n      render: (v: number) => <Tag>v{v}</Tag>,\n    },\n    {\n      title: '操作',\n      width: 300,\n      render: (_: unknown, record: DataSourceProfile) => (\n        <Space>\n          <Button\n            size=\"small\"\n            icon={<ApiOutlined />}\n            loading={testingId === record.id}\n            onClick={() => doTest(record.id)}\n          >\n            测试\n          </Button>\n          <Button\n            size=\"small\"\n            icon={<CodeOutlined />}\n            onClick={() => history.push(`/workbench?ds=${record.id}`)}\n          >\n            工作台\n          </Button>\n          <Button size=\"small\" icon={<KeyOutlined />} onClick={() => setRotateTarget(record)}>\n            轮换\n          </Button>\n          <Button size=\"small\" type=\"text\" onClick={() => showCapabilities(record)}>\n            能力\n          </Button>\n          <Popconfirm title={`确认删除「${record.name}」？`} onConfirm={() => doDelete(record.id)}>\n            <Button size=\"small\" type=\"text\" danger>\n              删除\n            </Button>\n          </Popconfirm>\n        </Space>\n      ),\n    },\n  ];\n\n  return (\n    <div>\n      <div className={styles.toolbar}>\n        <Typography.Title level={4} style={{ margin: 0 }}>\n          数据源\n        </Typography.Title>\n        <Button type=\"primary\" icon={<PlusOutlined />} onClick={() => setCreateOpen(true)}>\n          新建数据源\n        </Button>\n      </div>\n\n      <Table\n        rowKey=\"id\"\n        loading={loading}\n        columns={columns as never}\n        dataSource={profiles}\n        pagination={false}\n        size=\"middle\"\n      />\n\n      <Drawer\n        title=\"新建数据源\"\n        width={560}\n        open={createOpen}\n        onClose={() => setCreateOpen(false)}\n        destroyOnClose\n      >\n        <ConnectionForm\n          onSaved={() => {\n            setCreateOpen(false);\n            load();\n          }}\n        />\n      </Drawer>\n\n      <Modal\n        title={`轮换凭据 — ${rotateTarget?.name ?? ''}`}\n        open={!!rotateTarget}\n        onOk={doRotate}\n        onCancel={() => setRotateTarget(null)}\n        okButtonProps={{ disabled: !newPassword }}\n      >\n        <Typography.Paragraph type=\"secondary\">\n          生成新凭据版本并立即逐出旧连接池；请确保与数据库侧的实际口令一致。\n        </Typography.Paragraph>\n        <Input.Password\n          placeholder=\"新数据库密码\"\n          value={newPassword}\n          onChange={(e) => setNewPassword(e.target.value)}\n        />\n      </Modal>\n\n      <Modal\n        title={`能力声明 — ${capabilities?.profile.name ?? ''}`}\n        open={!!capabilities}\n        footer={null}\n        onCancel={() => setCapabilities(null)}\n      >\n        {capabilities && (\n          <Descriptions column={1} size=\"small\" bordered>\n            <Descriptions.Item label=\"数据库层级\">\n              {capabilities.caps.supportsDatabase ? '支持 database' : '—'}\n            </Descriptions.Item>\n            <Descriptions.Item label=\"Schema 层级\">\n              {capabilities.caps.supportsSchema ? '支持 schema' : '—'}\n            </Descriptions.Item>\n            <Descriptions.Item label=\"标识符引用符\">\n              <Tooltip title=\"用于 SQL 生成时转义标识符\">{capabilities.caps.identifierQuote}</Tooltip>\n            </Descriptions.Item>\n            <Descriptions.Item label=\"分页风格\">{capabilities.caps.paginationStyle}</Descriptions.Item>\n            <Descriptions.Item label=\"探活 SQL\">\n              <code>{capabilities.caps.probeSql}</code>\n            </Descriptions.Item>\n          </Descriptions>\n        )}\n      </Modal>\n    </div>\n  );\n}\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/ryan/mycode/MEPERChatBIServer/webapp/src/pages/datasources/index.tsx"
+    },
+    "5": {
+      "path": "/workbench",
+      "file": "@/pages/workbench/index.tsx",
+      "parentId": "2",
+      "id": "5",
+      "absPath": "/workbench",
+      "__content": "import { useCallback, useEffect, useMemo, useState } from 'react';\nimport {\n  Alert, Button, Drawer, InputNumber, message, Select, Space, Spin, Table, Tabs, Tag, Timeline, Tooltip, Typography,\n} from 'antd';\nimport { CaretRightOutlined, HistoryOutlined, ProfileOutlined } from '@ant-design/icons';\nimport { createStyles } from 'antd-style';\nimport Editor, { type Monaco } from '@monaco-editor/react';\nimport { useLocation } from 'umi';\nimport ResultSet from '@/components/ResultSet';\nimport type { DataSourceProfile, ExecuteResult, PreviewResult, SqlCategory } from '@/service/api';\nimport { datasourceApi, workbenchApi } from '@/service/api';\n\n// SQL 工作台：执行走「自动 preview → 确认 → execute」两步（防并发：确认前不可重复触发）\nconst useStyles = createStyles(({ token }) => ({\n  toolbar: {\n    display: 'flex',\n    gap: 12,\n    alignItems: 'center',\n    marginBottom: 12,\n  },\n  editorBox: {\n    border: `1px solid ${token.colorBorderSecondary}`,\n    borderRadius: token.borderRadius,\n    overflow: 'hidden',\n  },\n}));\n\nconst CATEGORY_COLORS: Record<SqlCategory, string> = {\n  SELECT: 'green',\n  DML: 'orange',\n  DDL: 'red',\n  TCL: 'purple',\n  OTHER: 'default',\n};\n\nconst SQL_KEYWORDS = [\n  'SELECT', 'FROM', 'WHERE', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'SET', 'DELETE', 'CREATE',\n  'TABLE', 'DROP', 'ALTER', 'TRUNCATE', 'JOIN', 'LEFT', 'RIGHT', 'INNER', 'OUTER', 'ON',\n  'GROUP', 'BY', 'ORDER', 'HAVING', 'LIMIT', 'OFFSET', 'AND', 'OR', 'NOT', 'NULL', 'IS',\n  'IN', 'LIKE', 'BETWEEN', 'DISTINCT', 'COUNT', 'SUM', 'AVG', 'MIN', 'MAX', 'COMMIT',\n  'ROLLBACK', 'BEGIN', 'UNION', 'ALL', 'AS', 'ASC', 'DESC',\n];\n\nfunction setupCompletion(monaco: Monaco) {\n  monaco.languages.registerCompletionItemProvider('sql', {\n    provideCompletionItems: (model, position) => {\n      const word = model.getWordUntilPosition(position);\n      return {\n        suggestions: SQL_KEYWORDS.map((k) => ({\n          label: k,\n          kind: monaco.languages.CompletionItemKind.Keyword,\n          insertText: k,\n          range: {\n            startLineNumber: position.lineNumber,\n            endLineNumber: position.lineNumber,\n            startColumn: word.startColumn,\n            endColumn: word.endColumn,\n          },\n        })),\n      };\n    },\n  });\n}\n\nexport default function WorkbenchPage() {\n  const { styles } = useStyles();\n  const location = useLocation();\n  const [profiles, setProfiles] = useState<DataSourceProfile[]>([]);\n  const [datasourceId, setDatasourceId] = useState<number | null>(null);\n  const [sql, setSql] = useState('SELECT 1');\n  const [maxRows, setMaxRows] = useState<number>(1000);\n  const [preview, setPreview] = useState<PreviewResult | null>(null);\n  const [confirming, setConfirming] = useState(false);\n  const [executing, setExecuting] = useState(false);\n  const [result, setResult] = useState<ExecuteResult | null>(null);\n  const [historyOpen, setHistoryOpen] = useState(false);\n\n  useEffect(() => {\n    datasourceApi.list().then((list) => {\n      setProfiles(list);\n      const fromQuery = new URLSearchParams(location.search).get('ds');\n      const initial = fromQuery ? Number(fromQuery) : list[0]?.id;\n      if (initial && list.some((p) => p.id === initial)) {\n        setDatasourceId(initial);\n      } else if (list.length > 0) {\n        setDatasourceId(list[0].id);\n      }\n    }).catch((e) => message.error((e as Error).message));\n  }, []);\n\n  const busy = confirming || executing;\n  const selected = useMemo(() => profiles.find((p) => p.id === datasourceId), [profiles, datasourceId]);\n\n  const runPreview = useCallback(async () => {\n    if (!datasourceId || !sql.trim()) return;\n    setConfirming(true);\n    setResult(null);\n    try {\n      setPreview(await workbenchApi.preview(datasourceId, sql));\n    } catch (e) {\n      message.error((e as Error).message);\n      setConfirming(false);\n    }\n  }, [datasourceId, sql]);\n\n  const runExecute = useCallback(async () => {\n    if (!datasourceId) return;\n    setExecuting(true);\n    try {\n      setResult(await workbenchApi.execute(datasourceId, sql, maxRows));\n      setPreview(null);\n      setConfirming(false);\n    } catch (e) {\n      message.error((e as Error).message);\n    } finally {\n      setExecuting(false);\n    }\n  }, [datasourceId, sql, maxRows]);\n\n  const tabs = useMemo(() => {\n    if (!result) return [];\n    return result.statements.map((s) => ({\n      key: String(s.seq),\n      label: (\n        <Space size={4}>\n          <span>#{s.seq}</span>\n          <Tag color={CATEGORY_COLORS[s.category]} style={{ marginInlineEnd: 0 }}>\n            {s.category}\n          </Tag>\n        </Space>\n      ),\n      children: s.error ? (\n        <Alert type=\"error\" message=\"执行失败\" description={s.error} style={{ marginTop: 8 }} />\n      ) : s.query && s.resultData ? (\n        <ResultSet data={s.resultData} />\n      ) : (\n        <Alert\n          style={{ marginTop: 8 }}\n          type=\"success\"\n          message={`执行成功 · 影响 ${s.updateCount ?? 0} 行 · ${s.durationMs}ms`}\n        />\n      ),\n    }));\n  }, [result]);\n\n  return (\n    <div>\n      <div className={styles.toolbar}>\n        <Typography.Title level={4} style={{ margin: 0 }}>\n          SQL 工作台\n        </Typography.Title>\n        <Space style={{ flex: 1, justifyContent: 'flex-end' }}>\n          <Select\n            style={{ width: 280 }}\n            placeholder=\"选择数据源\"\n            value={datasourceId}\n            onChange={setDatasourceId}\n            options={profiles.map((p) => ({\n              value: p.id,\n              label: `${p.name}（${p.type} · ${p.host}:${p.port}）`,\n            }))}\n          />\n          <Tooltip title=\"单语句返回行数上限（硬上限 10000）\">\n            <InputNumber min={1} max={10000} value={maxRows} onChange={(v) => setMaxRows(v ?? 1000)} addonBefore=\"maxRows\" style={{ width: 180 }} />\n          </Tooltip>\n          <Button icon={<HistoryOutlined />} onClick={() => setHistoryOpen(true)}>\n            执行历史\n          </Button>\n        </Space>\n      </div>\n\n      <div className={styles.editorBox}>\n        <Editor\n          height=\"220px\"\n          language=\"sql\"\n          theme=\"vs\"\n          value={sql}\n          onChange={(v) => setSql(v ?? '')}\n          beforeMount={setupCompletion}\n          options={{\n            minimap: { enabled: false },\n            fontSize: 13,\n            automaticLayout: true,\n            wordBasedSuggestions: 'off',\n            tabSize: 2,\n          }}\n          loading={<Spin style={{ margin: 80 }} />}\n        />\n      </div>\n\n      <Space style={{ margin: '12px 0' }}>\n        <Button\n          type=\"primary\"\n          icon={<CaretRightOutlined />}\n          onClick={runPreview}\n          disabled={!datasourceId || busy || !sql.trim()}\n        >\n          {confirming ? '1/2 已预检' : '运行'}\n        </Button>\n        {confirming && preview && (\n          <Button type=\"primary\" danger loading={executing} onClick={runExecute}>\n            2/2 确认执行（{preview.statements.length} 条语句）\n          </Button>\n        )}\n      </Space>\n\n      {preview && (\n        <Alert\n          style={{ marginBottom: 12 }}\n          type={preview.statements.some((s) => s.category === 'DDL' || s.category === 'DML') ? 'warning' : 'info'}\n          showIcon={false}\n          message={\n            <Space wrap>\n              <span>预检结果：</span>\n              {preview.statements.map((s) => (\n                <Tag key={s.seq} color={CATEGORY_COLORS[s.category]}>\n                  #{s.seq} {s.category}\n                </Tag>\n              ))}\n              <Tag color=\"volcano\">{preview.enforcement}（阶段 1 无策略约束，P2 接入）</Tag>\n            </Space>\n          }\n          description={\n            <Typography.Text type=\"secondary\" style={{ fontSize: 12 }}>\n              数据源「{preview.datasourceName}」· 目标执行 {preview.statements.length} 条语句，逐语句独立提交（autocommit），失败即停止后续语句\n            </Typography.Text>\n          }\n        />\n      )}\n\n      {executing && <Alert type=\"info\" showIcon={false} message=\"执行中…\" style={{ marginBottom: 12 }} />}\n\n      {result && (\n        <div>\n          <Alert\n            style={{ marginBottom: 12 }}\n            type={result.status === 'SUCCESS' ? 'success' : result.status === 'PARTIAL' ? 'warning' : 'error'}\n            showIcon={false}\n            message={`执行完成：${result.status} · 共 ${result.statements.length} 条 · ${result.durationMs}ms · 记录 #${result.executionId}`}\n          />\n          {tabs.length > 0 && <Tabs items={tabs} type=\"line\" size=\"small\" />}\n        </div>\n      )}\n\n      <HistoryDrawer open={historyOpen} onClose={() => setHistoryOpen(false)} />\n    </div>\n  );\n}\n\nfunction HistoryDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {\n  const [records, setRecords] = useState<import('@/service/api').ExecutionRecord[] | null>(null);\n\n  useEffect(() => {\n    if (open) {\n      workbenchApi.executions().then(setRecords).catch((e) => message.error((e as Error).message));\n    }\n  }, [open]);\n\n  return (\n    <Drawer title=\"执行历史（最近 100 条）\" width={640} open={open} onClose={onClose} destroyOnClose>\n      {!records ? (\n        <Spin />\n      ) : records.length === 0 ? (\n        <Typography.Text type=\"secondary\">暂无执行记录</Typography.Text>\n      ) : (\n        <Timeline\n          items={records.map((r) => ({\n            color: r.status === 'SUCCESS' ? 'green' : r.status === 'PARTIAL' ? 'orange' : 'red',\n            children: (\n              <div>\n                <Space wrap>\n                  <Tag>#{r.id}</Tag>\n                  <Tag color={r.status === 'SUCCESS' ? 'green' : r.status === 'PARTIAL' ? 'orange' : 'red'}>\n                    {r.status}\n                  </Tag>\n                  <span style={{ fontSize: 12 }}>\n                    数据源 {r.datasourceId} · {r.statementCount} 条 · {r.subject}\n                  </span>\n                </Space>\n                <div style={{ fontSize: 12, color: '#888', margin: '4px 0' }}>\n                  {new Date(r.startedAt).toLocaleString()} · {r.correlationId.slice(0, 8)}\n                </div>\n                <pre\n                  style={{\n                    fontSize: 12, background: '#f6f6f6', padding: 8, borderRadius: 6,\n                    maxHeight: 88, overflow: 'hidden', margin: 0,\n                  }}\n                >\n                  {r.sqlText.slice(0, 300)}\n                </pre>\n              </div>\n            ),\n          }))}\n        />\n      )}\n    </Drawer>\n  );\n}\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/ryan/mycode/MEPERChatBIServer/webapp/src/pages/workbench/index.tsx"
+    }
+  },
+  "apiRoutes": {},
+  "hasSrcDir": true,
+  "npmClient": "pnpm",
+  "umi": {
+    "version": "4.7.17",
+    "name": "Umi",
+    "importSource": "umi",
+    "cliName": "umi"
+  },
+  "bundleStatus": {
+    "done": false
+  },
+  "mfsuBundleStatus": {
+    "done": false
+  },
+  "react": {
+    "version": "18.3.1",
+    "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/react"
+  },
+  "react-dom": {
+    "version": "18.3.1",
+    "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/react-dom"
+  },
+  "appJS": null,
+  "locale": "zh-CN",
+  "globalCSS": [
+    "/Users/ryan/mycode/MEPERChatBIServer/webapp/src/global.less"
+  ],
+  "globalJS": [],
+  "overridesCSS": [],
+  "bundler": "webpack",
+  "git": {
+    "originUrl": "https://github.com/auenger/ChatBIServer.git"
+  },
+  "framework": "react",
+  "typescript": {
+    "tsVersion": "5.4.3",
+    "tslibVersion": "2.8.1"
+  },
+  "faviconFiles": []
+}

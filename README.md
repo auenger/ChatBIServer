@@ -2,7 +2,7 @@
 
 以 **Java 服务端作为数据库能力主体** 的 ChatBI 后端。数据库连接、驱动管理、元数据发现、SQL 查询与增删改、事务、DDL/DCL、对象管理、导入导出及方言插件等完整能力收敛在服务端；B/S 网页、业务系统 API 与 Agent 通过同一套 Java 领域接口访问，**不直接获得 JDBC 连接**。
 
-> 当前状态：**Maven 骨架阶段**（G0/P1 之前）。仅定义模块结构、装配与冒烟测试，未迁入任何 Chat2DB 源码，未接入真实数据库。
+> 当前状态：**P1 核心链路已实现** —— 数据源管理（登记/测试/能力/轮换）+ SQL 工作台（preview→execute→历史）+ React 前端。引导管理员阶段（无策略约束，P2 接入）。
 
 ## 设计文档
 
@@ -50,19 +50,28 @@ meper-chatbi-server
 
 ## 快速开始
 
-要求：JDK 17+、Maven 3.9+。
+要求：JDK 17+、Maven 3.9+、Docker（控制库/测试）、Node 18+ 与 pnpm（前端）。
 
 ```bash
-# 全量构建 + 测试
+# 1. 控制库（MySQL 8.4；业务库按需再起）
+docker run -d --name meper-control -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=meper_control -p 3307:3306 mysql:8.4
+
+# 2. 全量构建 + 测试（55 个测试，方言矩阵用 Testcontainers）
 mvn -B -ntp package
 
-# 启动服务
-mvn -B -ntp spring-boot:run -pl meper-chatbi-start
+# 3. 启动后端（主密钥缺失会拒绝启动；首次提交会先 install 到本地仓库）
+mvn -B -ntp install -DskipTests
+MEPER_MASTER_KEY=$(openssl rand -base64 32) mvn spring-boot:run -pl meper-chatbi-start
 
-# 验证
+# 4. 启动前端（dev 代理 /api → 8080）
+cd webapp && pnpm install && pnpm dev    # http://localhost:8001
+
+# 5. 验证
 curl http://localhost:8080/api/ping
 curl http://localhost:8080/actuator/health
 ```
+
+默认引导管理员：`admin / meper-admin-2026`（仅限本地开发，用 `MEPER_BOOTSTRAP_ADMIN_PASSWORD` 覆盖）。环境变量：`MEPER_CONTROL_DB_URL/USERNAME/PASSWORD` 可切换控制库。
 
 只构建/测试单个模块（含其依赖）：
 
@@ -77,10 +86,10 @@ mvn -B -ntp test -pl meper-chatbi-web -am
 | 阶段 | 内容 |
 | --- | --- |
 | G0 | 盘点：源码清单、目标数据库与能力矩阵 |
-| P1 | Java 连接器内核：SPI、Driver Registry、数据源/凭据、连接池 |
+| **P1 ✅（基础）** | **连接器内核：SPI 契约、4 方言、内置驱动、HikariCP 池注册表（凭据版本隔离+轮换逐出）、连通测试；数据源管理 API；AES-256-GCM 凭据加密；控制库 Flyway schema** |
 | P2 | 查询和权限：元数据过滤、身份模型、表/字段/行策略、受控查询 |
 | P3 | 数据增删改：DML、批量、事务、幂等、审批 |
-| P4 | 对象与账号全能力：DDL/DCL、例程、导入导出、管理员高级 SQL |
+| P4 | 对象与账号全能力：DDL/DCL、例程、导入导出、管理员高级 SQL（工作台基础执行已在 P1 提前提供，逐语句 autocommit） |
 | P5 | Session Wiki 与 Agent |
 | P6 | 方言扩展 |
 

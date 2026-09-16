@@ -23,6 +23,8 @@
     <maven.compiler.release>17</maven.compiler.release>
     <!-- Oracle JDBC 不在 Spring Boot BOM 管理范围内，在此锁定版本 -->
     <ojdbc.version>23.26.3.0.0</ojdbc.version>
+    <!-- Druid 仅用其 SQL 解析（语句拆分/分类），不用连接池 -->
+    <druid.version>1.2.28</druid.version>
   </properties>
 
   <modules>
@@ -79,6 +81,11 @@
         <groupId>com.oracle.database.jdbc</groupId>
         <artifactId>ojdbc17</artifactId>
         <version>${ojdbc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid</artifactId>
+        <version>${druid.version}</version>
       </dependency>
       <dependency>
         <groupId>com.meper</groupId>

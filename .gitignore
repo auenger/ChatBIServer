@@ -14,6 +14,12 @@ target/
 logs/
 *.log
 
+# webapp (前端)
+webapp/node_modules/
+webapp/dist/
+webapp/.umi/
+webapp/.umi-production/
+
 # local config (不允许提交真实凭据)
 application-local.yml
 application-local.yaml

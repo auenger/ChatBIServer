@@ -19,6 +19,11 @@
       <groupId>com.meper</groupId>
       <artifactId>meper-chatbi-connector-spi</artifactId>
     </dependency>
+    <!-- SQL 语句拆分与分类（借鉴 Chat2DB 的解析选型，4 个目标库方言已验证） -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>

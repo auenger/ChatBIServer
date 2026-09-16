@@ -1,6 +1,17 @@
 spring:
   application:
     name: meper-chatbi-server
+  # 控制库（存数据源配置、凭据密文、执行历史、审计）
+  datasource:
+    url: ${MEPER_CONTROL_DB_URL:jdbc:mysql://localhost:3307/meper_control?useUnicode=true&characterEncoding=utf8&sslMode=DISABLED&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true}
+    username: ${MEPER_CONTROL_DB_USERNAME:root}
+    password: ${MEPER_CONTROL_DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+  flyway:
+    enabled: true
 
 server:
   port: 8080
@@ -14,3 +25,14 @@ management:
     health:
       probes:
         enabled: true
+
+meper:
+  security:
+    # 主密钥（base64 32 字节）：缺失即启动失败（fail-fast，不生成临时密钥）
+    master-key: ${MEPER_MASTER_KEY}
+  bootstrap-admin:
+    # 阶段 1 引导管理员；默认值仅限本地开发，生产必须用环境变量覆盖
+    username: ${MEPER_BOOTSTRAP_ADMIN_USERNAME:admin}
+    password: ${MEPER_BOOTSTRAP_ADMIN_PASSWORD:meper-admin-2026}
+  workbench:
+    pool-max-size: 5
