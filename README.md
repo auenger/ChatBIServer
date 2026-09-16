@@ -56,7 +56,7 @@ meper-chatbi-server
 # 1. 控制库（MySQL 8.4；业务库按需再起）
 docker run -d --name meper-control -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=meper_control -p 3307:3306 mysql:8.4
 
-# 2. 全量构建 + 测试（55 个测试，方言矩阵用 Testcontainers）
+# 2. 全量构建 + 测试（56 个测试，方言矩阵用 Testcontainers）
 mvn -B -ntp package
 
 # 3. 启动后端（主密钥缺失会拒绝启动；首次提交会先 install 到本地仓库）
@@ -72,6 +72,26 @@ curl http://localhost:8080/actuator/health
 ```
 
 默认引导管理员：`admin / meper-admin-2026`（仅限本地开发，用 `MEPER_BOOTSTRAP_ADMIN_PASSWORD` 覆盖）。环境变量：`MEPER_CONTROL_DB_URL/USERNAME/PASSWORD` 可切换控制库。
+
+### 服务启停速查
+
+```bash
+# ── 启动（容器已存在时直接 start，数据保留）──
+docker start meper-control meper-biz
+MEPER_MASTER_KEY=$(cat /tmp/meper-master-key 2>/dev/null || echo "$(openssl rand -base64 32)") \
+  mvn spring-boot:run -pl meper-chatbi-start          # 后端 :8080（注意：主密钥与首次登记时不同，旧数据源凭据将无法解密）
+cd webapp && pnpm dev                                  # 前端 :8001（dev 代理 /api → 8080）
+
+# ── 停止服务 ──
+pkill -f 'spring-boot:run'    # 后端
+pkill -f 'umi dev'            # 前端
+
+# ── 停止/清理容器（数据在容器卷里，rm 会丢业务数据）──
+docker stop meper-control meper-biz      # 仅停止
+docker rm -f meper-control meper-biz     # 彻底删除
+```
+
+> 注意：主密钥（`MEPER_MASTER_KEY`）一旦更换，控制库中已加密的数据源凭据将无法解密，需重新登记或轮换数据源凭据。本地开发建议把密钥固定写入 `.env` 或 shell profile，不要每次随机生成。
 
 只构建/测试单个模块（含其依赖）：
 
