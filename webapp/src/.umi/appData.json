@@ -35,7 +35,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "preset",
@@ -48,7 +48,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 45
+        "register": 23
       },
       "enableBy": "register",
       "type": "preset",
@@ -65,7 +65,7 @@
             2
           ]
         },
-        "register": 8
+        "register": 9
       },
       "enableBy": "register",
       "type": "plugin",
@@ -79,10 +79,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            6
+            7
           ]
         },
-        "register": 9
+        "register": 12
       },
       "enableBy": "register",
       "type": "plugin",
@@ -99,7 +99,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -126,10 +126,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            18
+            21
           ]
         },
-        "register": 46
+        "register": 72
       },
       "enableBy": "register",
       "type": "plugin",
@@ -142,7 +142,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -159,10 +159,10 @@
             0
           ],
           "onCheck": [
-            0
+            1
           ]
         },
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -176,10 +176,10 @@
       "time": {
         "hooks": {
           "onCheck": [
-            1
+            0
           ]
         },
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -192,7 +192,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -209,7 +209,7 @@
             0
           ]
         },
-        "register": 21
+        "register": 19
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1078,7 +1078,7 @@
             1
           ]
         },
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1104,7 +1104,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 162
+        "register": 209
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1117,7 +1117,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 105
+        "register": 211
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1130,7 +1130,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 44
+        "register": 69
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1147,7 +1147,7 @@
             1
           ]
         },
-        "register": 1
+        "register": 4
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1160,7 +1160,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1173,7 +1173,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 5
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1187,10 +1187,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            2
+            3
           ]
         },
-        "register": 65
+        "register": 114
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1202,7 +1202,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 4
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1215,7 +1215,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/okam/okam.js",
@@ -1240,7 +1240,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1257,7 +1257,7 @@
             1
           ]
         },
-        "register": 4
+        "register": 5
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/polyfill/polyfill.js",
@@ -1321,7 +1321,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1334,7 +1334,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 11
+        "register": 14
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1347,7 +1347,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1360,7 +1360,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/routeProps/routeProps.js",
@@ -1372,7 +1372,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 5
+        "register": 8
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1385,7 +1385,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 7
+        "register": 9
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1398,7 +1398,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 6
+        "register": 9
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1411,7 +1411,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 5
+        "register": 6
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1437,7 +1437,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 13
+        "register": 15
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute.js",
@@ -1449,7 +1449,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 52
+        "register": 71
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1462,7 +1462,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 4
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/test/test.js",
@@ -1487,7 +1487,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1532
+        "register": 2640
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1500,7 +1500,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1513,7 +1513,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 4
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/webpack/webpack.js",
@@ -1529,7 +1529,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1542,7 +1542,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 6
+        "register": 9
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/ui/ui.js",
@@ -1554,7 +1554,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 4
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1567,7 +1567,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1580,7 +1580,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/reactCompiler/reactCompiler.js",
@@ -1592,7 +1592,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/utoopack/utoopack.js",
@@ -1604,7 +1604,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 7
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1616,7 +1616,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 51
+        "register": 90
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad.js",
@@ -1628,7 +1628,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 5
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1641,7 +1641,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 9
+        "register": 19
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1654,7 +1654,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 66
+        "register": 107
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1668,10 +1668,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            26
+            33
           ]
         },
-        "register": 87
+        "register": 100
       },
       "type": "plugin",
       "path": "/Users/ryan/mycode/MEPERChatBIServer/webapp/node_modules/.pnpm/@umijs+preset-umi@4.7.17_@types+node@26.5.1_@types+react@18.3.31_jiti@2.7.0_lightningcs_9b44edb0386a50fb9f83e6f76f491f38/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1696,7 +1696,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1722,7 +1722,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1735,7 +1735,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1748,7 +1748,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 5
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1761,7 +1761,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1774,7 +1774,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1787,7 +1787,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1826,7 +1826,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1865,7 +1865,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1878,7 +1878,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1904,7 +1904,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1917,7 +1917,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 5
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1930,7 +1930,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1943,7 +1943,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 4
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1987,11 +1987,15 @@
         "routes": [
           {
             "path": "/",
-            "redirect": "/datasources"
+            "redirect": "/workspace"
           },
           {
             "path": "/datasources",
             "component": "datasources"
+          },
+          {
+            "path": "/workspace",
+            "component": "workspace"
           },
           {
             "path": "/workbench",
@@ -2047,11 +2051,15 @@
         "routes": [
           {
             "path": "/",
-            "redirect": "/datasources"
+            "redirect": "/workspace"
           },
           {
             "path": "/datasources",
             "component": "datasources"
+          },
+          {
+            "path": "/workspace",
+            "component": "workspace"
           },
           {
             "path": "/workbench",
@@ -2091,7 +2099,7 @@
     },
     "3": {
       "path": "/",
-      "redirect": "/datasources",
+      "redirect": "/workspace",
       "parentId": "2",
       "id": "3",
       "absPath": "/"
@@ -2102,17 +2110,27 @@
       "parentId": "2",
       "id": "4",
       "absPath": "/datasources",
-      "__content": "import { useCallback, useEffect, useState } from 'react';\nimport {\n  Button, Descriptions, Drawer, Input, message, Modal, Popconfirm, Space, Table, Tag, Tooltip, Typography,\n} from 'antd';\nimport { ApiOutlined, CodeOutlined, KeyOutlined, PlusOutlined } from '@ant-design/icons';\nimport { createStyles } from 'antd-style';\nimport { history } from 'umi';\nimport type { CapabilityDescriptor, DataSourceProfile } from '@/service/api';\nimport { datasourceApi } from '@/service/api';\nimport ConnectionForm from './ConnectionForm';\n\nconst useStyles = createStyles({\n  toolbar: { display: 'flex', justifyContent: 'space-between', marginBottom: 16 },\n});\n\nconst TYPE_COLORS: Record<string, string> = {\n  MYSQL: 'blue',\n  SQLSERVER: 'red',\n  POSTGRESQL: 'cyan',\n  ORACLE: 'orange',\n};\n\nexport default function DatasourcesPage() {\n  const { styles } = useStyles();\n  const [profiles, setProfiles] = useState<DataSourceProfile[]>([]);\n  const [loading, setLoading] = useState(false);\n  const [createOpen, setCreateOpen] = useState(false);\n  const [testingId, setTestingId] = useState<number | null>(null);\n  const [rotateTarget, setRotateTarget] = useState<DataSourceProfile | null>(null);\n  const [newPassword, setNewPassword] = useState('');\n  const [capabilities, setCapabilities] = useState<{ profile: DataSourceProfile; caps: CapabilityDescriptor } | null>(null);\n\n  const load = useCallback(async () => {\n    setLoading(true);\n    try {\n      setProfiles(await datasourceApi.list());\n    } catch (e) {\n      message.error((e as Error).message);\n    } finally {\n      setLoading(false);\n    }\n  }, []);\n\n  useEffect(() => {\n    load();\n  }, [load]);\n\n  const doTest = async (id: number) => {\n    setTestingId(id);\n    try {\n      const result = await datasourceApi.testStored(id);\n      if (result.success) {\n        message.success(`连接成功（${result.latencyMs}ms）`);\n      } else {\n        message.error(result.message);\n      }\n    } catch (e) {\n      message.error((e as Error).message);\n    } finally {\n      setTestingId(null);\n    }\n  };\n\n  const doRotate = async () => {\n    if (!rotateTarget) return;\n    try {\n      await datasourceApi.rotate(rotateTarget.id, newPassword);\n      message.success('凭据已轮换，旧连接池已逐出');\n      setRotateTarget(null);\n      setNewPassword('');\n      load();\n    } catch (e) {\n      message.error((e as Error).message);\n    }\n  };\n\n  const doDelete = async (id: number) => {\n    try {\n      await datasourceApi.remove(id);\n      message.success('已删除');\n      load();\n    } catch (e) {\n      message.error((e as Error).message);\n    }\n  };\n\n  const showCapabilities = async (profile: DataSourceProfile) => {\n    try {\n      const caps = await datasourceApi.capabilities(profile.id);\n      setCapabilities({ profile, caps });\n    } catch (e) {\n      message.error((e as Error).message);\n    }\n  };\n\n  const columns = [\n    {\n      title: '名称',\n      dataIndex: 'name',\n      render: (name: string) => <Typography.Text strong>{name}</Typography.Text>,\n    },\n    {\n      title: '类型',\n      dataIndex: 'type',\n      width: 110,\n      render: (type: string) => <Tag color={TYPE_COLORS[type]}>{type}</Tag>,\n    },\n    { title: '主机', dataIndex: 'host' },\n    { title: '端口', dataIndex: 'port', width: 80 },\n    { title: '数据库', dataIndex: 'databaseName' },\n    { title: '用户名', dataIndex: 'username' },\n    {\n      title: 'TLS',\n      dataIndex: 'sslMode',\n      width: 100,\n      render: (mode: string) => (\n        <Tag color={mode === 'DISABLED' ? 'default' : 'green'}>{mode}</Tag>\n      ),\n    },\n    {\n      title: '凭据版本',\n      dataIndex: 'credentialVersion',\n      width: 90,\n      render: (v: number) => <Tag>v{v}</Tag>,\n    },\n    {\n      title: '操作',\n      width: 300,\n      render: (_: unknown, record: DataSourceProfile) => (\n        <Space>\n          <Button\n            size=\"small\"\n            icon={<ApiOutlined />}\n            loading={testingId === record.id}\n            onClick={() => doTest(record.id)}\n          >\n            测试\n          </Button>\n          <Button\n            size=\"small\"\n            icon={<CodeOutlined />}\n            onClick={() => history.push(`/workbench?ds=${record.id}`)}\n          >\n            工作台\n          </Button>\n          <Button size=\"small\" icon={<KeyOutlined />} onClick={() => setRotateTarget(record)}>\n            轮换\n          </Button>\n          <Button size=\"small\" type=\"text\" onClick={() => showCapabilities(record)}>\n            能力\n          </Button>\n          <Popconfirm title={`确认删除「${record.name}」？`} onConfirm={() => doDelete(record.id)}>\n            <Button size=\"small\" type=\"text\" danger>\n              删除\n            </Button>\n          </Popconfirm>\n        </Space>\n      ),\n    },\n  ];\n\n  return (\n    <div>\n      <div className={styles.toolbar}>\n        <Typography.Title level={4} style={{ margin: 0 }}>\n          数据源\n        </Typography.Title>\n        <Button type=\"primary\" icon={<PlusOutlined />} onClick={() => setCreateOpen(true)}>\n          新建数据源\n        </Button>\n      </div>\n\n      <Table\n        rowKey=\"id\"\n        loading={loading}\n        columns={columns as never}\n        dataSource={profiles}\n        pagination={false}\n        size=\"middle\"\n      />\n\n      <Drawer\n        title=\"新建数据源\"\n        width={560}\n        open={createOpen}\n        onClose={() => setCreateOpen(false)}\n        destroyOnClose\n      >\n        <ConnectionForm\n          onSaved={() => {\n            setCreateOpen(false);\n            load();\n          }}\n        />\n      </Drawer>\n\n      <Modal\n        title={`轮换凭据 — ${rotateTarget?.name ?? ''}`}\n        open={!!rotateTarget}\n        onOk={doRotate}\n        onCancel={() => setRotateTarget(null)}\n        okButtonProps={{ disabled: !newPassword }}\n      >\n        <Typography.Paragraph type=\"secondary\">\n          生成新凭据版本并立即逐出旧连接池；请确保与数据库侧的实际口令一致。\n        </Typography.Paragraph>\n        <Input.Password\n          placeholder=\"新数据库密码\"\n          value={newPassword}\n          onChange={(e) => setNewPassword(e.target.value)}\n        />\n      </Modal>\n\n      <Modal\n        title={`能力声明 — ${capabilities?.profile.name ?? ''}`}\n        open={!!capabilities}\n        footer={null}\n        onCancel={() => setCapabilities(null)}\n      >\n        {capabilities && (\n          <Descriptions column={1} size=\"small\" bordered>\n            <Descriptions.Item label=\"数据库层级\">\n              {capabilities.caps.supportsDatabase ? '支持 database' : '—'}\n            </Descriptions.Item>\n            <Descriptions.Item label=\"Schema 层级\">\n              {capabilities.caps.supportsSchema ? '支持 schema' : '—'}\n            </Descriptions.Item>\n            <Descriptions.Item label=\"标识符引用符\">\n              <Tooltip title=\"用于 SQL 生成时转义标识符\">{capabilities.caps.identifierQuote}</Tooltip>\n            </Descriptions.Item>\n            <Descriptions.Item label=\"分页风格\">{capabilities.caps.paginationStyle}</Descriptions.Item>\n            <Descriptions.Item label=\"探活 SQL\">\n              <code>{capabilities.caps.probeSql}</code>\n            </Descriptions.Item>\n          </Descriptions>\n        )}\n      </Modal>\n    </div>\n  );\n}\n",
+      "__content": "import { useCallback, useEffect, useState } from 'react';\nimport {\n  Button, Descriptions, Drawer, Input, message, Modal, Popconfirm, Space, Table, Tag, Tooltip, Typography,\n} from 'antd';\nimport { ApiOutlined, CodeOutlined, KeyOutlined, PlusOutlined } from '@ant-design/icons';\nimport { createStyles } from 'antd-style';\nimport { history } from 'umi';\nimport type { CapabilityDescriptor, DataSourceProfile } from '@/service/api';\nimport { datasourceApi } from '@/service/api';\nimport ConnectionForm from './ConnectionForm';\n\nconst useStyles = createStyles({\n  toolbar: { display: 'flex', justifyContent: 'space-between', marginBottom: 16 },\n});\n\nconst TYPE_COLORS: Record<string, string> = {\n  MYSQL: 'blue',\n  SQLSERVER: 'red',\n  POSTGRESQL: 'cyan',\n  ORACLE: 'orange',\n};\n\nexport default function DatasourcesPage() {\n  const { styles } = useStyles();\n  const [profiles, setProfiles] = useState<DataSourceProfile[]>([]);\n  const [loading, setLoading] = useState(false);\n  const [createOpen, setCreateOpen] = useState(false);\n  const [testingId, setTestingId] = useState<number | null>(null);\n  const [rotateTarget, setRotateTarget] = useState<DataSourceProfile | null>(null);\n  const [newPassword, setNewPassword] = useState('');\n  const [capabilities, setCapabilities] = useState<{ profile: DataSourceProfile; caps: CapabilityDescriptor } | null>(null);\n\n  const load = useCallback(async () => {\n    setLoading(true);\n    try {\n      setProfiles(await datasourceApi.list());\n    } catch (e) {\n      message.error((e as Error).message);\n    } finally {\n      setLoading(false);\n    }\n  }, []);\n\n  useEffect(() => {\n    load();\n  }, [load]);\n\n  const doTest = async (id: number) => {\n    setTestingId(id);\n    try {\n      const result = await datasourceApi.testStored(id);\n      if (result.success) {\n        message.success(`连接成功（${result.latencyMs}ms）`);\n      } else {\n        message.error(result.message);\n      }\n    } catch (e) {\n      message.error((e as Error).message);\n    } finally {\n      setTestingId(null);\n    }\n  };\n\n  const doRotate = async () => {\n    if (!rotateTarget) return;\n    try {\n      await datasourceApi.rotate(rotateTarget.id, newPassword);\n      message.success('凭据已轮换，旧连接池已逐出');\n      setRotateTarget(null);\n      setNewPassword('');\n      load();\n    } catch (e) {\n      message.error((e as Error).message);\n    }\n  };\n\n  const doDelete = async (id: number) => {\n    try {\n      await datasourceApi.remove(id);\n      message.success('已删除');\n      load();\n    } catch (e) {\n      message.error((e as Error).message);\n    }\n  };\n\n  const showCapabilities = async (profile: DataSourceProfile) => {\n    try {\n      const caps = await datasourceApi.capabilities(profile.id);\n      setCapabilities({ profile, caps });\n    } catch (e) {\n      message.error((e as Error).message);\n    }\n  };\n\n  const columns = [\n    {\n      title: '名称',\n      dataIndex: 'name',\n      render: (name: string) => <Typography.Text strong>{name}</Typography.Text>,\n    },\n    {\n      title: '类型',\n      dataIndex: 'type',\n      width: 110,\n      render: (type: string) => <Tag color={TYPE_COLORS[type]}>{type}</Tag>,\n    },\n    { title: '主机', dataIndex: 'host' },\n    { title: '端口', dataIndex: 'port', width: 80 },\n    { title: '数据库', dataIndex: 'databaseName' },\n    { title: '用户名', dataIndex: 'username' },\n    {\n      title: 'TLS',\n      dataIndex: 'sslMode',\n      width: 100,\n      render: (mode: string) => (\n        <Tag color={mode === 'DISABLED' ? 'default' : 'green'}>{mode}</Tag>\n      ),\n    },\n    {\n      title: '凭据版本',\n      dataIndex: 'credentialVersion',\n      width: 90,\n      render: (v: number) => <Tag>v{v}</Tag>,\n    },\n    {\n      title: '操作',\n      width: 300,\n      render: (_: unknown, record: DataSourceProfile) => (\n        <Space>\n          <Button\n            size=\"small\"\n            icon={<ApiOutlined />}\n            loading={testingId === record.id}\n            onClick={() => doTest(record.id)}\n          >\n            测试\n          </Button>\n          <Button\n            size=\"small\"\n            icon={<CodeOutlined />}\n            onClick={() => history.push(`/workspace?ds=${record.id}`)}\n          >\n            打开\n          </Button>\n          <Button size=\"small\" icon={<KeyOutlined />} onClick={() => setRotateTarget(record)}>\n            轮换\n          </Button>\n          <Button size=\"small\" type=\"text\" onClick={() => showCapabilities(record)}>\n            能力\n          </Button>\n          <Popconfirm title={`确认删除「${record.name}」？`} onConfirm={() => doDelete(record.id)}>\n            <Button size=\"small\" type=\"text\" danger>\n              删除\n            </Button>\n          </Popconfirm>\n        </Space>\n      ),\n    },\n  ];\n\n  return (\n    <div>\n      <div className={styles.toolbar}>\n        <Typography.Title level={4} style={{ margin: 0 }}>\n          数据源\n        </Typography.Title>\n        <Button type=\"primary\" icon={<PlusOutlined />} onClick={() => setCreateOpen(true)}>\n          新建数据源\n        </Button>\n      </div>\n\n      <Table\n        rowKey=\"id\"\n        loading={loading}\n        columns={columns as never}\n        dataSource={profiles}\n        pagination={false}\n        size=\"middle\"\n      />\n\n      <Drawer\n        title=\"新建数据源\"\n        width={560}\n        open={createOpen}\n        onClose={() => setCreateOpen(false)}\n        destroyOnClose\n      >\n        <ConnectionForm\n          onSaved={() => {\n            setCreateOpen(false);\n            load();\n          }}\n        />\n      </Drawer>\n\n      <Modal\n        title={`轮换凭据 — ${rotateTarget?.name ?? ''}`}\n        open={!!rotateTarget}\n        onOk={doRotate}\n        onCancel={() => setRotateTarget(null)}\n        okButtonProps={{ disabled: !newPassword }}\n      >\n        <Typography.Paragraph type=\"secondary\">\n          生成新凭据版本并立即逐出旧连接池；请确保与数据库侧的实际口令一致。\n        </Typography.Paragraph>\n        <Input.Password\n          placeholder=\"新数据库密码\"\n          value={newPassword}\n          onChange={(e) => setNewPassword(e.target.value)}\n        />\n      </Modal>\n\n      <Modal\n        title={`能力声明 — ${capabilities?.profile.name ?? ''}`}\n        open={!!capabilities}\n        footer={null}\n        onCancel={() => setCapabilities(null)}\n      >\n        {capabilities && (\n          <Descriptions column={1} size=\"small\" bordered>\n            <Descriptions.Item label=\"数据库层级\">\n              {capabilities.caps.supportsDatabase ? '支持 database' : '—'}\n            </Descriptions.Item>\n            <Descriptions.Item label=\"Schema 层级\">\n              {capabilities.caps.supportsSchema ? '支持 schema' : '—'}\n            </Descriptions.Item>\n            <Descriptions.Item label=\"标识符引用符\">\n              <Tooltip title=\"用于 SQL 生成时转义标识符\">{capabilities.caps.identifierQuote}</Tooltip>\n            </Descriptions.Item>\n            <Descriptions.Item label=\"分页风格\">{capabilities.caps.paginationStyle}</Descriptions.Item>\n            <Descriptions.Item label=\"探活 SQL\">\n              <code>{capabilities.caps.probeSql}</code>\n            </Descriptions.Item>\n          </Descriptions>\n        )}\n      </Modal>\n    </div>\n  );\n}\n",
       "__isJSFile": true,
       "__absFile": "/Users/ryan/mycode/MEPERChatBIServer/webapp/src/pages/datasources/index.tsx"
     },
     "5": {
+      "path": "/workspace",
+      "file": "@/pages/workspace/index.tsx",
+      "parentId": "2",
+      "id": "5",
+      "absPath": "/workspace",
+      "__content": "import { useCallback, useEffect, useState } from 'react';\nimport { Button, Empty, Typography, message } from 'antd';\nimport { ConsoleSqlOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';\nimport { createStyles } from 'antd-style';\nimport { useLocation } from 'umi';\nimport DatabaseTree, { type OpenTarget } from '@/components/DatabaseTree';\nimport TableDataView from '@/components/TableDataView';\nimport TableStructureView from '@/components/TableStructureView';\nimport WorkbenchPanel from '@/components/WorkbenchPanel';\nimport type { DataSourceProfile } from '@/service/api';\nimport { datasourceApi } from '@/service/api';\n\ntype ContentMode =\n  | { type: 'empty' }\n  | { type: 'data'; profile: DataSourceProfile; namespace: string; table: string }\n  | { type: 'structure'; profile: DataSourceProfile; namespace: string; table: string }\n  | { type: 'query'; profile: DataSourceProfile; namespace?: string; table?: string };\n\n// Workspace（对齐 Chat2DB 工作区）：左侧库表树 + 右侧内容区（单视图切换：表数据/表结构/查询）\nconst useStyles = createStyles(({ token }) => ({\n  layout: {\n    display: 'flex',\n    gap: 12,\n    height: 'calc(100vh - 40px)',\n  },\n  sider: {\n    width: 280,\n    flexShrink: 0,\n    background: token.colorBgContainer,\n    border: `1px solid ${token.colorBorderSecondary}`,\n    borderRadius: token.borderRadiusLG,\n    padding: 12,\n    overflow: 'auto',\n  },\n  content: {\n    flex: 1,\n    background: token.colorBgContainer,\n    border: `1px solid ${token.colorBorderSecondary}`,\n    borderRadius: token.borderRadiusLG,\n    padding: 16,\n    overflow: 'auto',\n    minWidth: 0,\n  },\n  collapse: {\n    alignSelf: 'flex-start',\n    border: `1px solid ${token.colorBorderSecondary}`,\n    background: token.colorBgContainer,\n    borderRadius: token.borderRadiusLG,\n    padding: '10px 4px',\n  },\n}));\n\n/** 生成打开表的初始 SQL（按方言使用对应标识符引用符）。 */\nfunction quoteFor(type: DataSourceProfile['type']): (s: string) => string {\n  if (type === 'MYSQL') return (s) => '`' + s + '`';\n  if (type === 'SQLSERVER') return (s) => '[' + s + ']';\n  return (s) => '\"' + s + '\"';\n}\n\nexport default function WorkspacePage() {\n  const { styles } = useStyles();\n  const location = useLocation();\n  const [profiles, setProfiles] = useState<DataSourceProfile[]>([]);\n  const [siderCollapsed, setSiderCollapsed] = useState(false);\n  const [mode, setMode] = useState<ContentMode>({ type: 'empty' });\n\n  const loadProfiles = useCallback(() => {\n    datasourceApi\n      .list()\n      .then((list) => {\n        setProfiles(list);\n        // 支持 /workspace?ds=N 直达：自动展开该数据源第一个库并打开查询\n        const fromQuery = new URLSearchParams(location.search).get('ds');\n        if (fromQuery && mode.type === 'empty') {\n          const p = list.find((x) => x.id === Number(fromQuery));\n          if (p) {\n            setMode({ type: 'query', profile: p });\n          }\n        }\n      })\n      .catch((e) => message.error((e as Error).message));\n  }, [location.search]);\n\n  useEffect(() => {\n    loadProfiles();\n  }, []);\n\n  const [lastSql, setLastSql] = useState<string | undefined>(undefined);\n\n  const openTable = (t: OpenTarget) => {\n    setMode({ type: 'data', profile: t.profile, namespace: t.namespace, table: t.table });\n  };\n\n  const openStructure = (t: OpenTarget) => {\n    setMode({ type: 'structure', profile: t.profile, namespace: t.namespace, table: t.table });\n  };\n\n  const newQuery = (profile: DataSourceProfile, namespace: string, table?: string) => {\n    const q = quoteFor(profile.type);\n    const qualified = table ? `${q(namespace)}.${q(table)}` : q(namespace);\n    setMode({\n      type: 'query',\n      profile,\n      namespace,\n      table,\n    });\n    setLastSql(`SELECT * FROM ${qualified} LIMIT 100;`);\n  };\n\n  return (\n    <div className={styles.layout}>\n      <div className={styles.sider} style={{ display: siderCollapsed ? 'none' : undefined }}>\n        <Typography.Title level={5} style={{ marginTop: 0 }}>\n          数据源\n        </Typography.Title>\n        <DatabaseTree\n          profiles={profiles}\n          onOpenTable={openTable}\n          onOpenStructure={openStructure}\n          onNewQuery={(p, ns) => newQuery(p, ns)}\n          onRefresh={loadProfiles}\n        />\n      </div>\n\n      {siderCollapsed && (\n        <div className={styles.collapse}>\n          <Button\n            type=\"text\"\n            size=\"small\"\n            icon={<MenuUnfoldOutlined />}\n            onClick={() => setSiderCollapsed(false)}\n          />\n        </div>\n      )}\n\n      <div className={styles.content}>\n        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 4 }}>\n          <Button\n            type=\"text\"\n            size=\"small\"\n            icon={<MenuFoldOutlined />}\n            onClick={() => setSiderCollapsed(true)}\n          >\n            收起树\n          </Button>\n        </div>\n\n        {mode.type === 'empty' && (\n          <Empty\n            style={{ marginTop: 120 }}\n            description={\n              <span>\n                在左侧展开数据源，双击表查看数据\n                <br />\n                <Typography.Text type=\"secondary\" style={{ fontSize: 12 }}>\n                  库节点悬浮「查询」可新建查询；表节点悬浮「结构」可查看表结构\n                </Typography.Text>\n              </span>\n            }\n            image={Empty.PRESENTED_IMAGE_SIMPLE}\n          />\n        )}\n\n        {mode.type === 'data' && (\n          <TableDataView profile={mode.profile} namespace={mode.namespace} table={mode.table} />\n        )}\n\n        {mode.type === 'structure' && (\n          <TableStructureView profile={mode.profile} namespace={mode.namespace} table={mode.table} />\n        )}\n\n        {mode.type === 'query' && (\n          <>\n            <div style={{ marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>\n              <ConsoleSqlOutlined style={{ color: '#1677ff' }} />\n              <Typography.Text type=\"secondary\" style={{ fontSize: 12 }}>\n                查询 · {mode.profile.name}\n                {mode.namespace ? ` · ${mode.namespace}` : ''}\n                {mode.table ? ` · ${mode.table}` : ''}\n              </Typography.Text>\n            </div>\n            <WorkbenchPanel\n              key={`${mode.profile.id}:${mode.namespace ?? ''}:${mode.table ?? ''}`}\n              initialDatasourceId={mode.profile.id}\n              initialSql={lastSql}\n            />\n          </>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/ryan/mycode/MEPERChatBIServer/webapp/src/pages/workspace/index.tsx"
+    },
+    "6": {
       "path": "/workbench",
       "file": "@/pages/workbench/index.tsx",
       "parentId": "2",
-      "id": "5",
+      "id": "6",
       "absPath": "/workbench",
-      "__content": "import { useCallback, useEffect, useMemo, useState } from 'react';\nimport {\n  Alert, Button, Drawer, InputNumber, message, Select, Space, Spin, Table, Tabs, Tag, Timeline, Tooltip, Typography,\n} from 'antd';\nimport { CaretRightOutlined, HistoryOutlined, ProfileOutlined } from '@ant-design/icons';\nimport { createStyles } from 'antd-style';\nimport Editor, { type Monaco } from '@monaco-editor/react';\nimport { useLocation } from 'umi';\nimport ResultSet from '@/components/ResultSet';\nimport type { DataSourceProfile, ExecuteResult, PreviewResult, SqlCategory } from '@/service/api';\nimport { datasourceApi, workbenchApi } from '@/service/api';\n\n// SQL 工作台：执行走「自动 preview → 确认 → execute」两步（防并发：确认前不可重复触发）\nconst useStyles = createStyles(({ token }) => ({\n  toolbar: {\n    display: 'flex',\n    gap: 12,\n    alignItems: 'center',\n    marginBottom: 12,\n  },\n  editorBox: {\n    border: `1px solid ${token.colorBorderSecondary}`,\n    borderRadius: token.borderRadius,\n    overflow: 'hidden',\n  },\n}));\n\nconst CATEGORY_COLORS: Record<SqlCategory, string> = {\n  SELECT: 'green',\n  DML: 'orange',\n  DDL: 'red',\n  TCL: 'purple',\n  OTHER: 'default',\n};\n\nconst SQL_KEYWORDS = [\n  'SELECT', 'FROM', 'WHERE', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'SET', 'DELETE', 'CREATE',\n  'TABLE', 'DROP', 'ALTER', 'TRUNCATE', 'JOIN', 'LEFT', 'RIGHT', 'INNER', 'OUTER', 'ON',\n  'GROUP', 'BY', 'ORDER', 'HAVING', 'LIMIT', 'OFFSET', 'AND', 'OR', 'NOT', 'NULL', 'IS',\n  'IN', 'LIKE', 'BETWEEN', 'DISTINCT', 'COUNT', 'SUM', 'AVG', 'MIN', 'MAX', 'COMMIT',\n  'ROLLBACK', 'BEGIN', 'UNION', 'ALL', 'AS', 'ASC', 'DESC',\n];\n\nfunction setupCompletion(monaco: Monaco) {\n  monaco.languages.registerCompletionItemProvider('sql', {\n    provideCompletionItems: (model, position) => {\n      const word = model.getWordUntilPosition(position);\n      return {\n        suggestions: SQL_KEYWORDS.map((k) => ({\n          label: k,\n          kind: monaco.languages.CompletionItemKind.Keyword,\n          insertText: k,\n          range: {\n            startLineNumber: position.lineNumber,\n            endLineNumber: position.lineNumber,\n            startColumn: word.startColumn,\n            endColumn: word.endColumn,\n          },\n        })),\n      };\n    },\n  });\n}\n\nexport default function WorkbenchPage() {\n  const { styles } = useStyles();\n  const location = useLocation();\n  const [profiles, setProfiles] = useState<DataSourceProfile[]>([]);\n  const [datasourceId, setDatasourceId] = useState<number | null>(null);\n  const [sql, setSql] = useState('SELECT 1');\n  const [maxRows, setMaxRows] = useState<number>(1000);\n  const [preview, setPreview] = useState<PreviewResult | null>(null);\n  const [confirming, setConfirming] = useState(false);\n  const [executing, setExecuting] = useState(false);\n  const [result, setResult] = useState<ExecuteResult | null>(null);\n  const [historyOpen, setHistoryOpen] = useState(false);\n\n  useEffect(() => {\n    datasourceApi.list().then((list) => {\n      setProfiles(list);\n      const fromQuery = new URLSearchParams(location.search).get('ds');\n      const initial = fromQuery ? Number(fromQuery) : list[0]?.id;\n      if (initial && list.some((p) => p.id === initial)) {\n        setDatasourceId(initial);\n      } else if (list.length > 0) {\n        setDatasourceId(list[0].id);\n      }\n    }).catch((e) => message.error((e as Error).message));\n  }, []);\n\n  const busy = confirming || executing;\n  const selected = useMemo(() => profiles.find((p) => p.id === datasourceId), [profiles, datasourceId]);\n\n  const runPreview = useCallback(async () => {\n    if (!datasourceId || !sql.trim()) return;\n    setConfirming(true);\n    setResult(null);\n    try {\n      setPreview(await workbenchApi.preview(datasourceId, sql));\n    } catch (e) {\n      message.error((e as Error).message);\n      setConfirming(false);\n    }\n  }, [datasourceId, sql]);\n\n  const runExecute = useCallback(async () => {\n    if (!datasourceId) return;\n    setExecuting(true);\n    try {\n      setResult(await workbenchApi.execute(datasourceId, sql, maxRows));\n      setPreview(null);\n      setConfirming(false);\n    } catch (e) {\n      message.error((e as Error).message);\n    } finally {\n      setExecuting(false);\n    }\n  }, [datasourceId, sql, maxRows]);\n\n  const tabs = useMemo(() => {\n    if (!result) return [];\n    return result.statements.map((s) => ({\n      key: String(s.seq),\n      label: (\n        <Space size={4}>\n          <span>#{s.seq}</span>\n          <Tag color={CATEGORY_COLORS[s.category]} style={{ marginInlineEnd: 0 }}>\n            {s.category}\n          </Tag>\n        </Space>\n      ),\n      children: s.error ? (\n        <Alert type=\"error\" message=\"执行失败\" description={s.error} style={{ marginTop: 8 }} />\n      ) : s.query && s.resultData ? (\n        <ResultSet data={s.resultData} />\n      ) : (\n        <Alert\n          style={{ marginTop: 8 }}\n          type=\"success\"\n          message={`执行成功 · 影响 ${s.updateCount ?? 0} 行 · ${s.durationMs}ms`}\n        />\n      ),\n    }));\n  }, [result]);\n\n  return (\n    <div>\n      <div className={styles.toolbar}>\n        <Typography.Title level={4} style={{ margin: 0 }}>\n          SQL 工作台\n        </Typography.Title>\n        <Space style={{ flex: 1, justifyContent: 'flex-end' }}>\n          <Select\n            style={{ width: 280 }}\n            placeholder=\"选择数据源\"\n            value={datasourceId}\n            onChange={setDatasourceId}\n            options={profiles.map((p) => ({\n              value: p.id,\n              label: `${p.name}（${p.type} · ${p.host}:${p.port}）`,\n            }))}\n          />\n          <Tooltip title=\"单语句返回行数上限（硬上限 10000）\">\n            <InputNumber min={1} max={10000} value={maxRows} onChange={(v) => setMaxRows(v ?? 1000)} addonBefore=\"maxRows\" style={{ width: 180 }} />\n          </Tooltip>\n          <Button icon={<HistoryOutlined />} onClick={() => setHistoryOpen(true)}>\n            执行历史\n          </Button>\n        </Space>\n      </div>\n\n      <div className={styles.editorBox}>\n        <Editor\n          height=\"220px\"\n          language=\"sql\"\n          theme=\"vs\"\n          value={sql}\n          onChange={(v) => setSql(v ?? '')}\n          beforeMount={setupCompletion}\n          options={{\n            minimap: { enabled: false },\n            fontSize: 13,\n            automaticLayout: true,\n            wordBasedSuggestions: 'off',\n            tabSize: 2,\n          }}\n          loading={<Spin style={{ margin: 80 }} />}\n        />\n      </div>\n\n      <Space style={{ margin: '12px 0' }}>\n        <Button\n          type=\"primary\"\n          icon={<CaretRightOutlined />}\n          onClick={runPreview}\n          disabled={!datasourceId || busy || !sql.trim()}\n        >\n          {confirming ? '1/2 已预检' : '运行'}\n        </Button>\n        {confirming && preview && (\n          <Button type=\"primary\" danger loading={executing} onClick={runExecute}>\n            2/2 确认执行（{preview.statements.length} 条语句）\n          </Button>\n        )}\n      </Space>\n\n      {preview && (\n        <Alert\n          style={{ marginBottom: 12 }}\n          type={preview.statements.some((s) => s.category === 'DDL' || s.category === 'DML') ? 'warning' : 'info'}\n          showIcon={false}\n          message={\n            <Space wrap>\n              <span>预检结果：</span>\n              {preview.statements.map((s) => (\n                <Tag key={s.seq} color={CATEGORY_COLORS[s.category]}>\n                  #{s.seq} {s.category}\n                </Tag>\n              ))}\n              <Tag color=\"volcano\">{preview.enforcement}（阶段 1 无策略约束，P2 接入）</Tag>\n            </Space>\n          }\n          description={\n            <Typography.Text type=\"secondary\" style={{ fontSize: 12 }}>\n              数据源「{preview.datasourceName}」· 目标执行 {preview.statements.length} 条语句，逐语句独立提交（autocommit），失败即停止后续语句\n            </Typography.Text>\n          }\n        />\n      )}\n\n      {executing && <Alert type=\"info\" showIcon={false} message=\"执行中…\" style={{ marginBottom: 12 }} />}\n\n      {result && (\n        <div>\n          <Alert\n            style={{ marginBottom: 12 }}\n            type={result.status === 'SUCCESS' ? 'success' : result.status === 'PARTIAL' ? 'warning' : 'error'}\n            showIcon={false}\n            message={`执行完成：${result.status} · 共 ${result.statements.length} 条 · ${result.durationMs}ms · 记录 #${result.executionId}`}\n          />\n          {tabs.length > 0 && <Tabs items={tabs} type=\"line\" size=\"small\" />}\n        </div>\n      )}\n\n      <HistoryDrawer open={historyOpen} onClose={() => setHistoryOpen(false)} />\n    </div>\n  );\n}\n\nfunction HistoryDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {\n  const [records, setRecords] = useState<import('@/service/api').ExecutionRecord[] | null>(null);\n\n  useEffect(() => {\n    if (open) {\n      workbenchApi.executions().then(setRecords).catch((e) => message.error((e as Error).message));\n    }\n  }, [open]);\n\n  return (\n    <Drawer title=\"执行历史（最近 100 条）\" width={640} open={open} onClose={onClose} destroyOnClose>\n      {!records ? (\n        <Spin />\n      ) : records.length === 0 ? (\n        <Typography.Text type=\"secondary\">暂无执行记录</Typography.Text>\n      ) : (\n        <Timeline\n          items={records.map((r) => ({\n            color: r.status === 'SUCCESS' ? 'green' : r.status === 'PARTIAL' ? 'orange' : 'red',\n            children: (\n              <div>\n                <Space wrap>\n                  <Tag>#{r.id}</Tag>\n                  <Tag color={r.status === 'SUCCESS' ? 'green' : r.status === 'PARTIAL' ? 'orange' : 'red'}>\n                    {r.status}\n                  </Tag>\n                  <span style={{ fontSize: 12 }}>\n                    数据源 {r.datasourceId} · {r.statementCount} 条 · {r.subject}\n                  </span>\n                </Space>\n                <div style={{ fontSize: 12, color: '#888', margin: '4px 0' }}>\n                  {new Date(r.startedAt).toLocaleString()} · {r.correlationId.slice(0, 8)}\n                </div>\n                <pre\n                  style={{\n                    fontSize: 12, background: '#f6f6f6', padding: 8, borderRadius: 6,\n                    maxHeight: 88, overflow: 'hidden', margin: 0,\n                  }}\n                >\n                  {r.sqlText.slice(0, 300)}\n                </pre>\n              </div>\n            ),\n          }))}\n        />\n      )}\n    </Drawer>\n  );\n}\n",
+      "__content": "import WorkbenchPanel from '@/components/WorkbenchPanel';\n\n/** 独立工作台路由（/workbench）：薄壳，主体在 WorkbenchPanel（workspace 亦复用）。 */\nexport default function WorkbenchPage() {\n  return <WorkbenchPanel />;\n}\n",
       "__isJSFile": true,
       "__absFile": "/Users/ryan/mycode/MEPERChatBIServer/webapp/src/pages/workbench/index.tsx"
     }
@@ -2157,7 +2175,7 @@
     "tslibVersion": "2.8.1"
   },
   "faviconFiles": [],
-  "port": 8001,
+  "port": 8002,
   "host": "0.0.0.0",
   "ip": "192.168.3.39"
 }

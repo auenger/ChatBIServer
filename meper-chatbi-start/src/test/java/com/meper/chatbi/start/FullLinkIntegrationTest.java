@@ -22,6 +22,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.sql.DriverManager;
 import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -210,7 +211,7 @@ class FullLinkIntegrationTest {
     }
 
     @Test
-    @Order(4)
+    @Order(6)
     void credentialRotationInvalidatesOldPassword() throws Exception {
         JsonNode profile = createDatasource("it-rotate");
         long dsId = profile.get("id").asLong();
@@ -256,5 +257,52 @@ class FullLinkIntegrationTest {
         assertEquals(200, del.getStatusCode().value());
         var gone = exchange(HttpMethod.GET, "/api/datasources/" + dsId, token, null);
         assertEquals(404, gone.getStatusCode().value());
+    }
+
+    @Test
+    @Order(4)
+    void metadataTreeTableDetailAndPagedData() {
+        JsonNode profile = createDatasource("it-metadata");
+        long dsId = profile.get("id").asLong();
+        String base = "/api/datasources/" + dsId + "/metadata";
+        String database = BIZ.getDatabaseName();
+
+        exchange(HttpMethod.POST, "/api/workbench/execute", token, Map.of(
+                "datasourceId", dsId,
+                "sql", "CREATE TABLE meta_t (id INT PRIMARY KEY, name VARCHAR(50)); "
+                        + "INSERT INTO meta_t VALUES (1,'a'),(2,'b'),(3,'c')"));
+
+        // 命名空间（MySQL=数据库列表）：包含业务库，排除系统库
+        var ns = exchange(HttpMethod.GET, base + "/namespaces", token, null);
+        assertEquals(200, ns.getStatusCode().value());
+        JsonNode names = read(ns);
+        boolean hasBiz = false;
+        for (JsonNode n : names) {
+            assertFalse(List.of("information_schema", "mysql", "performance_schema", "sys")
+                    .contains(n.asText()), "系统库必须被过滤");
+            hasBiz = hasBiz || n.asText().equals(database);
+        }
+        assertTrue(hasBiz, "业务库应出现在命名空间列表");
+
+        // 表清单
+        var tables = exchange(HttpMethod.GET, base + "/tables?namespace=" + database, token, null);
+        assertEquals(200, tables.getStatusCode().value());
+        assertTrue(read(tables).toString().contains("meta_t"));
+
+        // 表结构：列 + 主键标记
+        var detail = exchange(HttpMethod.GET, base + "/table?namespace=" + database + "&table=meta_t",
+                token, null);
+        assertEquals(200, detail.getStatusCode().value());
+        JsonNode detailBody = read(detail);
+        assertEquals("id", detailBody.get("columns").get(0).get("name").asText());
+        assertTrue(detailBody.get("columns").get(0).get("primaryKey").asBoolean());
+
+        // 表数据分页：total 精确，页大小生效
+        var data = exchange(HttpMethod.GET, base + "/data?namespace=" + database
+                + "&table=meta_t&page=2&size=2", token, null);
+        assertEquals(200, data.getStatusCode().value());
+        JsonNode dataBody = read(data);
+        assertEquals(3, dataBody.get("total").asLong());
+        assertEquals(1, dataBody.get("data").get("rows").size(), "3 行分 2 页，第 2 页应为 1 行");
     }
 }

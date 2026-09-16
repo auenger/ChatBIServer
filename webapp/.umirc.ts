@@ -10,8 +10,9 @@ export default defineConfig({
       path: '/',
       component: 'layouts/MainLayout',
       routes: [
-        { path: '/', redirect: '/datasources' },
+        { path: '/', redirect: '/workspace' },
         { path: '/datasources', component: 'datasources' },
+        { path: '/workspace', component: 'workspace' },
         { path: '/workbench', component: 'workbench' },
       ],
     },

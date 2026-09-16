@@ -50,7 +50,7 @@ public final class JdbcConnectionTester {
     }
 
     /** 错误摘要：单行、限长；完整堆栈只进日志。 */
-    static String summarize(SQLException e) {
+    public static String summarize(SQLException e) {
         String msg = e.getMessage() == null ? "" : e.getMessage().replace('\n', ' ').replace('\r', ' ');
         if (msg.length() > 500) {
             msg = msg.substring(0, 500) + "…(截断)";

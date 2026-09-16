@@ -68,4 +68,9 @@ public class SqlServerDialect implements SqlDialect {
     private boolean hasOrderBy(String sql) {
         return sql.toUpperCase(Locale.ROOT).matches("(?s).*\\bORDER\\s+BY\\b.*");
     }
+
+    @Override
+    public java.util.List<String> systemNamespaceNames() {
+        return java.util.List.of("master", "tempdb", "model", "msdb");
+    }
 }

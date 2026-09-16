@@ -139,9 +139,9 @@ export default function DatasourcesPage() {
           <Button
             size="small"
             icon={<CodeOutlined />}
-            onClick={() => history.push(`/workbench?ds=${record.id}`)}
+            onClick={() => history.push(`/workspace?ds=${record.id}`)}
           >
-            工作台
+            打开
           </Button>
           <Button size="small" icon={<KeyOutlined />} onClick={() => setRotateTarget(record)}>
             轮换

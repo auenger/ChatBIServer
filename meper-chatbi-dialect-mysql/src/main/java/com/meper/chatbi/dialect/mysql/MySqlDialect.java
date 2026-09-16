@@ -75,4 +75,14 @@ public class MySqlDialect implements SqlDialect {
     private String encode(String value) {
         return URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
+
+    @Override
+    public NamespaceLayout namespaceLayout() {
+        return NamespaceLayout.CATALOG_IS_DATABASE;
+    }
+
+    @Override
+    public java.util.List<String> systemNamespaceNames() {
+        return java.util.List.of("information_schema", "mysql", "performance_schema", "sys");
+    }
 }

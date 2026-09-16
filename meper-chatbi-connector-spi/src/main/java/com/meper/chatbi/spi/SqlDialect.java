@@ -40,4 +40,19 @@ public interface SqlDialect {
         String trimmed = sql.trim();
         return trimmed.endsWith(";") ? trimmed.substring(0, trimmed.length() - 1).trim() : trimmed;
     }
+
+    /**
+     * 元数据命名空间布局（借鉴 Chat2DB DBConfig.supportDatabase/supportSchema 的差异声明）：
+     * MySQL 的 catalog 即 database；PostgreSQL/SQL Server/Oracle 以 schema 组织。
+     */
+    default NamespaceLayout namespaceLayout() {
+        return NamespaceLayout.SCHEMA_BASED;
+    }
+
+    /** 需要在元数据树中隐藏的系统库名（按 namespaceLayout 对应层级过滤）。 */
+    default java.util.List<String> systemNamespaceNames() {
+        return java.util.List.of();
+    }
+
+    enum NamespaceLayout { CATALOG_IS_DATABASE, SCHEMA_BASED }
 }

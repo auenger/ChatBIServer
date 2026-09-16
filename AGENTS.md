@@ -13,7 +13,7 @@ Chat2DB 参考源码位于同级目录 `../Chat2DB-permission-aware-chatbi`（�
 
 ## 当前阶段与边界
 
-- **P1 核心链路已实现**：connector-spi 契约（ExecutionContext/CapabilityDescriptor/SqlDialect/SqlExecutor）、4 方言（URL/分页/探活）、HikariCP 池注册表（key = datasourceId + credentialVersion，轮换逐出）、SqlClassifier（Druid 拆分分类）、数据源管理 + 工作台 API、AES-256-GCM 凭据加密（主密钥 `MEPER_MASTER_KEY` 缺失即拒绝启动）、控制库 Flyway schema（meper_ 前缀 5 表）、React+antd 前端（webapp/，登录/数据源/工作台）。
+- **P1 核心链路已实现**：connector-spi 契约（ExecutionContext/CapabilityDescriptor/SqlDialect/SqlExecutor）、4 方言（URL/分页/探活/元数据命名空间布局）、HikariCP 池注册表（key = datasourceId + credentialVersion，轮换逐出）、SqlClassifier（Druid 拆分分类）、**JdbcMetadataReader（JDBC 标准元数据：库表树/表结构/表数据分页，MySQL 走 catalog、其余走 schema，系统库按方言过滤）**、数据源管理 + 工作台 + 元数据 API、AES-256-GCM 凭据加密（主密钥 `MEPER_MASTER_KEY` 缺失即拒绝启动）、控制库 Flyway schema（meper_ 前缀 5 表）、React+antd 前端（webapp/：登录/数据源管理/**workspace 库表树+表数据+表结构+查询**/独立工作台）。
 - **执法状态恒为 BOOTSTRAP_ADMIN_UNRESTRICTED**：阶段 1 无策略约束，响应显式携带该标记；ExecutionContext 只能由 domain 的 ExecutionContextFactory 签发，P2 接入后在 WorkbenchService/DataSourceService 的执行路径插入策略决策，不得在 Controller 层加判断。
 - 尚未迁入任何 Chat2DB 源码；迁入按实施方案 §3 的阶段推进，不要跳阶段引入半成品能力。
 - **首批目标数据库已定（2026-09-15，2026-09-16 补版本矩阵）**：MySQL 5.7/8.4.x、SQL Server 2019/2022、PostgreSQL 16、Oracle 19c/23ai。JDBC 驱动内置在对应 dialect 模块（版本：mysql-connector-j / mssql-jdbc / postgresql 由 Spring Boot BOM 管理，ojdbc17 由根 pom `ojdbc.version` 锁定）；**不做自定义驱动 JAR 上传**，若未来引入必须先满足实施方案 §4 的驱动来源/校验/隔离要求。

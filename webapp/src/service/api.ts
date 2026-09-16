@@ -129,3 +129,60 @@ export const workbenchApi = {
   executions: (datasourceId?: number) =>
     get<ExecutionRecord[]>(`/workbench/executions${datasourceId ? `?datasourceId=${datasourceId}` : ''}`),
 };
+
+// ---------- 元数据（库表树 / 表结构 / 表数据） ----------
+
+export interface TableInfo {
+  name: string;
+  type: 'TABLE' | 'VIEW';
+  remarks: string | null;
+}
+
+export interface ColumnInfo {
+  name: string;
+  typeName: string;
+  nullable: boolean;
+  defaultValue: string | null;
+  remarks: string | null;
+  primaryKey: boolean;
+  autoIncrement: boolean;
+}
+
+export interface IndexInfo {
+  name: string;
+  unique: boolean;
+  columns: string[];
+}
+
+export interface TableDetail {
+  table: string;
+  type: 'TABLE' | 'VIEW';
+  remarks: string | null;
+  columns: ColumnInfo[];
+  indexes: IndexInfo[];
+}
+
+export interface TableDataPage {
+  data: QueryResultData;
+  total: number;
+  page: number;
+  size: number;
+}
+
+export const metadataApi = {
+  namespaces: (id: number) => get<string[]>(`/datasources/${id}/metadata/namespaces`),
+  tables: (id: number, namespace: string, pattern?: string) =>
+    get<TableInfo[]>(
+      `/datasources/${id}/metadata/tables?namespace=${encodeURIComponent(namespace)}` +
+      (pattern ? `&pattern=${encodeURIComponent(pattern)}` : ''),
+    ),
+  tableDetail: (id: number, namespace: string, table: string) =>
+    get<TableDetail>(
+      `/datasources/${id}/metadata/table?namespace=${encodeURIComponent(namespace)}&table=${encodeURIComponent(table)}`,
+    ),
+  tableData: (id: number, namespace: string, table: string, page: number, size: number) =>
+    get<TableDataPage>(
+      `/datasources/${id}/metadata/data?namespace=${encodeURIComponent(namespace)}` +
+      `&table=${encodeURIComponent(table)}&page=${page}&size=${size}`,
+    ),
+};

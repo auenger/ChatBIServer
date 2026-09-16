@@ -55,4 +55,9 @@ public class PostgreSqlDialect implements SqlDialect {
     public String paginate(String sql, int offset, int limit) {
         return SqlDialect.stripTrailingSemicolon(sql) + " LIMIT " + limit + " OFFSET " + offset;
     }
+
+    @Override
+    public java.util.List<String> systemNamespaceNames() {
+        return java.util.List.of("template0", "template1");
+    }
 }
