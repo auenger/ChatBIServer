@@ -1,0 +1,19 @@
+# build
+target/
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+
+# logs
+logs/
+*.log
+
+# local config (不允许提交真实凭据)
+application-local.yml
+application-local.yaml

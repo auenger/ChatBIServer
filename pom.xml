@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.5.16</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>com.meper</groupId>
+  <artifactId>meper-chatbi-server</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>MEPER ChatBI Server</name>
+  <description>MEPER ChatBI 服务端：以 Java 服务端为数据库能力主体的 B/S 服务</description>
+
+  <properties>
+    <java.version>17</java.version>
+    <maven.compiler.release>17</maven.compiler.release>
+    <!-- Oracle JDBC 不在 Spring Boot BOM 管理范围内，在此锁定版本 -->
+    <ojdbc.version>23.26.3.0.0</ojdbc.version>
+  </properties>
+
+  <modules>
+    <module>meper-chatbi-connector-spi</module>
+    <module>meper-chatbi-connector-jdbc</module>
+    <module>meper-chatbi-dialect-mysql</module>
+    <module>meper-chatbi-dialect-sqlserver</module>
+    <module>meper-chatbi-dialect-postgresql</module>
+    <module>meper-chatbi-dialect-oracle</module>
+    <module>meper-chatbi-policy</module>
+    <module>meper-chatbi-query-enforcement</module>
+    <module>meper-chatbi-domain</module>
+    <module>meper-chatbi-control-storage</module>
+    <module>meper-chatbi-session-wiki</module>
+    <module>meper-chatbi-agent</module>
+    <module>meper-chatbi-web</module>
+    <module>meper-chatbi-start</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- 内部模块统一版本，模块间引用不写版本号 -->
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-connector-spi</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-connector-jdbc</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-dialect-mysql</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-dialect-sqlserver</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-dialect-postgresql</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-dialect-oracle</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.oracle.database.jdbc</groupId>
+        <artifactId>ojdbc17</artifactId>
+        <version>${ojdbc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-policy</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-query-enforcement</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-domain</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-control-storage</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-session-wiki</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-agent</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.meper</groupId>
+        <artifactId>meper-chatbi-web</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>
