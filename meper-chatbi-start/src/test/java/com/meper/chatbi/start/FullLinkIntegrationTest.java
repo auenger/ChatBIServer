@@ -169,6 +169,13 @@ class FullLinkIntegrationTest {
         assertEquals(3, previewBody.get("statements").size());
         assertEquals("BOOTSTRAP_ADMIN_UNRESTRICTED", previewBody.get("enforcement").asText());
 
+        // format：按数据源方言排版，不连接业务库执行 SQL
+        var format = exchange(HttpMethod.POST, "/api/workbench/format", token,
+                Map.of("datasourceId", profile.get("id").asLong(),
+                        "sql", "select id,name from meper_wt where id=1 order by name"));
+        assertEquals(200, format.getStatusCode().value());
+        assertTrue(read(format).get("sql").asText().contains("ORDER BY name"));
+
         // execute
         var execute = exchange(HttpMethod.POST, "/api/workbench/execute", token,
                 Map.of("datasourceId", profile.get("id").asLong(), "sql", script));

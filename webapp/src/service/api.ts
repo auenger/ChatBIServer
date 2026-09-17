@@ -123,6 +123,8 @@ export const datasourceApi = {
 export const workbenchApi = {
   preview: (datasourceId: number, sql: string) =>
     post<PreviewResult>('/workbench/preview', { datasourceId, sql }),
+  format: (datasourceId: number, sql: string) =>
+    post<{ sql: string }>('/workbench/format', { datasourceId, sql }),
   execute: (datasourceId: number, sql: string, maxRows?: number) =>
     post<ExecuteResult>('/workbench/execute', { datasourceId, sql, maxRows }),
   execution: (id: number) => get<ExecutionRecord>(`/workbench/executions/${id}`),

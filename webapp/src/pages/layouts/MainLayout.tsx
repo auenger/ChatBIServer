@@ -12,11 +12,14 @@ const useStyles = createStyles(({ token }) => ({
   sider: {
     background: token.colorBgContainer,
     borderRight: `1px solid ${token.colorBorderSecondary}`,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '12px 0',
-    gap: 8,
+    '& .ant-layout-sider-children': {
+      display: 'flex',
+      height: '100%',
+      flexDirection: 'column',
+      alignItems: 'center',
+      padding: '12px 0',
+      gap: 8,
+    },
   },
   logo: {
     width: 40,
@@ -50,7 +53,9 @@ export default function MainLayout() {
     }
   }, []);
 
-  const selectedKey = location.pathname.startsWith('/workbench') ? '/workbench' : '/datasources';
+  const selectedKey = location.pathname.startsWith('/workspace') || location.pathname.startsWith('/workbench')
+    ? '/workspace'
+    : '/datasources';
 
   const logout = async () => {
     try {
@@ -73,7 +78,7 @@ export default function MainLayout() {
           style={{ borderInlineEnd: 'none' }}
           items={[
             { key: '/datasources', icon: <DatabaseOutlined />, label: '数据源' },
-            { key: '/workbench', icon: <CodeOutlined />, label: '工作台' },
+            { key: '/workspace', icon: <CodeOutlined />, label: '工作台' },
           ]}
           onClick={({ key }) => history.push(key)}
         />
@@ -85,7 +90,10 @@ export default function MainLayout() {
           <LogoutOutlined style={{ marginTop: 8, cursor: 'pointer' }} />
         </Popconfirm>
       </Layout.Sider>
-      <Layout.Content className={styles.content}>
+      <Layout.Content
+        className={styles.content}
+        style={selectedKey === '/workspace' ? { padding: 0, overflow: 'hidden' } : undefined}
+      >
         <Outlet />
       </Layout.Content>
     </Layout>

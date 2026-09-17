@@ -32,6 +32,10 @@ public class WorkbenchController {
                           Integer maxRows) {
     }
 
+    record FormatRequest(@NotNull Long datasourceId,
+                         @NotBlank @Size(max = 1_000_000) String sql) {
+    }
+
     private final WorkbenchService workbench;
 
     public WorkbenchController(WorkbenchService workbench) {
@@ -43,6 +47,13 @@ public class WorkbenchController {
             @RequestAttribute(AuthInterceptor.PRINCIPAL_ATTR) String principal,
             @Valid @RequestBody PreviewRequest request) {
         return workbench.preview(principal, request.datasourceId(), request.sql());
+    }
+
+    @PostMapping("/format")
+    public WorkbenchService.FormatResult format(
+            @RequestAttribute(AuthInterceptor.PRINCIPAL_ATTR) String principal,
+            @Valid @RequestBody FormatRequest request) {
+        return workbench.format(principal, request.datasourceId(), request.sql());
     }
 
     @PostMapping("/execute")

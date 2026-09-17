@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SqlClassifierTest {
 
@@ -69,5 +70,19 @@ class SqlClassifierTest {
     @Test
     void blankScriptRejected() {
         assertThrows(IllegalArgumentException.class, () -> classifier.analyze(DatabaseType.MYSQL, "  ;  "));
+    }
+
+    @Test
+    void formatsSqlWithTargetDialect() {
+        String formatted = classifier.format(DatabaseType.MYSQL,
+                "select id,name from users where id=1 order by name");
+        assertTrue(formatted.contains("SELECT"));
+        assertTrue(formatted.contains("FROM users"));
+        assertTrue(formatted.contains("ORDER BY name"));
+    }
+
+    @Test
+    void blankFormatRejected() {
+        assertThrows(IllegalArgumentException.class, () -> classifier.format(DatabaseType.POSTGRESQL, "  "));
     }
 }

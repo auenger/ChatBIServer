@@ -58,6 +58,20 @@ public class SqlClassifier {
         return statements;
     }
 
+    /**
+     * 按目标方言格式化 SQL。格式化只做语法排版，不连接业务库，也不改变执行权限语义。
+     */
+    public String format(DatabaseType type, String script) {
+        if (script == null || script.isBlank()) {
+            throw new IllegalArgumentException("SQL 脚本为空");
+        }
+        try {
+            return SQLUtils.format(script, druidType(type));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("SQL 格式化失败: " + e.getMessage(), e);
+        }
+    }
+
     /** Druid 解析成功返回语句列表；整体解析失败返回 null（走 fallback）。 */
     private List<SQLStatement> parse(DatabaseType type, String script) {
         try {

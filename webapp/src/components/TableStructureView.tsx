@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Descriptions, Spin, Table, Tag, Typography, message } from 'antd';
+import { Descriptions, Spin, Table, Tabs, Tag, Typography, message } from 'antd';
 import { KeyOutlined } from '@ant-design/icons';
 import type { DataSourceProfile, TableDetail } from '@/service/api';
 import { metadataApi } from '@/service/api';
@@ -32,29 +32,35 @@ export default function TableStructureView({ profile, namespace, table }: Props)
   }
 
   return (
-    <div style={{ overflow: 'auto', height: '100%' }}>
-      <Typography.Title level={5} style={{ marginTop: 0 }}>
-        {namespace}.{table}
-        <Tag style={{ marginLeft: 8 }} color={detail.type === 'VIEW' ? 'cyan' : 'green'}>
-          {detail.type}
-        </Tag>
-      </Typography.Title>
+    <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', height: '100%' }}>
+      <div style={{ display: 'flex', alignItems: 'center', minHeight: 38, padding: '0 10px', borderBottom: '1px solid #f0f0f0' }}>
+        <Typography.Text strong>{namespace}.{table}</Typography.Text>
+        <Tag style={{ marginLeft: 8 }} color={detail.type === 'VIEW' ? 'cyan' : 'green'}>{detail.type}</Tag>
+      </div>
 
-      <Descriptions size="small" column={4} bordered style={{ marginBottom: 20 }}>
+      <Descriptions size="small" column={4} bordered style={{ margin: 10 }}>
         <Descriptions.Item label="列数">{detail.columns.length}</Descriptions.Item>
         <Descriptions.Item label="索引数">{detail.indexes.length}</Descriptions.Item>
         <Descriptions.Item label="备注" span={2}>
-          {detail.remarks || '—'}
+          {detail.remarks || '-'}
         </Descriptions.Item>
       </Descriptions>
 
-      <Typography.Title level={5}>列</Typography.Title>
-      <Table
-        rowKey="name"
+      <Tabs
         size="small"
-        pagination={false}
-        dataSource={detail.columns}
-        columns={[
+        style={{ flex: 1, minHeight: 0, padding: '0 10px' }}
+        items={[
+          {
+            key: 'columns',
+            label: `列 (${detail.columns.length})`,
+            children: <Table
+              rowKey="name"
+              size="small"
+              bordered
+              pagination={false}
+              scroll={{ x: 'max-content', y: 'calc(100vh - 245px)' }}
+              dataSource={detail.columns}
+              columns={[
           {
             title: '#',
             width: 48,
@@ -83,30 +89,30 @@ export default function TableStructureView({ profile, namespace, table }: Props)
             title: '默认值',
             dataIndex: 'defaultValue',
             width: 140,
-            render: (v: string | null) => v ?? '—',
+            render: (v: string | null) => v ?? '-',
           },
           {
             title: '自增',
             dataIndex: 'autoIncrement',
             width: 72,
-            render: (v: boolean) => (v ? <Tag color="purple">AI</Tag> : '—'),
+            render: (v: boolean) => (v ? <Tag color="purple">AI</Tag> : '-'),
           },
-          { title: '备注', dataIndex: 'remarks', ellipsis: true, render: (v: string | null) => v || '—' },
-        ] as never}
-      />
-
-      <Typography.Title level={5} style={{ marginTop: 20 }}>
-        索引
-      </Typography.Title>
-      {detail.indexes.length === 0 ? (
-        <Typography.Text type="secondary">无索引</Typography.Text>
-      ) : (
-        <Table
-          rowKey="name"
-          size="small"
-          pagination={false}
-          dataSource={detail.indexes}
-          columns={[
+          { title: '备注', dataIndex: 'remarks', ellipsis: true, render: (v: string | null) => v || '-' },
+              ] as never}
+            />,
+          },
+          {
+            key: 'indexes',
+            label: `索引 (${detail.indexes.length})`,
+            children: detail.indexes.length === 0 ? (
+              <Typography.Text type="secondary">无索引</Typography.Text>
+            ) : <Table
+              rowKey="name"
+              size="small"
+              bordered
+              pagination={false}
+              dataSource={detail.indexes}
+              columns={[
             { title: '索引名', dataIndex: 'name' },
             {
               title: '唯一',
@@ -119,9 +125,11 @@ export default function TableStructureView({ profile, namespace, table }: Props)
               dataIndex: 'columns',
               render: (cols: string[]) => cols.join(', '),
             },
-          ] as never}
-        />
-      )}
+              ] as never}
+            />,
+          },
+        ]}
+      />
     </div>
   );
 }

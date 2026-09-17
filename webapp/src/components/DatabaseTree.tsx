@@ -1,16 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Button, Empty, Input, message, Tooltip, Tree } from 'antd';
 import {
-  AppstoreOutlined, CodeOutlined, DatabaseOutlined, EyeOutlined, ReloadOutlined, TableOutlined,
+  AppstoreOutlined, CodeOutlined, DatabaseOutlined, EyeOutlined, FolderOpenOutlined,
+  ReloadOutlined, TableOutlined, UnorderedListOutlined,
 } from '@ant-design/icons';
 import type { DataNode } from 'antd/es/tree';
-import type { DataSourceProfile } from '@/service/api';
+import type { DataSourceProfile, TableInfo } from '@/service/api';
 import { metadataApi } from '@/service/api';
 
-/**
- * 左侧数据源树（对齐 Chat2DB：数据源 → 库/Schema → 表/视图，懒加载展开）。
- * 双击表节点 → 打开表数据；表节点悬浮「结构」→ 表结构；库节点悬浮「查询」→ 新建查询。
- */
 export interface OpenTarget {
   profile: DataSourceProfile;
   namespace: string;
@@ -22,154 +19,271 @@ interface Props {
   profiles: DataSourceProfile[];
   onOpenTable: (target: OpenTarget) => void;
   onOpenStructure: (target: OpenTarget) => void;
-  onNewQuery: (profile: DataSourceProfile, namespace: string) => void;
+  onOpenObjectList: (profile: DataSourceProfile, namespace: string, type: 'TABLE' | 'VIEW') => void;
+  onNewQuery: (profile: DataSourceProfile, namespace?: string, table?: string) => void;
   onRefresh: () => void;
+}
+
+interface WorkspaceDataNode extends DataNode {
+  searchText?: string;
+  children?: WorkspaceDataNode[];
 }
 
 const KEY_DS = 'ds:';
 const KEY_NS = 'ns:';
-const KEY_TB = 'tb:';
+const KEY_GROUP = 'group:';
+
+function encode(value: string) {
+  return encodeURIComponent(value);
+}
+
+function nodeLabelText(node: WorkspaceDataNode): string {
+  return String(node.searchText ?? '').toLocaleLowerCase();
+}
+
+function updateChildren(nodes: WorkspaceDataNode[], key: React.Key, children: WorkspaceDataNode[]): WorkspaceDataNode[] {
+  return nodes.map((node) => {
+    if (node.key === key) return { ...node, children };
+    if (node.children) return { ...node, children: updateChildren(node.children, key, children) };
+    return node;
+  });
+}
+
+function filterNodes(nodes: WorkspaceDataNode[], keyword: string): WorkspaceDataNode[] {
+  if (!keyword) return nodes;
+  return nodes.flatMap((node) => {
+    const children = node.children ? filterNodes(node.children, keyword) : [];
+    if (nodeLabelText(node).includes(keyword) || children.length) {
+      return [{ ...node, children: children.length ? children : node.children }];
+    }
+    return [];
+  });
+}
 
 export default function DatabaseTree({
-  profiles, onOpenTable, onOpenStructure, onNewQuery, onRefresh,
+  profiles,
+  onOpenTable,
+  onOpenStructure,
+  onOpenObjectList,
+  onNewQuery,
+  onRefresh,
 }: Props) {
   const [keyword, setKeyword] = useState('');
   const [expanded, setExpanded] = useState<React.Key[]>([]);
-  const [treeVersion, setTreeVersion] = useState(0);
+  const [treeData, setTreeData] = useState<WorkspaceDataNode[]>([]);
 
-  const filtered = useMemo(
-    () => (keyword ? profiles.filter((p) => p.name.includes(keyword)) : profiles),
-    [profiles, keyword],
+  const profileTitle = (profile: DataSourceProfile) => (
+    <span className="tree-node-title">
+      <DatabaseOutlined className="tree-node-icon tree-node-icon-datasource" />
+      <span className="tree-node-label tree-node-label-strong">{profile.name}</span>
+      <span className="tree-node-meta">{profile.type}</span>
+      <Tooltip title="新建查询">
+        <CodeOutlined
+          className="tree-action"
+          onClick={(event) => {
+            event.stopPropagation();
+            onNewQuery(profile);
+          }}
+        />
+      </Tooltip>
+    </span>
   );
 
-  const treeData: DataNode[] = useMemo(
-    () =>
-      filtered.map((p) => ({
-        key: `${KEY_DS}${p.id}`,
-        title: (
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-            <DatabaseOutlined style={{ color: '#1677ff' }} />
-            <span style={{ fontWeight: 500 }}>{p.name}</span>
-            <span style={{ fontSize: 11, color: '#999' }}>{p.type}</span>
-          </span>
-        ),
-        isLeaf: false,
-      })),
-    [filtered],
-  );
+  useEffect(() => {
+    setTreeData(profiles.map((profile) => ({
+      key: `${KEY_DS}${profile.id}`,
+      searchText: `${profile.name} ${profile.type}`,
+      title: profileTitle(profile),
+      isLeaf: false,
+    })));
+  }, [profiles]);
 
-  const loadNamespaces = async (profile: DataSourceProfile): Promise<DataNode[]> => {
-    const names = await metadataApi.namespaces(profile.id);
-    return names.map((ns) => ({
-      key: `${KEY_NS}${profile.id}:${ns}`,
+  const makeTableNode = (profile: DataSourceProfile, namespace: string, table: TableInfo): WorkspaceDataNode => {
+    const target: OpenTarget = { profile, namespace, table: table.name, type: table.type };
+    return {
+      key: `object:${profile.id}:${encode(namespace)}:${table.type}:${encode(table.name)}`,
+      searchText: `${table.name} ${table.remarks ?? ''}`,
       title: (
-        <span className="tree-node-title" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-          <AppstoreOutlined style={{ color: '#722ed1' }} />
-          <span>{ns}</span>
+        <span className="tree-node-title" onDoubleClick={() => onOpenTable(target)}>
+          {table.type === 'VIEW'
+            ? <EyeOutlined className="tree-node-icon tree-node-icon-view" />
+            : <TableOutlined className="tree-node-icon tree-node-icon-table" />}
+          <span className="tree-node-label">{table.name}</span>
           <Tooltip title="新建查询">
             <CodeOutlined
               className="tree-action"
-              onClick={(e) => {
-                e.stopPropagation();
-                onNewQuery(profile, ns);
+              onClick={(event) => {
+                event.stopPropagation();
+                onNewQuery(profile, namespace, table.name);
               }}
-              style={{ visibility: 'hidden', marginLeft: 'auto', cursor: 'pointer' }}
+            />
+          </Tooltip>
+          <Tooltip title="查看结构">
+            <UnorderedListOutlined
+              className="tree-action"
+              onClick={(event) => {
+                event.stopPropagation();
+                onOpenStructure(target);
+              }}
             />
           </Tooltip>
         </span>
       ),
-      isLeaf: false,
-    }));
+      isLeaf: true,
+    };
   };
 
-  const loadTables = async (profile: DataSourceProfile, ns: string): Promise<DataNode[]> => {
-    const tables = await metadataApi.tables(profile.id, ns);
-    return tables.map((t) => {
-      const target: OpenTarget = { profile, namespace: ns, table: t.name, type: t.type };
-      const isView = t.type === 'VIEW';
-      return {
-        key: `${KEY_TB}${profile.id}:${ns}:${t.name}:${t.type}`,
-        title: (
-          <span
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}
-            onDoubleClick={() => onOpenTable(target)}
-          >
-            {isView ? <EyeOutlined style={{ color: '#13c2c2' }} /> : <TableOutlined style={{ color: '#52c41a' }} />}
-            <span>{t.name}</span>
-            <span
-              className="tree-action"
-              style={{ visibility: 'hidden', marginLeft: 'auto', cursor: 'pointer', fontSize: 11, color: '#1677ff' }}
-              onClick={(e) => {
-                e.stopPropagation();
-                onOpenStructure(target);
-              }}
-            >
-              结构
+  const loadNode = async (node: WorkspaceDataNode) => {
+    const key = String(node.key);
+    try {
+      if (key.startsWith(KEY_DS)) {
+        const profile = profiles.find((item) => item.id === Number(key.slice(KEY_DS.length)));
+        if (!profile) return;
+        const namespaces = await metadataApi.namespaces(profile.id);
+        const children = namespaces.map((namespace): WorkspaceDataNode => ({
+          key: `${KEY_NS}${profile.id}:${encode(namespace)}`,
+          searchText: namespace,
+          title: (
+            <span className="tree-node-title">
+              <AppstoreOutlined className="tree-node-icon tree-node-icon-namespace" />
+              <span className="tree-node-label tree-node-label-strong">{namespace}</span>
+              <Tooltip title="新建查询">
+                <CodeOutlined
+                  className="tree-action"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onNewQuery(profile, namespace);
+                  }}
+                />
+              </Tooltip>
             </span>
-          </span>
-        ),
-        isLeaf: true,
-      };
-    });
+          ),
+          isLeaf: false,
+        }));
+        setTreeData((current) => updateChildren(current, node.key, children));
+        return;
+      }
+
+      if (key.startsWith(KEY_NS)) {
+        const [, datasourceIdText, encodedNamespace] = key.split(':');
+        const profile = profiles.find((item) => item.id === Number(datasourceIdText));
+        if (!profile) return;
+        const namespace = decodeURIComponent(encodedNamespace);
+        const tables = await metadataApi.tables(profile.id, namespace);
+        const makeGroup = (type: 'TABLE' | 'VIEW', label: string, icon: React.ReactNode): WorkspaceDataNode => {
+          const objects = tables.filter((table) => table.type === type);
+          return {
+            key: `${KEY_GROUP}${profile.id}:${encode(namespace)}:${type}`,
+            searchText: label,
+            title: (
+              <span className="tree-node-title">
+                {icon}
+                <span className="tree-node-label">{label}</span>
+                <span className="tree-node-count">{objects.length}</span>
+              </span>
+            ),
+            children: objects.map((table) => makeTableNode(profile, namespace, table)),
+            isLeaf: objects.length === 0,
+          };
+        };
+        setTreeData((current) => updateChildren(current, node.key, [
+          makeGroup('TABLE', '表', <FolderOpenOutlined className="tree-node-icon tree-node-icon-folder" />),
+          makeGroup('VIEW', '视图', <FolderOpenOutlined className="tree-node-icon tree-node-icon-folder" />),
+        ]));
+      }
+    } catch (error) {
+      message.error((error as Error).message);
+      throw error;
+    }
   };
+
+  const handleSelect = (_keys: React.Key[], info: { node: DataNode }) => {
+    const key = String(info.node.key);
+    if (!key.startsWith(KEY_GROUP)) return;
+    const [, datasourceIdText, encodedNamespace, type] = key.split(':');
+    const profile = profiles.find((item) => item.id === Number(datasourceIdText));
+    if (profile && (type === 'TABLE' || type === 'VIEW')) {
+      onOpenObjectList(profile, decodeURIComponent(encodedNamespace), type);
+    }
+  };
+
+  const handleDoubleClick = (event: React.MouseEvent, node: DataNode) => {
+    if ((event.target as HTMLElement).closest('.tree-action') || node.isLeaf) return;
+    const willExpand = !expanded.includes(node.key);
+    setExpanded((current) => (
+      current.includes(node.key)
+        ? current.filter((key) => key !== node.key)
+        : [...current, node.key]
+    ));
+    if (willExpand && !node.children) {
+      void loadNode(node as WorkspaceDataNode);
+    }
+  };
+
+  const displayedTree = useMemo(
+    () => filterNodes(treeData, keyword.trim().toLocaleLowerCase()),
+    [treeData, keyword],
+  );
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div style={{ display: 'flex', gap: 6, paddingBottom: 8 }}>
+    <div className="database-tree-root">
+      <div className="database-tree-toolbar">
         <Input
           size="small"
-          placeholder="搜索数据源"
+          placeholder="搜索已加载的数据库对象"
           allowClear
           value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          prefix={<DatabaseOutlined style={{ color: '#bbb' }} />}
+          onChange={(event) => setKeyword(event.target.value)}
+          prefix={<DatabaseOutlined className="database-tree-search-icon" />}
         />
-        <Tooltip title="重置树（收起并重新懒加载）">
+        <Tooltip title="刷新数据源树">
           <Button
             size="small"
             icon={<ReloadOutlined />}
             onClick={() => {
               setExpanded([]);
-              setTreeVersion((v) => v + 1);
+              setTreeData([]);
               onRefresh();
             }}
           />
         </Tooltip>
       </div>
       {profiles.length === 0 ? (
-        <Empty description="暂无数据源" image={Empty.PRESENTED_IMAGE_SIMPLE} style={{ marginTop: 40 }} />
+        <Empty description="暂无数据源" image={Empty.PRESENTED_IMAGE_SIMPLE} className="database-tree-empty" />
       ) : (
         <Tree
-          key={treeVersion}
           blockNode
-          treeData={treeData}
+          showLine={{ showLeafIcon: false }}
+          treeData={displayedTree}
           expandedKeys={expanded}
-          onExpand={(keys) => setExpanded(keys)}
-          loadData={async (node) => {
-            const key = String(node.key);
-            try {
-              if (key.startsWith(KEY_DS)) {
-                const profile = profiles.find((p) => p.id === Number(key.slice(KEY_DS.length)));
-                if (profile) {
-                  return await loadNamespaces(profile);
-                }
-              } else if (key.startsWith(KEY_NS)) {
-                const rest = key.slice(KEY_NS.length);
-                const dsId = Number(rest.slice(0, rest.indexOf(':')));
-                const ns = rest.slice(rest.indexOf(':') + 1);
-                const profile = profiles.find((p) => p.id === dsId);
-                if (profile) {
-                  return await loadTables(profile, ns);
-                }
-              }
-            } catch (e) {
-              message.error((e as Error).message);
-            }
-          }}
+          onExpand={setExpanded}
+          onDoubleClick={handleDoubleClick}
+          onSelect={handleSelect}
+          loadData={loadNode}
         />
       )}
       <style>{`
-        .tree-node-title:hover .tree-action { visibility: visible !important; }
+        .database-tree-root { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+        .database-tree-toolbar { display: flex; gap: 6px; padding-bottom: 8px; }
+        .database-tree-search-icon { color: #bfbfbf; }
+        .database-tree-empty { margin-top: 40px; }
+        .database-tree-root .ant-tree { min-width: 0; overflow: auto; }
+        .database-tree-root .ant-tree-node-content-wrapper { min-width: 0; flex: 1; overflow: hidden; }
+        .database-tree-root .ant-tree-title { display: block; width: 100%; min-width: 0; }
+        .tree-node-title { display: inline-flex; width: 100%; min-width: 0; align-items: center; gap: 6px; }
+        .tree-node-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .tree-node-label-strong { font-weight: 500; }
+        .tree-node-meta { color: #999; font-size: 11px; }
+        .tree-node-count { margin-left: auto; padding: 0 5px; border-radius: 8px; color: #999; background: #f2f3f5; font-size: 11px; line-height: 16px; }
+        .tree-node-icon { flex: none; }
+        .tree-node-icon-datasource { color: #1677ff; }
+        .tree-node-icon-namespace { color: #6f52c4; }
+        .tree-node-icon-folder { color: #e6a23c; }
+        .tree-node-icon-table { color: #52c41a; }
+        .tree-node-icon-view { color: #13c2c2; }
+        .tree-action { flex: none; visibility: hidden; margin-left: auto; color: #666; cursor: pointer; }
+        .tree-action + .tree-action { margin-left: 0; }
+        .tree-node-title:hover .tree-action { visibility: visible; }
       `}</style>
     </div>
   );

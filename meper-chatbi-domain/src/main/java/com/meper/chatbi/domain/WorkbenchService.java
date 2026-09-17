@@ -39,6 +39,10 @@ public class WorkbenchService {
                                 long durationMs) {
     }
 
+    /** SQL 格式化结果。 */
+    public record FormatResult(String sql) {
+    }
+
     private final DataSourceService dataSources;
     private final SqlClassifier classifier;
     private final JdbcSqlExecutor executor;
@@ -68,6 +72,14 @@ public class WorkbenchService {
                 Map.of("statementCount", statements.size()));
         return new PreviewResult(profile.id(), profile.name(),
                 context.enforcementState(), statements);
+    }
+
+    public FormatResult format(String principal, long datasourceId, String sql) {
+        var profile = dataSources.get(datasourceId);
+        String formatted = classifier.format(profile.type(), sql);
+        audits.insert("default", principal, "WORKBENCH_FORMAT", "DATASOURCE", String.valueOf(datasourceId),
+                Map.of("inputLength", sql.length(), "outputLength", formatted.length()));
+        return new FormatResult(formatted);
     }
 
     public ExecuteResult execute(String principal, long datasourceId, String sql, Integer maxRows) {
