@@ -1,12 +1,27 @@
 # MEPER ChatBI Server：Java 数据库能力架构方案
 
-> 方案草案｜2026-09-15｜依据 `feature/permission-aware-chatbi`、HEAD `8fd3d9bd9` 的当前工作树梳理。当前工作树有未提交改动；本文是能力与目标架构分析，不表示已完成代码迁入或跨数据库验证。
+> 架构方案｜初稿 2026-09-15｜实现状态更新 2026-09-17。Chat2DB 仅作为能力与交互参考；MEPER 已独立实现 P1 连接器、元数据、数据源管理和数据库操作台，后续阶段仍以本文定义的安全边界为准。
 
 ## 1. 结论与产品定位
 
 MEPER ChatBI Server 采用 **Java 服务端作为数据库能力主体**：保留数据库连接、驱动管理、元数据发现、SQL 查询与增删改、事务、DDL/DCL、对象管理、导入导出及方言插件等完整能力目标。B/S 网页、业务系统 API 和 Agent 都通过同一套 Java 领域接口访问能力，不能直接获得 JDBC 连接。
 
 “保留全部能力”指**产品能力目标不主动裁剪**，不等于每个数据库、每种角色或 Agent 默认都能执行所有操作。每个方言要声明支持项；高风险操作由身份、权限、环境、审批和数据库原生权限共同控制。
+
+### 1.1 当前实现基线（2026-09-17）
+
+当前代码已经形成可运行的 P1 纵向链路：
+
+- `connector-spi` 定义 `ExecutionContext`、能力描述、方言和 SQL 执行契约；上下文由服务端工厂签发。
+- `connector-jdbc` 提供 HikariCP 动态池、凭据版本轮换逐出、SQL 执行以及 JDBC 标准元数据读取。
+- MySQL、SQL Server、PostgreSQL、Oracle 方言实现 URL、分页、探活、命名空间布局、系统库过滤和标识符引用；驱动内置，不开放自定义 JAR 上传。
+- 数据源控制面支持登记、测试、能力查询、凭据轮换和删除；凭据使用 AES-256-GCM 加密。
+- 元数据链路支持库/Schema、表/视图、列、主键、索引、表数据分页和精确计数。
+- React 操作台提供懒加载库表树、双击展开、对象列表、表数据、表结构、多标签页和会话状态保持。
+- SQL 工作台提供元数据补全、方言关键字/函数/模板、结构检查、无 WHERE 风险提示、方言格式化、两阶段执行、结果展示和执行历史。
+- 四种方言均有真实数据库 Testcontainers 验证；当前全量构建共 58 个测试。
+
+当前边界也必须明确：策略执法仍为 `BOOTSTRAP_ADMIN_UNRESTRICTED`。现有 SQL 分类、预检和审计是 P2 的插入点，不代表表/字段/行权限已经完成；结构化 DML、事务、DDL/DCL、账号、导入导出与 Agent 仍属于后续阶段。
 
 ## 2. 完整数据库能力目录
 
@@ -29,7 +44,7 @@ MEPER ChatBI Server 采用 **Java 服务端作为数据库能力主体**：保�
 
 ## 3. Java 技术栈与模块划分
 
-第一版建议以 **Java 17、Spring Boot 3.x、Maven 多模块** 为服务端基线。Java 17 与 Spring Boot 3.5 系列兼容；Spring Boot 对 JDBC `DataSource`、连接池和 Spring JDBC 的支持可用于控制库与业务库的连接管理，但业务库动态 SQL、元数据和方言操作仍需保留直接 JDBC/插件能力。[Spring Boot 3.5 系统要求](https://docs.spring.io/spring-boot/3.5/system-requirements.html)、[SQL 数据库指南](https://docs.spring.io/spring-boot/3.5/reference/data/sql.html)、[JDBC Driver 接口](https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Driver.html)。实际依赖版本在新仓库建项时锁定并测试，不机械继承旧 BOM。
+当前实现以 **Java 17、Spring Boot 3.5.16、Maven 多模块** 为服务端基线。Spring Boot 对 JDBC `DataSource`、连接池和 Spring JDBC 的支持用于控制库与业务库连接管理，业务库动态 SQL、元数据和方言操作保留直接 JDBC/方言能力。[Spring Boot 3.5 系统要求](https://docs.spring.io/spring-boot/3.5/system-requirements.html)、[SQL 数据库指南](https://docs.spring.io/spring-boot/3.5/reference/data/sql.html)、[JDBC Driver 接口](https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Driver.html)。依赖版本由根 POM 锁定并通过版本矩阵测试。
 
 ```text
 meper-chatbi-start                  组装、配置、健康检查
@@ -45,7 +60,7 @@ meper-chatbi-start                  组装、配置、健康检查
 └─ meper-chatbi-agent               Agent 定义、Run、工具入口与交付
 ```
 
-模块方向：`web → domain/policy/query`，`domain/query → connector-spi`，`jdbc/dialect → connector-spi`，`storage → domain storage contracts`，`start` 负责装配。接口不返回 HTTP DTO；方言 SQL 不放在 Web/Domain。该方向借鉴当前仓库 [Java 模块边界](../Chat2DB-permission-aware-chatbi/spec/code/server/java-module-boundaries.md)，但 MEPER 应重新命名契约和数据模型，而非保留旧命名空间。
+模块方向：`web → domain/policy/query`，`query → connector-spi`，`domain → connector-spi/connector-jdbc/query-enforcement/control-storage`（装配与仓储，见 [docs/modules/domain.md](./docs/modules/domain.md) §7），`jdbc/dialect → connector-spi`，`storage → connector-spi`，`start` 负责装配。接口不返回 HTTP DTO；方言 SQL 不放在 Web/Domain。该方向借鉴当前仓库 [Java 模块边界](../Chat2DB-permission-aware-chatbi/spec/code/server/java-module-boundaries.md)，但 MEPER 应重新命名契约和数据模型，而非保留旧命名空间。各模块的开发级契约见 [docs/modules/](./docs/modules/README.md)。
 
 ### 存储与连接分离
 

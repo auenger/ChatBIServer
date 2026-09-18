@@ -1,19 +1,21 @@
 # AGENTS.md — AI 协作指南
 
-面向在此仓库工作的 AI 编码代理（Claude Code 等）与人类协作者。改动前请先读本文与两份设计文档。
+面向在此仓库工作的 AI 编码代理（Claude Code 等）与人类协作者。改动前请先读本文、[docs/README.md](./docs/README.md)（文档核心索引）与两份设计文档。
 
 ## 项目是什么
 
 MEPER ChatBI Server：以 Java 服务端为数据库能力主体的 ChatBI 后端。所有数据库访问（网页 / API / Agent）统一走 Java 领域接口，任何入口都不直接持有 JDBC 连接。
 
+- [docs/README.md](./docs/README.md) — **文档核心索引**：全部文档地址、定位与按场景阅读路径（找文档从这里进）
 - [Java数据库能力架构方案.md](./Java数据库能力架构方案.md) — 目标架构（做什么、边界在哪）
 - [Chat2DB-Java能力借鉴实施方案.md](./Chat2DB-Java能力借鉴实施方案.md) — 实施路径（怎么做、怎么验收）
+- [docs/modules/](./docs/modules/README.md) — 模块开发文档：每模块契约/边界/能力矩阵/DoD，按 6 个能力包组织，是「独立拆分开发」的工作界面
 
 Chat2DB 参考源码位于同级目录 `../Chat2DB-permission-aware-chatbi`（只读参考，branch `feature/permission-aware-chatbi`）。
 
 ## 当前阶段与边界
 
-- **P1 核心链路已实现**：connector-spi 契约（ExecutionContext/CapabilityDescriptor/SqlDialect/SqlExecutor）、4 方言（URL/分页/探活/元数据命名空间布局）、HikariCP 池注册表（key = datasourceId + credentialVersion，轮换逐出）、SqlClassifier（Druid 拆分分类）、**JdbcMetadataReader（JDBC 标准元数据：库表树/表结构/表数据分页，MySQL 走 catalog、其余走 schema，系统库按方言过滤）**、数据源管理 + 工作台 + 元数据 API、AES-256-GCM 凭据加密（主密钥 `MEPER_MASTER_KEY` 缺失即拒绝启动）、控制库 Flyway schema（meper_ 前缀 5 表）、React+antd 前端（webapp/：登录/数据源管理/**workspace 库表树+表数据+表结构+查询**/独立工作台）。
+- **P1 核心链路已实现**：connector-spi 契约（ExecutionContext/CapabilityDescriptor/SqlDialect/SqlExecutor）、4 方言（URL/分页/探活/元数据命名空间布局）、HikariCP 池注册表（key = datasourceId + credentialVersion，轮换逐出）、SqlClassifier（Druid 拆分分类 + 方言格式化）、**JdbcMetadataReader（JDBC 标准元数据：库表树/表结构/表数据分页，MySQL 走 catalog、其余走 schema，系统库按方言过滤）**、数据源管理 + 工作台 + 元数据 API、AES-256-GCM 凭据加密（主密钥 `MEPER_MASTER_KEY` 缺失即拒绝启动）、控制库 Flyway schema（meper_ 前缀 5 表）、React+antd 前端（webapp/：登录/数据源管理/**workspace 懒加载库表树、双击展开、对象列表、表数据/结构、多标签页与状态保持、SQL 元数据补全/检查/格式化/两阶段执行**/独立工作台）。
 - **执法状态恒为 BOOTSTRAP_ADMIN_UNRESTRICTED**：阶段 1 无策略约束，响应显式携带该标记；ExecutionContext 只能由 domain 的 ExecutionContextFactory 签发，P2 接入后在 WorkbenchService/DataSourceService 的执行路径插入策略决策，不得在 Controller 层加判断。
 - 尚未迁入任何 Chat2DB 源码；迁入按实施方案 §3 的阶段推进，不要跳阶段引入半成品能力。
 - **首批目标数据库已定（2026-09-15，2026-09-16 补版本矩阵）**：MySQL 5.7/8.4.x、SQL Server 2019/2022、PostgreSQL 16、Oracle 19c/23ai。JDBC 驱动内置在对应 dialect 模块（版本：mysql-connector-j / mssql-jdbc / postgresql 由 Spring Boot BOM 管理，ojdbc17 由根 pom `ojdbc.version` 锁定）；**不做自定义驱动 JAR 上传**，若未来引入必须先满足实施方案 §4 的驱动来源/校验/隔离要求。
@@ -48,10 +50,10 @@ mvn -B -ntp spring-boot:run -pl meper-chatbi-start
 | meper-chatbi-dialect-sqlserver | SQL Server 方言 + 内置 mssql-jdbc | connector-spi |
 | meper-chatbi-dialect-postgresql | PostgreSQL 方言 + 内置驱动 | connector-spi |
 | meper-chatbi-dialect-oracle | Oracle 方言 + 内置 ojdbc17 | connector-spi |
-| meper-chatbi-policy | 身份映射、表/字段/行/操作策略、审批 | （暂无内部依赖） |
+| meper-chatbi-policy | 身份映射、表/字段/行/操作策略、审批 | control-storage（仓储，P2 起；已决策放开，见 policy.md §7） |
 | meper-chatbi-query-enforcement | SQL/对象操作分类、权限校验、结果治理 | connector-spi |
-| meper-chatbi-domain | 数据源、对象操作、任务、Agent、Wiki 工作流 | connector-spi |
-| meper-chatbi-control-storage | Repository、配置版本、审计与任务存储 | （暂无内部依赖） |
+| meper-chatbi-domain | 数据源、对象操作、任务、Agent、Wiki 工作流 | connector-spi、connector-jdbc、query-enforcement、control-storage（装配与仓储；DomainConfig 装配连接器/分类器实现，见 domain.md §7） |
+| meper-chatbi-control-storage | Repository、配置版本、审计与任务存储 | connector-spi（ExecutionRecord 关联 ExecutionContext） |
 | meper-chatbi-session-wiki | 授权语义目录、有限会话历史 | （暂无内部依赖） |
 | meper-chatbi-agent | Agent 定义、Run、工具入口与交付 | （暂无内部依赖） |
 | meper-chatbi-web | B/S API、Trusted API、MCP 适配 | domain、policy、query-enforcement |
@@ -67,7 +69,7 @@ mvn -B -ntp spring-boot:run -pl meper-chatbi-start
 ## 关键工程约束（迁移 Chat2DB 代码前必读）
 
 1. **无隐式请求状态**：不用 `ThreadLocal` 传递身份/权限/连接；统一显式 `ExecutionContext`（服务端生成，前端不可自填授权）。
-2. **权限默认拒绝**：MEPER 语义为"空字段列表 = 拒绝"，与 Chat2DB"空列表 = 全部可读"不同；策略语义变更必须版本化，历史策略迁入前显式转换。
+2. **权限默认拒绝**：MEPER 语义为"空字段列表 = 拒绝"，与 Chat2DB"空列表 = 全部可读"不同；策略语义变更必须版本化，历史策略迁入前显式转换。内置超级管理员（P2 随迁移 seed）可跳过策略决策用于测试与应急，但短路必须在 `PolicyDecisionService` 内部实现并照常审计（`SUPER_ADMIN_BYPASS`），不得另开免检执行路径。
 3. **禁止 SSL 失败自动退化**：不得在连接失败后补 `useSSL=false` 重试；TLS 由管理员显式配置，失败保留原错误。
 4. **凭据安全**：凭据不进日志与审计；控制库只存 `CredentialRef`，不存明文口令；撤权/轮换后不得复用旧连接。
 5. **能力逐方言探测**：不因接口存在而宣称支持；不支持显式返回 UNSUPPORTED。

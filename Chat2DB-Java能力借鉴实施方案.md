@@ -1,6 +1,24 @@
 # Chat2DB Java 能力借鉴实施方案（MEPER ChatBI Server）
 
-> 计划草案｜2026-09-15｜目标：保留现有 Java 数据库能力，并把它们改造成受权限控制的独立 B/S 服务。总体架构见 [Java数据库能力架构方案.md](./Java数据库能力架构方案.md)。
+> 实施方案｜初稿 2026-09-15｜状态更新 2026-09-17。目标：保留 Java 数据库能力，并把它们改造成受权限控制的独立 B/S 服务。总体架构见 [Java数据库能力架构方案.md](./Java数据库能力架构方案.md)。
+
+## 0. 当前实施状态
+
+P1 核心链路已经完成，并提前交付了支撑人工验证所需的元数据和 SQL 操作台：
+
+| 范围 | 当前实现 |
+| --- | --- |
+| 连接器合同 | `ExecutionContext`、`CapabilityDescriptor`、`SqlDialect`、`SqlExecutor`；Web 不直接依赖 JDBC |
+| 方言与驱动 | MySQL 5.7/8.4.x、SQL Server 2019/2022、PostgreSQL 16、Oracle 19c/23ai；驱动内置 |
+| 数据源 | 登记、列表、详情、删除、连通测试、能力查询、凭据轮换、AES-256-GCM 加密 |
+| 连接池 | HikariCP 动态池，键为 `datasourceId + credentialVersion`，轮换后逐出旧连接 |
+| 元数据 | 库/Schema、表/视图、列、主键、索引、表数据分页与总数；按方言过滤系统库 |
+| 操作台 | 懒加载库表树、双击展开、对象列表、表数据、表结构、多标签页、菜单切换状态保持 |
+| SQL 编辑 | 元数据/别名补全、方言关键字和函数、SQL 模板、结构错误标记、无 WHERE 风险提醒、方言格式化 |
+| SQL 执行 | `preview → confirm → execute`、多语句分类、结果集、最大行数、执行历史和审计 |
+| 验证 | `mvn -B -ntp package` 58 个测试；四方言 Testcontainers 矩阵；前端生产构建和真实浏览器链路验证 |
+
+当前仍是引导管理员阶段，响应显式返回 `BOOTSTRAP_ADMIN_UNRESTRICTED`。P2 必须在 `WorkbenchService` / `DataSourceService` 的执行路径接入策略决策，不得把 Controller 判断或前端提示当作权限边界。
 
 ## 1. 源码借鉴清单与处理方式
 
@@ -55,7 +73,7 @@ interface ExportImportService { TaskRun submit(ExecutionContext context, Transfe
 | 阶段 | 主要工作 | 完成条件 |
 | --- | --- | --- |
 | G0：盘点 | 完成源码/第三方组件清单、目标数据库与能力矩阵、旧语义差异表 | 迁入范围有明确清单；无秘密或生产数据复制 |
-| P1：Java 连接器内核 | 新 Maven reactor、Connector SPI、Driver Registry、DataSource/Secret、池、SSL/SSH、连通测试 | 凭据不泄露；池按租户/访问角色/凭据版本隔离；轮换与驱动卸载可测试 |
+| **P1：Java 连接器内核 ✅** | Maven reactor、Connector SPI、DataSource/Secret、内置驱动、池、连通测试；提前交付元数据与基础工作台 | 凭据加密且不回显；池按数据源/凭据版本隔离；轮换逐出已验证；四方言版本矩阵已运行 |
 | P2：查询和权限 | 元数据过滤、身份模型、权限域、表/字段/行策略、SQL 分类与受控查询 | 网页/API/Agent 无执行旁路；撤权与策略版本变化拒绝交付；分页/取消/超时生效 |
 | P3：数据增删改 | INSERT/UPDATE/DELETE、批量编辑、事务、幂等、行/列写权限与审批 | 可重复测试提交/回滚；部分失败有明确语义；Agent 不因工具存在而自动获得写权限 |
 | P4：对象与账号全能力 | DDL/DCL、库/Schema/表/视图、例程、账号、迁移、导入导出与管理员高级 SQL 脚本 | 方言能力探测准确；逐语句授权、变更计划、审批、审计、可恢复演练完成 |
@@ -80,6 +98,7 @@ interface ExportImportService { TaskRun submit(ExecutionContext context, Transfe
 
 - 数据源控制面：`POST /api/datasources`、`POST /api/datasources/{id}/test`、`GET /api/datasources/{id}/capabilities`、驱动注册/退役与凭据轮换。
 - 人类数据库工作台：保留原始 SQL 和多语句脚本能力，但查询/变更请求统一为 `preview → approve（如需要）→ execute → status`，逐语句分类和授权；不得再提供无权限检查的直通 SQL URL。
+- 当前操作台 API：元数据使用 `/api/datasources/{id}/metadata/*`；SQL 使用 `/api/workbench/preview`、`/format`、`/execute` 和 `/executions`。格式化不连接业务库；SQL 修改会使旧预检失效。
 - 用户权限配置：身份模型、权限域、真实主体目录、表字段矩阵、策略预检、草稿/发布/停用、有效权限模拟。
 - Agent 工具：`wiki_find`、`inspect_table`、`query` 及受控的 `propose_mutation`/`propose_object_change`；Agent 提案不等于执行许可。
 - 审计：记录身份、资源、操作类别、方言、策略版本、审批、事务结果与交付状态；日志不记录密码、Token 或完整敏感结果。
@@ -93,13 +112,13 @@ interface ExportImportService { TaskRun submit(ExecutionContext context, Transfe
 - **安全回归**：跨租户池复用、撤权后连接与结果、Agent 直连旁路、隐藏列/WHERE 字段、JOIN/CTE/子查询行规则、长任务取消、过期结果交付。
 - **部署验证**：B/S 服务与 Worker 的监听和控制库隔离、资源上限、健康检查、审计链；不以纯 shell 检查冒充真实数据库操作测试。
 
-本文创建时没有执行 Maven/Yarn、数据库写入或任何迁入验证。后续每阶段应记录执行的测试命令、非零测试数、方言覆盖和仍未验证的数据库版本。
+当前 P1 已执行 `mvn -B -ntp package`（58 个测试）、前端生产构建和浏览器真实链路验证。方言矩阵覆盖 MySQL 5.7/8.4.x、SQL Server 2019/2022、PostgreSQL 16、Oracle 23ai；Oracle 19c 仍需调用方提供官方镜像。后续每阶段继续记录测试命令、非零测试数、方言覆盖和仍未验证的数据库版本。
 
 ## 7. 下一步最小可执行工作包
 
-1. ~~选第一批目标数据库~~ 已定：MySQL 5.7/8.4.x、SQL Server 2019/2022、PostgreSQL 16、Oracle 19c/23ai；驱动内置、测试用 Testcontainers + Docker（2026-09-15/16）。待办：冻结完整操作矩阵与风险级别（连接/查询/写入/DDL/账号逐格）。
-2. 创建 Java 17 / Spring Boot 3.x / Maven 模块骨架，只定义 MEPER 契约与测试夹具。
-3. 逐项改造迁入现有源码，按 MEPER 合同补齐测试。
-4. 先打通“可信身份 → 表字段权限 → JDBC 查询/写入 → 审计”，再逐步启用 DDL/DCL 与 Agent 提案。
+1. ~~完成 P1 模块骨架、四方言、数据源、连接池、凭据安全、元数据和基础操作台。~~
+2. 冻结 P2 查询操作矩阵和风险级别，定义身份、权限域、策略版本及默认拒绝语义。
+3. 在领域执行路径打通“可信身份 → 表/字段/行策略 → JDBC 查询 → 结果治理 → 审计”，补撤权和跨租户测试。
+4. 完成分页/超时/取消语义后，再进入结构化 DML、事务、审批、DDL/DCL 与 Agent 提案。
 
 **本方案目标是尽量保留 Java 数据库能力，不承诺直接复制旧模块就能安全上线。**
