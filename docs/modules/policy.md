@@ -109,6 +109,11 @@ record TableDecision(
 2. **同表多策略叠加语义**：按 §3.1「allow 取并、约束取最严」执行；该语义锁定于 `POLICY_CONTRACT_VERSION "1"`，后续变更须升版并写迁移转换。
 3. **超级管理员**：默认存在（V2 迁移 seed），可跳过策略决策用于测试与应急（§3 判定规则 0）。实现红线：短路在决策接口内部完成、审计照常携带 `SUPER_ADMIN_BYPASS`，不得另开免检执行路径；P1 引导管理员的凭据机制迁移为超级管理员初始凭据。
 
+**2026-09-21 补充（P2 实施计划评审通过，详见 [../plans/p2-permission-implementation-plan.md](../plans/p2-permission-implementation-plan.md) §10）**：
+
+4. **权限域命名空间支持 `'*'` 通配**：一条权限域授权数据源全部命名空间（显式授权，不违反默认拒绝）；决策时精确匹配优先，`'*'` 兜底。
+5. **密码哈希 bcrypt**（`spring-security-crypto` 单依赖）：`PasswordHashService` 落 control-storage，`IdentityAuthService` 消费；超级管理员初始凭据随 V2 seed 写入。
+
 ## 8. 完成定义（DoD）
 
 - §3 契约冻结并升版记录；决策内核全覆盖单测（§6 清单）；

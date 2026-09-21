@@ -42,7 +42,8 @@ B/S API 层：把领域服务暴露为 REST API。**禁止**：依赖 connector-
 - 超级管理员：内置身份随 V2 迁移 seed（初始凭据复用 `MEPER_BOOTSTRAP_ADMIN_PASSWORD` 式环境变量机制）；其请求照常走决策短路与审计（`SUPER_ADMIN_BYPASS`），**web 层不做任何免检特殊分支**；
 - 身份管理 API：`/api/identities` CRUD、角色分配；
 - 策略管理 API：权限域/资源策略的草稿-发布-停用、有效权限**模拟预检**（干跑 `PolicyDecisionService`）、审批列表/通过/驳回；
-- 管理 API 自身的访问控制：P2 以 `admin` 角色拦截（Interceptor 层做**角色**检查是会话语义，不是资源授权；资源授权仍在决策层）。
+- 管理 API 自身的访问控制：P2 以 `admin` 角色拦截（Interceptor 层做**角色**检查是会话语义，不是资源授权；资源授权仍在决策层）；
+- 管理前端页面：**延后 P2.5**，P2 只交付管理 API（2026-09-21 决策，见 [../plans/p2-permission-implementation-plan.md](../plans/p2-permission-implementation-plan.md) §10）。
 
 ## 5. 演进（其余能力包）
 

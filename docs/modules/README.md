@@ -71,7 +71,7 @@ P4（DDL/DCL/账号/例程/导入导出）不设独立能力包文档，其契�
 
 模块间只通过「模块文档 §2/§3 定义的契约」交接。契约一旦冻结，双方即可并行：
 
-**P2 权限建模线（建议时序）**：
+**P2 权限建模线（建议时序；单线实施顺序见 [../plans/p2-permission-implementation-plan.md](../plans/p2-permission-implementation-plan.md)，已评审 2026-09-21）**：
 
 1. **冻结决策契约**：评审 [policy.md](./policy.md) §3 的 `PolicyDecisionService` / `DecisionQuery` / `TableDecision`。三个方向性决策已于 2026-09-18 确认（policy→control-storage 放开、多策略「allow 取并/约束取最严」、内置超级管理员短路，见 policy.md §7），契约定型（contractVersion 锁定）后即可并行。
 2. 并行三条线：

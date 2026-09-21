@@ -47,6 +47,8 @@ enum Resolution { RESOLVED, UNRESOLVED }        // UNRESOLVED = 无法可靠解�
 
 行规则落地策略（P2）：单表 SELECT 且 rowFilter 可安全实例化 → 改写注入 `WHERE`；其余情况（JOIN 多行规则、表达式含不支持构造）**拒绝执行**，不做静默放行。
 
+脚本级语义（2026-09-21 决策，P2 实施计划 §10）：任一语句被拒即**失败即停**（与执行器失败语义一致），响应携带三类拒绝语义明细，后续语句不再执行。
+
 ### 3.3 结果治理（ResultGovernance）
 - 列裁剪：结果集列与 `allowedColumns` 求交（防御性二次裁剪，不只靠改写）；
 - 脱敏：`maskedColumns` 按策略脱敏（P2 内置占位脱敏，如 `***`；格式化脱敏规则后续版本化）；
