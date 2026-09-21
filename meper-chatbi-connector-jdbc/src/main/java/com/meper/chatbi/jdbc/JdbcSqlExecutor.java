@@ -20,7 +20,8 @@ import java.util.function.Consumer;
 
 /**
  * JDBC SQL 执行器（补齐 Chat2DB DefaultSQLExecutor 的缺口）：
- * 逐语句 queryTimeout、maxRows 硬截断、单元格/列数限额、语句级失败即停止。
+ * 逐语句 queryTimeout、驱动层限行（setMaxRows，防止全结果集物化进 JVM 内存）、
+ * 读取循环截断（安全网 + rowsTruncated 标记）、单元格/列数限额、语句级失败即停止。
  *
  * <p>阶段 1 为逐语句 autocommit；错误摘要返回给调用方（完整异常进日志由上层处理）。
  */
@@ -62,6 +63,10 @@ public class JdbcSqlExecutor implements SqlExecutor {
                 cancelHook.accept(stmt);
             }
             stmt.setQueryTimeout(limits.queryTimeoutSeconds());
+            // 驱动层限行：多读 1 行作截断探测。MySQL 等驱动默认非流式——不设 maxRows 会把整个结果集
+            // 物化进 JVM 内存（只显示前 N 行也照常 OOM）；此设置让驱动最多传输 maxRows+1 行。
+            // 截断判定改由 readData 的探测行完成（读满限额仍有数据 = 截断）。
+            stmt.setMaxRows(limits.maxRows() + 1);
             boolean hasResultSet = stmt.execute(analyzed.sql());
             if (hasResultSet) {
                 try (ResultSet rs = stmt.getResultSet()) {
@@ -112,7 +117,9 @@ public class JdbcSqlExecutor implements SqlExecutor {
         List<List<String>> rows = new ArrayList<>();
         boolean rowsTruncated = false;
         while (rs.next()) {
-            if (rows.size() >= limits.maxRows()) {
+            if (rows.size() == limits.maxRows()) {
+                // 探测行：驱动层限行为 maxRows+1，读满限额仍取到数据即证明有更多行被截断；
+                // 恰好等于限额且无更多数据时不标记（该行不会进入本分支）
                 rowsTruncated = true;
                 break;
             }

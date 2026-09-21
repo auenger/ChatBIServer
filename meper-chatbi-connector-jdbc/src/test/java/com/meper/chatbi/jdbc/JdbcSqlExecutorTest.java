@@ -93,6 +93,21 @@ class JdbcSqlExecutorTest {
     }
 
     @Test
+    void noTruncationFlagWhenRowsWithinOrAtLimit() {
+        exec("INSERT INTO t (name) VALUES ('probe1'),('probe2')");
+        // 行数少于限额：不标记截断
+        var under = run("SELECT id FROM t WHERE name IN ('probe1','probe2') ORDER BY id",
+                new ExecutionLimits(10, 30, 4000, 10)).statement;
+        assertEquals(2, under.resultData().rows().size());
+        assertFalse(under.resultData().rowsTruncated());
+        // 行数恰好等于限额：不算截断（探测行判定——驱动限行为限额+1，无第 N+1 行即无截断）
+        var exact = run("SELECT id FROM t WHERE name IN ('probe1','probe2') ORDER BY id",
+                new ExecutionLimits(2, 30, 4000, 10)).statement;
+        assertEquals(2, exact.resultData().rows().size());
+        assertFalse(exact.resultData().rowsTruncated());
+    }
+
+    @Test
     void dmlReportsUpdateCount() {
         StatementResult s = run("UPDATE t SET name = 'upd' WHERE name = 'upd'", ExecutionLimits.DEFAULTS).statement;
         assertFalse(s.query());

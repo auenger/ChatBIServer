@@ -37,7 +37,7 @@ JDBC 标准元数据读取，全部经方言适配：
 | 表数据 | 方言 `paginate` 分页 + 精确总数；带 `ExecutionLimits`（超时/最大行/列/单元格截断） |
 
 ### 2.5 `JdbcSqlExecutor`
-`SqlExecutor` 实现：逐语句执行 `AnalyzedStatement`，逐语句 `queryTimeout` 与 `maxRows` 硬截断；单元格字符与列数限额；语句级失败即停止；错误信息摘要脱敏；`cancelHook` 接收当前 `Statement` 供外部取消（当前传 null，异步化属 P3）；逐语句 autocommit。
+`SqlExecutor` 实现：逐语句执行 `AnalyzedStatement`，逐语句 `queryTimeout` 与**两层限行**——驱动层 `setMaxRows(maxRows+1)`（防止驱动把全结果集物化进 JVM 内存，MySQL 默认非流式；多读 1 行作截断探测）+ 读取循环截断（安全网，`rowsTruncated` 由探测行判定：读满限额仍有数据才标记，恰好等于限额不标记）；单元格字符与列数限额；语句级失败即停止；错误信息摘要脱敏；`cancelHook` 接收当前 `Statement` 供外部取消（当前传 null，异步化属 P3）；逐语句 autocommit。
 
 ## 3. 依赖的模块契约
 
