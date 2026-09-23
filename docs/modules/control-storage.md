@@ -44,7 +44,7 @@ AES-256-GCM 加解密；主密钥来自环境变量 `MEPER_MASTER_KEY`，**缺�
 
 > 冻结前提：[policy.md](./policy.md) §3 的模型与决策契约。字段清单以 policy.md 为准，本节只定模块侧交付。
 
-- `V2__permission_model.sql`（暂名）：身份表、角色/身份-角色映射、权限域、资源策略（含 revision / status DRAFT-PUBLISHED-DISABLED）、策略发布快照、审批单；
+- `V6__permission_model.sql`（暂名）：身份表、角色/身份-角色映射、权限域、资源策略（含 revision / status DRAFT-PUBLISHED-DISABLED）、策略发布快照、审批单（含 `via_agent` 预留列）；**V2 被 0.1 模型配置表 `V2__model_provider.sql`、V3 被对话消息表 `V3__chat_session.sql`（`meper_chat_message`，会话持久化 + subject 隔离 + seq 懒加载分页）占用**（见 [../plans/p01-agent-chat-mvp.md](../plans/p01-agent-chat-mvp.md)）；
 - 密码哈希：`PasswordHashService`（bcrypt，`spring-security-crypto` 单依赖；2026-09-21 决策，见 [../plans/p2-permission-implementation-plan.md](../plans/p2-permission-implementation-plan.md) §10）；
 - 对应 Repository：身份、权限域、策略草稿/发布/停用、快照读取（按 revision）、审批；
 - 仓储测试：空字段语义（默认拒绝下的存储形态）、revision 单调、草稿不可被决策读取；

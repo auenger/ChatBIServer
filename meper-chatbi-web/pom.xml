@@ -33,6 +33,10 @@
     </dependency>
     <dependency>
       <groupId>com.meper</groupId>
+      <artifactId>meper-chatbi-agent</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.meper</groupId>
       <artifactId>meper-chatbi-query-enforcement</artifactId>
     </dependency>
     <dependency>

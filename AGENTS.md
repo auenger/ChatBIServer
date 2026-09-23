@@ -17,6 +17,7 @@ Chat2DB 参考源码位于同级目录 `../Chat2DB-permission-aware-chatbi`（�
 
 - **P1 核心链路已实现**：connector-spi 契约（ExecutionContext/CapabilityDescriptor/SqlDialect/SqlExecutor）、4 方言（URL/分页/探活/元数据命名空间布局）、HikariCP 池注册表（key = datasourceId + credentialVersion，轮换逐出）、SqlClassifier（Druid 拆分分类 + 方言格式化）、**JdbcMetadataReader（JDBC 标准元数据：库表树/表结构/表数据分页，MySQL 走 catalog、其余走 schema，系统库按方言过滤）**、数据源管理 + 工作台 + 元数据 API、AES-256-GCM 凭据加密（主密钥 `MEPER_MASTER_KEY` 缺失即拒绝启动）、控制库 Flyway schema（meper_ 前缀 5 表）、React+antd 前端（webapp/：登录/数据源管理/**workspace 懒加载库表树、双击展开、对象列表、表数据/结构、多标签页与状态保持、SQL 元数据补全/检查/格式化/两阶段执行**/独立工作台）。
 - **执法状态恒为 BOOTSTRAP_ADMIN_UNRESTRICTED**：阶段 1 无策略约束，响应显式携带该标记；ExecutionContext 只能由 domain 的 ExecutionContextFactory 签发，P2 接入后在 WorkbenchService/DataSourceService 的执行路径插入策略决策，不得在 Controller 层加判断。
+- **0.1 Agent chat MVP 开发中（2026-09-23 起，见 docs/plans/p01-agent-chat-mvp.md）**：Spring AI 1.1.8（Boot 3 兼容线）引入 agent 模块 `gateway` 子包——**spring-ai 类型不得出现在其他模块**（静态约束）；starter 自动配置以 `spring.ai.model.chat=none` 关闭，ChatModel 由 `ModelGateway` 按 provider 配置手动构建（启动期零 apiKey 依赖）；模型配置存控制库 `V2__model_provider.sql`，apiKey AES-256-GCM 加密、API/日志不回显；`execute_query` 工具经 `WorkbenchService` 执行（SELECT-only + maxRows 200），agent 不持有 JDBC。
 - 尚未迁入任何 Chat2DB 源码；迁入按实施方案 §3 的阶段推进，不要跳阶段引入半成品能力。
 - **首批目标数据库已定（2026-09-15，2026-09-16 补版本矩阵）**：MySQL 5.7/8.4.x、SQL Server 2019/2022、PostgreSQL 16、Oracle 19c/23ai。JDBC 驱动内置在对应 dialect 模块（版本：mysql-connector-j / mssql-jdbc / postgresql 由 Spring Boot BOM 管理，ojdbc17 由根 pom `ojdbc.version` 锁定）；**不做自定义驱动 JAR 上传**，若未来引入必须先满足实施方案 §4 的驱动来源/校验/隔离要求。
 - **MySQL 5.7 + mysql-connector-j 9.7.0**：官方不再声明支持 5.7，但实测连通正常（Testcontainers 验证）。方言实现里不得因此使用 5.7 独有行为；若发现协议级问题，降级驱动到 8.0.33。
@@ -55,8 +56,8 @@ mvn -B -ntp spring-boot:run -pl meper-chatbi-start
 | meper-chatbi-domain | 数据源、对象操作、任务、Agent、Wiki 工作流 | connector-spi、connector-jdbc、query-enforcement、control-storage（装配与仓储；DomainConfig 装配连接器/分类器实现，见 domain.md §7） |
 | meper-chatbi-control-storage | Repository、配置版本、审计与任务存储 | connector-spi（ExecutionRecord 关联 ExecutionContext） |
 | meper-chatbi-session-wiki | 授权语义目录、有限会话历史 | （暂无内部依赖） |
-| meper-chatbi-agent | Agent 定义、Run、工具入口与交付 | （暂无内部依赖） |
-| meper-chatbi-web | B/S API、Trusted API、MCP 适配 | domain、policy、query-enforcement |
+| meper-chatbi-agent | Agent 定义、Run、工具入口与交付 | control-storage（模型 provider 配置仓储，0.1 起）；P5 起按 agent.md §3 扩展 |
+| meper-chatbi-web | B/S API、Trusted API、MCP 适配 | domain、policy、query-enforcement、agent（0.1 起：模型配置/chat API） |
 | meper-chatbi-start | 装配、配置、健康检查 | 全部模块 |
 
 禁止（静态合同检查项，实施方案 §6）：

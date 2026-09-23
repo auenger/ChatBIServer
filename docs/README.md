@@ -7,7 +7,7 @@
 | 项 | 状态 |
 | --- | --- |
 | 项目定位 | 以 Java 服务端为数据库能力主体的 ChatBI 后端；任何入口不直接持有 JDBC 连接 |
-| 当前进度 | **P1 完成**（连接器内核 + 基本数据库操作 + 操作台前端）；P2 实施计划已评审（2026-09-21），待开工 |
+| 当前进度 | **P1 完成**；P2 计划已评审；**0.1 Agent chat MVP 开发中**（chat+NL2SQL+执行，Spring AI） |
 | 执法状态 | `BOOTSTRAP_ADMIN_UNRESTRICTED`（阶段 1 无策略约束，响应显式携带） |
 | 工程规模 | 15 个 Maven 模块 + React 前端（webapp/）；`mvn -B -ntp package` 全绿（58 个测试） |
 | 目标数据库 | MySQL 5.7/8.4.x · SQL Server 2019/2022 · PostgreSQL 16 · Oracle 19c/23ai（Testcontainers 矩阵） |
@@ -24,8 +24,9 @@
 | AI 协作指南 | [../AGENTS.md](../AGENTS.md) | 模块地图与依赖硬规则、7 条关键工程约束、迁入规则、完成定义 | **AI 代理改动代码前必读** |
 | 目标架构 | [../Java数据库能力架构方案.md](../Java数据库能力架构方案.md) | 能力目录（12 域）、统一操作管线、权限模型、模块划分 —— 回答「为什么这样设计、边界在哪」 | 做设计决策 / 评审时 |
 | 实施方案 | [../Chat2DB-Java能力借鉴实施方案.md](../Chat2DB-Java能力借鉴实施方案.md) | 阶段计划 G0→P6 与完成条件、必须改造的风险清单、验证计划 —— 回答「怎么做、怎么验收」 | 排阶段计划 / 验收时 |
-| **P2 实施计划** | [plans/p2-permission-implementation-plan.md](./plans/p2-permission-implementation-plan.md) | P2 权限建模 8 批次落地：类清单、V2 表 DDL、测试矩阵、行为翻转点、已决策记录（§10） | **开发 P2 前必读**（已评审 2026-09-21，可开工） |
+| **P2 实施计划** | [plans/p2-permission-implementation-plan.md](./plans/p2-permission-implementation-plan.md) | P2 权限建模 8 批次落地：类清单、V5 表 DDL、测试矩阵、行为翻转点、已决策记录（§10） | **开发 P2 前必读**（已评审 2026-09-21，可开工） |
 | **P5 Agent 设计** | [plans/p5-agent-design.md](./plans/p5-agent-design.md) | 内置编排 Agent 定稿：Spring AI + OpenAI/Anthropic 双协议网关、AgentTool SPI、五层权限交集、SSE 交付、落地批次 | 开发 P5 Agent 前必读（设计定稿 2026-09-23，实现待 P2/P3） |
+| **0.1 Agent chat MVP** | [plans/p01-agent-chat-mvp.md](./plans/p01-agent-chat-mvp.md) | 最小闭环：模型配置页（双协议）+ chat SSE + 3 工具 + SELECT 自动执行/非 SELECT 回显；占用 V2 迁移（P2 顺延 V3） | **当前开发重点**（2026-09-23 确认） |
 
 ### 1.2 模块开发文档（`docs/modules/`，独立拆分开发的工作界面）
 
@@ -51,7 +52,7 @@
 | 位置 | 内容 |
 | --- | --- |
 | 各模块 `package-info.java` | 模块约束声明，改模块行为时与模块文档**同步更新** |
-| `meper-chatbi-control-storage/src/main/resources/db/migration/` | Flyway schema（V1 运行表；P2 增 V2 策略表，只增不改） |
+| `meper-chatbi-control-storage/src/main/resources/db/migration/` | Flyway schema（V1 运行表；V2 模型 provider 配置、V3 对话消息（0.1）；P2 开工时增 V6 策略表，只增不改） |
 
 ## 2. 按场景的阅读路径
 

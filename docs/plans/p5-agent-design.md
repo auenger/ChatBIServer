@@ -126,7 +126,7 @@ tool_result 一律脱敏后输出；交付写 AGENT_DELIVER 审计
 
 | # | 批次 | 交付 | 前置 |
 | --- | --- | --- | --- |
-| 1 | 模型网关 | `meper_model_provider` 表 + 加密凭据 + `ModelGateway`（Spring AI 封装，双协议） | 无 |
+| 1 | 模型网关 | `meper_model_provider` 表 + 加密凭据 + `ModelGateway`（Spring AI 封装，双协议）——**已由 0.1 Agent chat MVP 提前交付**（[p01-agent-chat-mvp.md](./p01-agent-chat-mvp.md)） | 无 |
 | 2 | 工具与执法接入 | `AgentTool` SPI + `inspect_table`/`query`（复用 P2 管线）+ 暴露面收窄 | **P2** |
 | 3 | Run 循环 | `AgentRunService` 状态机 + SSE + 预算 + Run 存储 | 批次 1/2 |
 | 4 | 完整工具面 | `wiki_find`（P5 wiki）+ `propose_*`（P3 审批）+ 全链路审计 | 批次 3 + **P3** |

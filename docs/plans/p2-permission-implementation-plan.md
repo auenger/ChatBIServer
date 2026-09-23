@@ -18,7 +18,7 @@
 | # | 批次 | 模块 | 关键交付 | 验收 |
 | --- | --- | --- | --- | --- |
 | 1 | 决策契约落码 | policy、query-enforcement | `PolicyDecisionService` / `DecisionQuery` / `TableDecision` / `TableOperation` | 编译全绿，无行为变更 |
-| 2 | V2 存储迁移 | control-storage | `V2__permission_model.sql`（7 表）+ 5 个 Repository + 哈希服务 | 迁移测试 + 仓储单测 |
+| 2 | V6 存储迁移 | control-storage | `V6__permission_model.sql`（7 表）+ 5 个 Repository + 哈希服务 | 迁移测试 + 仓储单测 |
 | 3 | 决策内核 | policy | `PolicyDecisionServiceImpl`（默认拒绝 4 规则 + §3.1 叠加 6 规则 + 超管短路）+ `IdentityAuthService` | policy.md §6 清单全覆盖单测 |
 | 4 | 身份登录改造 | web | 登录走 identity 表 + 超管 seed + 会话携带角色 | 行为兼容：admin 原账号密码可登录 |
 | 5 | 执法管线 | query-enforcement | `StatementResolver` / `EnforcementPipeline` / `ResultGovernance` / `MetadataFilter` | query-enforcement.md §5 清单单测（mock 决策） |
@@ -59,9 +59,9 @@ public record TableDecision(
 
 **验收**：全量构建全绿；现有行为零变化。
 
-## 3. 批次 2：V2 存储迁移
+## 3. 批次 2：V6 存储迁移
 
-**`V2__permission_model.sql`**（沿用 V1 风格：utf8mb4、DATETIME(6)、显式约束命名；tenant_id 统一预留，阶段 1 恒 `default`）：
+**`V6__permission_model.sql`**（沿用 V1 风格：utf8mb4、DATETIME(6)、显式约束命名；tenant_id 统一预留，阶段 1 恒 `default`；**V2 被 0.1 模型配置表、V3 被对话消息表占用**，见 [p01-agent-chat-mvp.md](./p01-agent-chat-mvp.md)）：
 
 ```sql
 -- 身份
@@ -315,6 +315,7 @@ CREATE TABLE meper_operation_approval (
 | 6 | TokenStore 会话 | **维持内存**（评审未提异议，按建议执行）；多实例前再评估持久会话 |
 | 7 | 元数据过滤决策开销 | 请求内缓存（评审未提异议，按建议执行）；跨请求缓存留后续 |
 | 8 | Agent 技术栈（2026-09-23 补充） | **Spring AI** 内置编排 + 模型网关兼容 OpenAI 兼容/Anthropic 双协议；`meper_operation_approval` 预留 `via_agent` 列（详见 [p5-agent-design.md](./p5-agent-design.md) §8） |
+| 9 | 迁移序号顺延（2026-09-23 补充） | 0.1 Agent chat MVP 占用 `V2__model_provider.sql`（模型 provider 配置表）；本计划权限模型迁移为 **`V3__permission_model.sql`**（详见 [p01-agent-chat-mvp.md](./p01-agent-chat-mvp.md)） |
 
 P1.x 前置补丁已完成（2026-09-21，提交 `861925e`）：`JdbcSqlExecutor` 驱动层限行（`setMaxRows(maxRows+1)`）防大结果集物化，探测行判定截断标记；工作台 maxRows 非法值确认映射 400（无需改码）。
 
@@ -323,7 +324,7 @@ P1.x 前置补丁已完成（2026-09-21，提交 `861925e`）：`JdbcSqlExecutor
 | 批次 | 提交信息（拟） |
 | --- | --- |
 | 1 | `feat(policy): P2 决策契约类型落码（contractVersion 1）` |
-| 2 | `feat(storage): V2 权限模型迁移与仓储（身份/权限域/策略/快照/审批）` |
+| 2 | `feat(storage): V6 权限模型迁移与仓储（身份/权限域/策略/快照/审批）` |
 | 3 | `feat(policy): 决策内核 —— 默认拒绝、多策略叠加、超管短路` |
 | 4 | `feat(web): 身份登录接入 identity 表与超管 seed` |
 | 5 | `feat(query): 目标资源解析、执法管线与结果治理` |

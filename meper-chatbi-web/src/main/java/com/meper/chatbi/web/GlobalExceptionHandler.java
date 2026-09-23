@@ -3,6 +3,7 @@ package com.meper.chatbi.web;
 import com.meper.chatbi.web.auth.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -43,6 +44,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> conflict(IllegalStateException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(new ApiError("CONFLICT", e.getMessage()));
+    }
+
+    /** 唯一约束冲突（名称重复等）显式 409，不落 500。 */
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResponseEntity<ApiError> duplicate(DuplicateKeyException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ApiError("CONFLICT", "名称已存在（唯一约束冲突）"));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

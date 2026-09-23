@@ -15,6 +15,34 @@
   <description>Agent 定义、Run、工具入口与交付</description>
 
   <dependencies>
+    <!-- 模型配置持久化（V2 表仓储 + AES-256-GCM 密钥服务） -->
+    <dependency>
+      <groupId>com.meper</groupId>
+      <artifactId>meper-chatbi-control-storage</artifactId>
+    </dependency>
+    <!-- 数据工具执行路径：经 domain 用例（Workbench/Metadata），agent 零 JDBC -->
+    <dependency>
+      <groupId>com.meper</groupId>
+      <artifactId>meper-chatbi-domain</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.meper</groupId>
+      <artifactId>meper-chatbi-query-enforcement</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.meper</groupId>
+      <artifactId>meper-chatbi-connector-spi</artifactId>
+    </dependency>
+    <!-- Spring AI：仅本模块 gateway 子包允许出现 spring-ai 类型（p5-agent-design.md §3）；
+         自动配置在 start 侧以 spring.ai.model.chat=none 关闭，ChatModel 由 ModelGateway 手动构建 -->
+    <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-starter-model-openai</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-starter-model-anthropic</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>

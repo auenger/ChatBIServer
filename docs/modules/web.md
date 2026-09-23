@@ -1,6 +1,6 @@
 # meper-chatbi-web
 
-> 能力包：B 基本数据库操作（P1 ✅）｜能力包 C 承接：身份扩展 + 策略管理 API（P2）｜依赖：domain、policy、query-enforcement
+> 能力包：B 基本数据库操作（P1 ✅）｜能力包 C 承接：身份扩展 + 策略管理 API（P2）｜依赖：domain、policy、query-enforcement、agent（0.1 起）
 > 模块约束原文：`com.meper.chatbi.web.package-info`
 
 ## 1. 定位与边界
@@ -19,6 +19,7 @@ B/S API 层：把领域服务暴露为 REST API。**禁止**：依赖 connector-
 | 数据源 `/api/datasources` | `POST`（登记）、`GET`（列表）、`GET /{id}`、`POST /test`（临时参数测试）、`POST /{id}/test`、`GET /{id}/capabilities`、`POST /{id}/rotate-credential`、`DELETE /{id}` |
 | 元数据 `/api/datasources/{id}/metadata` | `GET /namespaces`、`GET /tables`、`GET /table`、`GET /data` |
 | 工作台 `/api/workbench` | `POST /preview`、`POST /format`、`POST /execute`、`GET /executions/{id}`、`GET /executions` |
+| 模型配置 `/api/model-providers`（0.1） | `POST`、`GET`、`GET /{id}`、`PUT /{id}`、`DELETE /{id}`、`POST /{id}/test`（apiKey 只写不回显） |
 | 探活 | `GET /api/ping`（免认证） |
 
 语义约定：SQL 修改使旧预检失效（前端配合）；执行响应显式携带 `enforcement` 状态；错误经 `GlobalExceptionHandler` 统一映射。
@@ -35,6 +36,7 @@ B/S API 层：把领域服务暴露为 REST API。**禁止**：依赖 connector-
 | domain | 全部业务用例（数据源/元数据/工作台）；`ExecutionContext` 一律由 domain 工厂签发，web 不构造 |
 | policy（P2） | 策略/身份管理用例（P2 前 policy 为空壳，仅占依赖位） |
 | query-enforcement | 拒绝语义透传（`DENY_BY_POLICY` 等，见 query-enforcement.md §3.5） |
+| agent（0.1 起） | 模型 provider 配置管理（`ModelProviderService`）；chat 链路批次 C 接入 |
 
 ## 4. 能力包 C 承接（P2 身份扩展 + 管理 API）
 

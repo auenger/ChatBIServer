@@ -51,7 +51,7 @@ P4（DDL/DCL/账号/例程/导入导出）不设独立能力包文档，其契�
                                    （ServiceLoader 注册，互不依赖）
 ```
 
-实际依赖边（pom 已核对）：
+实际依赖边（pom 已核对，2026-09-23 更新；框图新增两条边：**web → agent**、**agent → control-storage**，下表为准）：
 
 | 模块 | 允许依赖 | 备注 |
 | --- | --- | --- |
@@ -62,7 +62,8 @@ P4（DDL/DCL/账号/例程/导入导出）不设独立能力包文档，其契�
 | domain | connector-spi、connector-jdbc、query-enforcement、control-storage | **注意**：domain 装配连接器/分类器实现类（`DomainConfig`），与旧模块地图「仅 connector-spi」不同，已按实际修正；见 domain.md §7 |
 | control-storage | connector-spi | `ExecutionRecord` 关联 `ExecutionContext` |
 | policy | control-storage（仓储，P2 起；已决策放开） | 决策契约见 [policy.md](./policy.md) §3（已决策记录见 §7） |
-| web | domain、policy、query-enforcement | **禁止**依赖 connector-jdbc / dialect-* / 直接 JDBC |
+| agent | control-storage（0.1 模型配置仓储起；P5 按文档扩展） | spring-ai 类型仅限本模块 `gateway` 子包 |
+| web | domain、policy、query-enforcement、**agent（0.1 起）** | **禁止**依赖 connector-jdbc / dialect-* / 直接 JDBC |
 | start | 全部 | 只做装配与配置 |
 
 静态合同检查项（实施方案 §6，不变）：web 无 JDBC 直连；connector-spi 无 Spring/驱动；方言 SQL 只出现在 dialect-* 与 connector-jdbc；不存在绕过 query-enforcement 的执行路径。

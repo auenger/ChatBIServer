@@ -1,6 +1,17 @@
 spring:
   application:
     name: meper-chatbi-server
+  # Spring AI starter 引入但禁用其全部自动配置：ChatModel 由 agent 模块按 provider 配置手动构建，
+  # 避免启动期依赖任何模型 apiKey（0.1 Agent chat MVP）。开关族来自 starter 的 @ConditionalOnProperty。
+  ai:
+    model:
+      chat: none
+      embedding: none
+      image: none
+      moderation: none
+      audio:
+        speech: none
+        transcription: none
   # 控制库（存数据源配置、凭据密文、执行历史、审计）
   datasource:
     url: ${MEPER_CONTROL_DB_URL:jdbc:mysql://localhost:3307/meper_control?useUnicode=true&characterEncoding=utf8&sslMode=DISABLED&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true}
