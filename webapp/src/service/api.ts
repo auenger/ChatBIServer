@@ -188,3 +188,96 @@ export const metadataApi = {
       `&table=${encodeURIComponent(table)}&page=${page}&size=${size}`,
     ),
 };
+
+// ---------- 模型 provider 配置（0.1） ----------
+
+export type ModelProtocol = 'OPENAI_COMPATIBLE' | 'ANTHROPIC';
+
+export interface ModelProviderView {
+  id: number;
+  name: string;
+  protocol: ModelProtocol;
+  baseUrl: string;
+  model: string;
+  params: Record<string, unknown>;
+  enabled: boolean;
+}
+
+export interface ModelProviderSave {
+  name: string;
+  protocol: ModelProtocol;
+  baseUrl: string;
+  model: string;
+  apiKey?: string;
+  params?: Record<string, unknown>;
+  enabled?: boolean;
+}
+
+export const modelProviderApi = {
+  list: () => get<ModelProviderView[]>('/model-providers'),
+  create: (body: ModelProviderSave) => post<{ id: number }>('/model-providers', body),
+  update: (id: number, body: ModelProviderSave) => put<void>(`/model-providers/${id}`, body),
+  remove: (id: number) => del<void>(`/model-providers/${id}`),
+  test: (id: number) => post<TestResult>(`/model-providers/${id}/test`),
+};
+
+export const modelProviderApiExtra = {
+  previewModels: (body: { protocol: ModelProtocol; baseUrl: string; apiKey?: string; providerId?: number }) =>
+    post<{ models: string[] }>('/model-providers/preview-models', body),
+};
+
+// ---------- Agent chat 会话历史（0.1 持久化） ----------
+
+export interface ChatSessionSummary {
+  sessionId: string;
+  title: string;
+  messageCount: number;
+  lastAt: string;
+}
+
+export interface ChatMessageView {
+  seq: number;
+  role: 'USER' | 'ASSISTANT';
+  content: string;
+  createdAt: string | null;
+}
+
+export const chatApi = {
+  sessions: () => get<ChatSessionSummary[]>('/agent/chat/sessions'),
+  messages: (sessionId: string, beforeSeq?: number, limit = 20) =>
+    get<ChatMessageView[]>(
+      `/agent/chat/sessions/${sessionId}/messages?limit=${limit}` +
+      (beforeSeq !== undefined ? `&beforeSeq=${beforeSeq}` : ''),
+    ),
+};
+
+export interface ChatMessageView {
+  seq: number;
+  role: 'USER' | 'ASSISTANT';
+  content: string;
+  createdAt: string | null;
+  promptTokens: number | null;
+  completionTokens: number | null;
+}
+
+// ChatMessageView 追加思维链与工具调用字段（覆盖上方旧定义）
+export interface ToolCallView {
+  request: string;
+  result: string | null;
+}
+
+export interface ChatMessageView {
+  seq: number;
+  role: 'USER' | 'ASSISTANT';
+  content: string;
+  createdAt: string | null;
+  reasoning: string | null;
+  tools: ToolCallView[] | null;
+  promptTokens: number | null;
+  completionTokens: number | null;
+}
+
+// chatApi 补充删除
+export const chatApiExtra = {
+  deleteSession: (sessionId: string) => del<void>(`/agent/chat/sessions/${sessionId}`),
+};
