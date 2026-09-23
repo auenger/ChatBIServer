@@ -25,6 +25,7 @@
 | 目标架构 | [../Java数据库能力架构方案.md](../Java数据库能力架构方案.md) | 能力目录（12 域）、统一操作管线、权限模型、模块划分 —— 回答「为什么这样设计、边界在哪」 | 做设计决策 / 评审时 |
 | 实施方案 | [../Chat2DB-Java能力借鉴实施方案.md](../Chat2DB-Java能力借鉴实施方案.md) | 阶段计划 G0→P6 与完成条件、必须改造的风险清单、验证计划 —— 回答「怎么做、怎么验收」 | 排阶段计划 / 验收时 |
 | **P2 实施计划** | [plans/p2-permission-implementation-plan.md](./plans/p2-permission-implementation-plan.md) | P2 权限建模 8 批次落地：类清单、V2 表 DDL、测试矩阵、行为翻转点、已决策记录（§10） | **开发 P2 前必读**（已评审 2026-09-21，可开工） |
+| **P5 Agent 设计** | [plans/p5-agent-design.md](./plans/p5-agent-design.md) | 内置编排 Agent 定稿：Spring AI + OpenAI/Anthropic 双协议网关、AgentTool SPI、五层权限交集、SSE 交付、落地批次 | 开发 P5 Agent 前必读（设计定稿 2026-09-23，实现待 P2/P3） |
 
 ### 1.2 模块开发文档（`docs/modules/`，独立拆分开发的工作界面）
 
@@ -43,7 +44,7 @@
 | **policy** | [modules/policy.md](./modules/policy.md) | 权限建模核心：决策契约（`PolicyDecisionService`）、默认拒绝语义、§3.1 多策略叠加、超级管理员短路、§7 已决策记录 | ❌ P2（**契约已定稿**） |
 | query-enforcement | [modules/query-enforcement.md](./modules/query-enforcement.md) | 执法管线：目标资源解析（JOIN/CTE→默认拒绝兜底）、行规则注入、结果治理、三类拒绝语义 | ◐ 仅分类 / P2 待开发 |
 | session-wiki | [modules/session-wiki.md](./modules/session-wiki.md) | 授权过滤的语义目录与有限会话历史（目标契约 sketch） | 骨架 / P5 |
-| agent | [modules/agent.md](./modules/agent.md) | Agent 定义/Run/工具清单、权限收窄模型、提案≠执行许可 | 骨架 / P5 |
+| agent | [modules/agent.md](./modules/agent.md) | Agent 定义/Run/工具清单、权限收窄模型、提案≠执行许可（设计定稿见 [plans/p5-agent-design.md](../plans/p5-agent-design.md)） | 骨架 / P5（设计已定稿） |
 
 ### 1.3 代码内约束（与文档同等效力）
 

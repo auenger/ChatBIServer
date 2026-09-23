@@ -153,6 +153,7 @@ CREATE TABLE meper_operation_approval (
     id            BIGINT        NOT NULL AUTO_INCREMENT,
     tenant_id     VARCHAR(64)   NOT NULL DEFAULT 'default',
     applicant     VARCHAR(128)  NOT NULL,
+    via_agent     VARCHAR(128)  NULL COMMENT '发起 Agent 定义标识；人类直发为 NULL（P5 预留，2026-09-23 决策）',
     operation     VARCHAR(32)   NOT NULL,
     target        JSON          NULL,
     plan_snapshot JSON          NULL,
@@ -313,6 +314,7 @@ CREATE TABLE meper_operation_approval (
 | 5 | 策略管理前端页面 | **延后 P2.5**，P2 只交付管理 API |
 | 6 | TokenStore 会话 | **维持内存**（评审未提异议，按建议执行）；多实例前再评估持久会话 |
 | 7 | 元数据过滤决策开销 | 请求内缓存（评审未提异议，按建议执行）；跨请求缓存留后续 |
+| 8 | Agent 技术栈（2026-09-23 补充） | **Spring AI** 内置编排 + 模型网关兼容 OpenAI 兼容/Anthropic 双协议；`meper_operation_approval` 预留 `via_agent` 列（详见 [p5-agent-design.md](./p5-agent-design.md) §8） |
 
 P1.x 前置补丁已完成（2026-09-21，提交 `861925e`）：`JdbcSqlExecutor` 驱动层限行（`setMaxRows(maxRows+1)`）防大结果集物化，探测行判定截断标记；工作台 maxRows 非法值确认映射 400（无需改码）。
 

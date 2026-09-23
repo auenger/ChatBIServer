@@ -1,6 +1,6 @@
 # meper-chatbi-agent
 
-> 能力包：F Agent｜阶段：P5 ❌（现仅 package-info 约束）｜依赖：暂无（目标：经 query-enforcement 执行；权限为主体权限的收窄）
+> 能力包：F Agent｜阶段：P5 ❌（现仅 package-info 约束）｜**设计已定稿**（2026-09-23，见 [../plans/p5-agent-design.md](../plans/p5-agent-design.md)）｜依赖：暂无（目标：经 query-enforcement 执行；权限为主体权限的收窄）
 > 模块约束原文：`com.meper.chatbi.agent.package-info`
 
 ## 1. 定位与边界
@@ -45,9 +45,17 @@ interface AgentTool {                                           // 全部工具�
 | domain | 元数据/工作台用例的 Agent 视图入口（`Purpose.AGENT`） |
 | control-storage | Agent 定义 / Run 记录 / 提案表 |
 
-## 4. 演进与开放决策点
+## 4. 演进与已决策/开放点
 
-- Run 编排是否引入独立模型网关（模型调用不触库，凭据零暴露）；
+**已决策（2026-09-23，详见 [../plans/p5-agent-design.md](../plans/p5-agent-design.md)）**：
+
+- **编排路线**：内置编排为主 Runtime（服务端工具循环）；外部 Agent CLI 桥接（Claude Code / Codex 等）作为未来 `AgentRuntimeProvider` 适配器，不改变工具面与执法边界；
+- **编排框架**：Spring AI，隔离在 `gateway` 子包（类型不进领域契约）；
+- **模型网关**：兼容 **OpenAI 兼容 + Anthropic 原生**两种协议，`ModelProviderProfile` 配置化切换；不引入独立网关服务——模型调用不触库、凭据经 AES-256-GCM 加密存储、零暴露；
+- **审批预留**：`meper_operation_approval.via_agent` 列随 P2 批次 2 DDL 落列。
+
+仍开放：
+
 - 提案的差异化审批（按目标资源路由审批人）——依赖 policy 审批状态机成熟度；
 - Agent 写权限的默认关闭策略与开启审批（P5 前不开放写工具）。
 
