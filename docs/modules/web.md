@@ -28,6 +28,7 @@ B/S API 层：把领域服务暴露为 REST API。**禁止**：依赖 connector-
 - `BootstrapAdminAuth`：引导管理员（`admin`，密码来自 `MEPER_BOOTSTRAP_ADMIN_PASSWORD`，默认仅本地开发）；
 - `TokenStore`：内存 token（重启失效，单实例语义）；
 - `AuthInterceptor`：除 `/api/auth/login`、`/api/ping`、`/actuator/**` 外全部拦截；`principal` 以请求属性向 Controller 传递。
+- CORS：`MEPER_CORS_ALLOWED_ORIGINS` 以逗号配置精确 Origin，默认仅 `http://localhost:8001`；生产同源反向代理无需放开，跨源时禁止使用 `*` 代替受控白名单。
 
 ## 3. 依赖的模块契约
 
@@ -48,6 +49,22 @@ B/S API 层：把领域服务暴露为 REST API。**禁止**：依赖 connector-
 - 管理前端页面：**延后 P2.5**，P2 只交付管理 API（2026-09-21 决策，见 [../plans/p2-permission-implementation-plan.md](../plans/p2-permission-implementation-plan.md) §10）。
 
 ## 5. 演进（其余能力包）
+
+**AI 对话 Markdown 表格（2026-10-09）**：流式回复与历史回放共用 `MarkdownTable`，
+每张表提供「复制表格」，包含表头与全部已显示数据；优先写入 HTML 表格和 TSV 纯文本，
+富文本剪贴板不可用时降级为 TSV，便于粘贴到 Excel。单元格中的制表符、换行和引号按 TSV 转义。
+按钮使用 antd 小尺寸描边按钮与 CopyOutlined 图标，沿用当前主题。
+
+**AI 对话图表（2026-10-09）**：`ChatMarkdown` 识别 `GPT-Vis` / `vis` 代码块，
+`ChatChart` 按需加载 `@antv/gpt-vis` 1.0.2；支持 JSON 与以 `vis <type>` 开头的 DSL，
+提供折线、面积、柱状、条形、饼图、散点、雷达、漏斗 8 类。
+`chartConfig` 将输入收窄为白名单配置与 1–200 行内联数据，模型自定义样式或外部地址不会透传。
+流式内容不完整时显示生成状态，结束后无效配置显示错误及原始图表数据；历史回放复用相同组件。
+图表实例卸载时销毁，使用自适应宽度；依赖要求 Node 20+。
+G2 5.4.8 的生命周期补丁通过 `pnpm-workspace.yaml` 与 `patches/` 固定：
+绘制过程中延后销毁、忽略解绑后的延迟 resize 回调、移除图形前取消动画，避免快速切换会话后的悬空任务。
+另固定 G 6.3.1 的插值补丁：取消动画时缺失的属性端点沿用已有值，空向量使用离散切换，
+避免已移除的图形属性产生 `Mismatched interpolation arguments` 异常。升级依赖时须重验缩放/卸载场景。
 
 | 阶段 | 变更 |
 | --- | --- |

@@ -1,0 +1,66 @@
+diff --git a/esm/api/runtime.js b/esm/api/runtime.js
+index 683bf21dc566e4d741b8edb6b01a77784466b306..7582c3d5b70528c34eb117f412ceee824cfdd005 100644
+--- a/esm/api/runtime.js
++++ b/esm/api/runtime.js
+@@ -45,7 +45,8 @@ export class Runtime extends CompositionNode {
+         this._trailingReject = null;
+         this._previousDefinedType = null;
+         this._onResize = debounce(() => {
+-            this.forceFit();
++            // Ignore resize callbacks queued before the chart was unbound or destroyed.
++            if (this._hasBindAutoFit) this.forceFit();
+         }, 300);
+         this._renderer = renderer || new CanvasRenderer();
+         this._plugins = plugins || [];
+@@ -142,6 +143,18 @@ export class Runtime extends CompositionNode {
+         this.emit(ChartEvent.AFTER_CLEAR);
+     }
+     destroy() {
++        // Like clear(), defer disposal until an in-flight render has settled.
++        this._unbindAutoFit();
++        // Cancel queued scene-graph animations before their targets are removed.
++        const cancelAnimations = (node) => {
++            node.getAnimations().forEach((animation) => animation.cancel());
++            node.children.forEach(cancelAnimations);
++        };
++        if (this._context.canvas) cancelAnimations(this._context.canvas.getRoot());
++        if (this._rendering) {
++            this._trailingClear = () => this.destroy();
++            return;
++        }
+         const options = this.options();
+         this.emit(ChartEvent.BEFORE_DESTROY);
+         this._unbindAutoFit();
+diff --git a/lib/api/runtime.js b/lib/api/runtime.js
+index 8d2cc9703e0debf63acc6b51449a8025645d4000..85b2600ba179472805330a83a4dfe1761c2b67c3 100644
+--- a/lib/api/runtime.js
++++ b/lib/api/runtime.js
+@@ -51,7 +51,8 @@ class Runtime extends composition_1.CompositionNode {
+         this._trailingReject = null;
+         this._previousDefinedType = null;
+         this._onResize = (0, util_1.debounce)(() => {
+-            this.forceFit();
++            // Ignore resize callbacks queued before the chart was unbound or destroyed.
++            if (this._hasBindAutoFit) this.forceFit();
+         }, 300);
+         this._renderer = renderer || new g_canvas_1.Renderer();
+         this._plugins = plugins || [];
+@@ -148,6 +149,18 @@ class Runtime extends composition_1.CompositionNode {
+         this.emit(event_1.ChartEvent.AFTER_CLEAR);
+     }
+     destroy() {
++        // Like clear(), defer disposal until an in-flight render has settled.
++        this._unbindAutoFit();
++        // Cancel queued scene-graph animations before their targets are removed.
++        const cancelAnimations = (node) => {
++            node.getAnimations().forEach((animation) => animation.cancel());
++            node.children.forEach(cancelAnimations);
++        };
++        if (this._context.canvas) cancelAnimations(this._context.canvas.getRoot());
++        if (this._rendering) {
++            this._trailingClear = () => this.destroy();
++            return;
++        }
+         const options = this.options();
+         this.emit(event_1.ChartEvent.BEFORE_DESTROY);
+         this._unbindAutoFit();

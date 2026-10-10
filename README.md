@@ -99,7 +99,7 @@ meper-chatbi-server
 
 ## 快速开始
 
-要求：JDK 17+、Maven 3.9+、Docker（控制库/测试）、Node 18+ 与 pnpm（前端）。
+要求：JDK 17+、Maven 3.9+、Docker（控制库/测试）、Node 20+ 与 pnpm（前端，GPT-Vis 1.0.2 要求 Node 20+）。
 
 ```bash
 # 1. 控制库（MySQL 8.4；业务库按需再起）
@@ -121,6 +121,30 @@ curl http://localhost:8080/actuator/health
 ```
 
 默认引导管理员：`admin / meper-admin-2026`（仅限本地开发，用 `MEPER_BOOTSTRAP_ADMIN_PASSWORD` 覆盖）。环境变量：`MEPER_CONTROL_DB_URL/USERNAME/PASSWORD` 可切换控制库。
+
+生产建议由同一域名的反向代理同时提供前端与 `/api`，此时浏览器不会发起跨源请求。如前端与 API 确实不同源，启动后端时显式配置白名单（值必须是 Origin，不要带 `/api` 或末尾路径）：
+
+```bash
+MEPER_CORS_ALLOWED_ORIGINS=https://chatbi.meper.cn \
+MEPER_MASTER_KEY=... \
+java -jar meper-chatbi-start/target/meper-chatbi-start-0.1.0-SNAPSHOT.jar
+```
+
+多个前端 Origin 用逗号分隔，例如 `https://chatbi.meper.cn,https://admin.meper.cn`。
+
+后端 Docker 镜像构建（先生成 Spring Boot 可执行 JAR）：
+
+```bash
+mvn -B -ntp package -pl meper-chatbi-start -am -DskipTests
+docker build --platform linux/amd64 \
+  -t meper-chatbi-backend:latest \
+  meper-chatbi-start
+```
+
+运行容器时传入 `MEPER_MASTER_KEY`、控制库连接参数以及生产 CORS 白名单；不要把真实密钥写入镜像。
+
+前后端 Docker 部署包与同源代理配置见 [deploy/docker/README.md](./deploy/docker/README.md)。
+前端镜像使用 `webapp/Dockerfile`，Compose 编排连接已有 MySQL 控制库，包含 AI 对话 SSE 转发配置。
 
 ### 服务启停速查
 

@@ -2,6 +2,7 @@ package com.meper.chatbi.agent.chat;
 
 import com.meper.chatbi.agent.definition.ModelProviderService;
 import com.meper.chatbi.agent.gateway.SpringAiModelGateway;
+import com.meper.chatbi.agent.gateway.ChatResponseEvents;
 import com.meper.chatbi.domain.DataSourceService;
 import com.meper.chatbi.domain.MetadataService;
 import com.meper.chatbi.domain.WorkbenchService;
@@ -119,7 +120,7 @@ public class AgentChatService {
                         lastUsage.set(u);
                     }
                 })
-                .mapNotNull(r -> frameOf(sid, r))
+                .concatMapIterable(r -> ChatResponseEvents.from(sid, r))
                 .filter(event -> !event.data().isEmpty())
                 .doOnNext(event -> {
                     // 仅正文进回答历史；思维链单独落库供回放
@@ -158,24 +159,6 @@ public class AgentChatService {
                 }))
                 .doFinally(signal -> toolSink.tryEmitComplete());
         return Flux.merge(toolSink.asFlux(), main);
-    }
-
-    /** 每帧转事件：思维链增量 → reasoning 事件；正文增量 → token 事件；其余帧丢弃。 */
-    private ChatEvent frameOf(String sid, ChatResponse response) {
-        if (response == null || response.getResult() == null
-                || response.getResult().getOutput() == null) {
-            return null;
-        }
-        var output = response.getResult().getOutput();
-        String text = output.getText();
-        if (text != null && !text.isEmpty()) {
-            return ChatEvent.token(sid, text);
-        }
-        Object reasoning = output.getMetadata().get("reasoningContent");
-        if (reasoning instanceof String s && !s.isEmpty()) {
-            return ChatEvent.reasoning(sid, s);
-        }
-        return null;
     }
 
     private Usage usageOf(ChatResponse response) {

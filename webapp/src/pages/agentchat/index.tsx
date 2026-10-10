@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Button, Input, Progress, Select, Space, Tooltip, Typography, message } from 'antd';
 import { ClearOutlined, DeleteOutlined, HistoryOutlined, SendOutlined, BulbOutlined, ToolOutlined } from '@ant-design/icons';
 import { createStyles } from 'antd-style';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import ChatMarkdown from '@/components/ChatMarkdown';
 import { Popconfirm } from 'antd';
 import type { ChatSessionSummary, DataSourceProfile, ModelProviderView } from '@/service/api';
 import { chatApi, chatApiExtra, datasourceApi, modelProviderApi } from '@/service/api';
@@ -39,7 +38,7 @@ const useStyles = createStyles({
     padding: '8px 12px', borderRadius: '12px 12px 2px 12px', whiteSpace: 'pre-wrap', wordBreak: 'break-word',
   },
   assistantBubble: {
-    alignSelf: 'flex-start', maxWidth: '85%', background: '#fff', border: '1px solid #f0f0f0',
+    alignSelf: 'flex-start', maxWidth: '85%', minWidth: 0, background: '#fff', border: '1px solid #f0f0f0',
     padding: '8px 12px', borderRadius: '12px 12px 12px 2px', wordBreak: 'break-word',
   },
   mdBody: {
@@ -458,7 +457,7 @@ export default function AgentChatPage() {
                 ))}
                 {m.content && (
                   <div className={styles.mdBody}>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.content}</ReactMarkdown>
+                    <ChatMarkdown content={m.content} streaming={streaming && i === messages.length - 1} />
                   </div>
                 )}
               </div>

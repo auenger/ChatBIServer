@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
- * Agent 数据工具（0.1）：注册给模型的三个只读能力。
+ * Agent 数据工具（0.1）：三个只读数据能力与内置图表技能目录。
  *
  * <p>执法边界：{@code run_query} 仅放行单条 SELECT（SqlClassifier 白名单），
  * 且必经 {@link WorkbenchService}（审计/执行记录/限额全保留）——本类零 JDBC。
@@ -39,6 +39,14 @@ public class AgentDbTools {
         this.metadata = metadata;
         this.workbench = workbench;
         this.classifier = classifier;
+    }
+
+    @Tool(description = "读取内置图表技能：trend（趋势）、comparison（分类对比/排名）、proportion（占比）。需要画图时先读取对应技能，按规范输出 GPT-Vis 图表；本工具仅返回规范，不查询数据")
+    public String get_chart_skill(@ToolParam(description = "技能名称：trend / comparison / proportion") String skill) {
+        ctx.notifyTool("get_chart_skill(" + skill + ")");
+        String result = ChartSkills.read(skill);
+        ctx.notifyToolResult(result.startsWith("不支持") ? result : "已加载图表技能");
+        return result;
     }
 
     @Tool(description = "列出指定库/Schema 下的所有表和视图（名称、类型、备注）。不确定有哪些库时传空字符串可获取顶层命名空间列表")

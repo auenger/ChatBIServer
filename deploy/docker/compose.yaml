@@ -1,0 +1,42 @@
+services:
+  backend:
+    image: meper-chatbi-backend:${MEPER_IMAGE_TAG:-0.1.0-20261009}
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      MEPER_MASTER_KEY: ${MEPER_MASTER_KEY:?请配置原主密钥或新安装的 base64 32 字节主密钥}
+      MEPER_CONTROL_DB_URL: ${MEPER_CONTROL_DB_URL:?请配置控制库 JDBC URL}
+      MEPER_CONTROL_DB_USERNAME: ${MEPER_CONTROL_DB_USERNAME:?请配置控制库用户名}
+      MEPER_CONTROL_DB_PASSWORD: ${MEPER_CONTROL_DB_PASSWORD:?请配置控制库密码}
+      MEPER_BOOTSTRAP_ADMIN_USERNAME: ${MEPER_BOOTSTRAP_ADMIN_USERNAME:-admin}
+      MEPER_BOOTSTRAP_ADMIN_PASSWORD: ${MEPER_BOOTSTRAP_ADMIN_PASSWORD:?请配置管理员密码}
+    expose:
+      - "8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/actuator/health"]
+      interval: 15s
+      timeout: 5s
+      start_period: 60s
+      retries: 5
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  frontend:
+    image: meper-chatbi-frontend:${MEPER_IMAGE_TAG:-0.1.0-20261009}
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "${MEPER_HTTP_PORT:-8001}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

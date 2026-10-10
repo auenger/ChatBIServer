@@ -1,0 +1,46 @@
+diff --git a/dist/index.esm.js b/dist/index.esm.js
+index dbe8e3d6feabe761b3c54947e283daeb5206e147..84b99fbc223fba76ef31d83535ed90be74fa4be1 100644
+--- a/dist/index.esm.js
++++ b/dist/index.esm.js
+@@ -1236,6 +1236,9 @@ function propertyInterpolation(property, left, right, target) {
+  * interpolate with number, boolean, number[], boolean[]
+  */
+ function interpolate(from, to, f) {
++  // Removed scene-graph properties can have a missing endpoint during cancellation.
++  if (from === undefined) return to;
++  if (to === undefined) return from;
+   if (typeof from === 'number' && typeof to === 'number') {
+     return from * (1 - f) + to * f;
+   }
+@@ -1247,6 +1250,8 @@ function interpolate(from, to, f) {
+     // interpolate arrays/matrix
+     var fromLength = from.length;
+     var toLength = to.length;
++    // Empty vectors have no element to extend; use discrete interpolation instead.
++    if (fromLength === 0 || toLength === 0) return f < 0.5 ? from : to;
+     var length = Math.max(fromLength, toLength);
+     var r = [];
+     for (var i = 0; i < length; i++) {
+diff --git a/dist/index.js b/dist/index.js
+index d5750cd16f4374c28cb5b617b1848d822cd69457..4543e86c6796dad254c1124af6a596c01a9b8561 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1237,6 +1237,9 @@ function propertyInterpolation(property, left, right, target) {
+  * interpolate with number, boolean, number[], boolean[]
+  */
+ function interpolate(from, to, f) {
++  // Removed scene-graph properties can have a missing endpoint during cancellation.
++  if (from === undefined) return to;
++  if (to === undefined) return from;
+   if (typeof from === 'number' && typeof to === 'number') {
+     return from * (1 - f) + to * f;
+   }
+@@ -1248,6 +1251,8 @@ function interpolate(from, to, f) {
+     // interpolate arrays/matrix
+     var fromLength = from.length;
+     var toLength = to.length;
++    // Empty vectors have no element to extend; use discrete interpolation instead.
++    if (fromLength === 0 || toLength === 0) return f < 0.5 ? from : to;
+     var length = Math.max(fromLength, toLength);
+     var r = [];
+     for (var i = 0; i < length; i++) {

@@ -1,6 +1,8 @@
 # build
 target/
 *.class
+meper-chatbi-backend-*.tar
+dist/docker/
 
 # IDE
 .idea/

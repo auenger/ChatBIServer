@@ -6,7 +6,7 @@
 
 ## 0. 范围
 
-**做**：模型配置管理（独立设置页，OpenAI 兼容 + Anthropic 两种协议）、chat 对话（SSE 流式）、3 个工具（schema 发现 ×2 + 查询执行 ×1）、SELECT 自动执行、最小前端（模型设置页 + 对话页）。
+**做**：模型配置管理（独立设置页，OpenAI 兼容 + Anthropic 两种协议）、chat 对话（SSE 流式）、3 个数据工具（schema 发现 ×2 + 查询执行 ×1）与内置图表技能读取工具、SELECT 自动执行、前端模型设置页与对话页（表格复制 + GPT-Vis 图表）。
 
 **不做**（留 P5）：AgentDefinition 管理与工具开关、Run 持久化状态机、`wiki_find`/`propose_*` 工具、`Purpose.AGENT` 语义切换（0.1 暂用 `Purpose.WORKBENCH`）。**不做 P2 执法**——0.1 在 `BOOTSTRAP_ADMIN_UNRESTRICTED` 下运行（标记照常携带）；P2 完成后 `execute_query` 经 `WorkbenchService` 自动获得权限执法，无需改动。
 
@@ -65,6 +65,10 @@
 4. **对话持久化（2026-09-23 追加）**：消息落控制库 `V3__chat_session.sql`（`meper_chat_message`），内存窗口 + 库全量；会话列表/消息分页 API；**P2 权限模型顺延 V4**；
 5. **上下文比例（2026-09-23 追加）**：流式结束提取模型返回的真实 usage（prompt/completion tokens），以 `usage` 事件返回前端，按 **100 万 token 窗口**显示占用比例；工具活动不落库；
 6. **思维链渲染与落库（2026-09-23 追加）**：reasoning 模型的思考过程以 `reasoning` 事件流式渲染（灰色折叠块，正文出现后收起，icon 不用 emoji），并随 ASSISTANT 消息落库回放。
+7. **双协议思考归一化（2026-10-09 修复）**：同时兼容 OpenAI `reasoning_content`（Spring AI 元数据 `reasoningContent`）与 Anthropic `thinking_delta`（含智谱 Anthropic 兼容端点）；同帧思考/正文及多 generation 均保留，思考不得混入正文。既有错误落库的历史消息不按自然语言猜测拆分。
+8. **图表交付（2026-10-09 追加）**：`get_chart_skill` 按需加载趋势/对比/占比规则；模型输出 `GPT-Vis` JSON 代码块。
+   前端以 GPT-Vis 1.0.2 按需渲染 8 类统计图，最多 200 数据点，不接收外部 URL 或任意执行代码。
+   流式等待、错误兜底、数据查看/复制与历史回放共用渲染器；数据来源为受控查询或用户明确提供的数据。
 
 ## 8. 完成定义（DoD）
 
