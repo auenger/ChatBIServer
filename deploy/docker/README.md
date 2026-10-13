@@ -48,11 +48,17 @@ docker compose logs --tail=100 backend frontend
 在仓库根目录执行：
 
 ```bash
-mvn -B -ntp package -DskipTests
+mvn -B -ntp package
 pnpm --dir webapp build
-docker build --platform linux/amd64 -t meper-chatbi-backend:0.1.0-20261009 meper-chatbi-start
-docker build --platform linux/amd64 -t meper-chatbi-frontend:0.1.0-20261009 webapp
-docker save -o images.tar meper-chatbi-backend:0.1.0-20261009 meper-chatbi-frontend:0.1.0-20261009
+docker build --platform linux/amd64 -t meper-chatbi-backend:0.1.0-20261013 meper-chatbi-start
+docker build --platform linux/amd64 -t meper-chatbi-frontend:0.1.0-20261013 webapp
+docker save -o images.tar meper-chatbi-backend:0.1.0-20261013 meper-chatbi-frontend:0.1.0-20261013
 ```
 
 前端构建要求 Node 20+，GPT-Vis 依赖补丁通过 pnpm 锁文件固定。
+
+## glm-5.3-flash 验收配置
+
+2026-10-13 使用智谱 `glm-5.3-flash`、Anthropic 协议、接入点 `https://open.bigmodel.cn/api/anthropic` 验证知识草稿与跨库分析。模型设置 → 高级参数 → Max Tokens 填 `8192`（API 参数为 `{"maxTokens":8192}`）。未设置时当前网关默认 1024，实际验收出现工具 JSON 截断；不要将仅有文字回复视为草稿已保存，应核对变更回执。复杂跨库多步分析本次耗时约 289 秒，接近当前 300 秒 SSE 上限；不作为时延 SLA。
+
+原控制库的模型配置未被本次验收修改。模型密钥、控制库、测试业务库均不随部署包分发。完整结果见 [验收记录](../../docs/plans/release-acceptance-20261013.md)。

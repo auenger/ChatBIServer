@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "c756ecfb-f76b-4368-9b1e-c6bef4247ff7",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/model.json",
+  "output": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/permission-model.html",
+  "specification": {
+    "sha256": "53ae0c3a25a69abfc248074c90e7c95e34dac69e825f6f8138f6c158b1d56b44",
+    "bytes": 7430
+  },
+  "artifact": {
+    "sha256": "f8150090f4a78300433018d0709229c345cb94778befb09f6f59313333550f4e",
+    "bytes": 773093
+  }
+}

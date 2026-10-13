@@ -1,11 +1,13 @@
 # meper-chatbi-control-storage
 
+> P2 当前设计依据：[2026-10-13 适配修订](../plans/p2-permission-adaptation-20261013.md)。本文旧 contractVersion 1、版本校验、权限入口与批次条款如有冲突，以修订稿为准；设计修订不代表运行时已实现。
+
 > 能力包：B 基本数据库操作（运行表，P1 ✅）｜能力包 C 权限建模（策略表，P2 待开发）｜依赖：connector-spi
 > 模块约束原文：`com.meper.chatbi.storage.package-info`
 
 ## 1. 定位与边界
 
-控制库（MySQL 8.4，`meper_` 前缀）的唯一持久化模块：Repository、凭据加密、Flyway schema。存**控制面数据**（数据源档案、凭据密文、执行与审计记录、以及 P2 起的身份与策略），**永不存业务库数据**。
+控制库（MySQL 8.4，`meper_` 前缀）的唯一持久化模块：Repository、凭据加密、Flyway schema。存**控制面数据**（数据源档案、凭据密文、执行与审计记录、以及 P2 起的身份与策略），不复制业务库作为业务数据仓库；会话正文和工具回执可能含查询摘要，属于需要授权治理的历史交付数据。
 
 - 凭据只存 `CredentialRef` 与密文；明文口令不落库、不进日志；
 - 审计不含凭据与完整结果（`detail` JSON 列只放脱敏上下文）；
@@ -40,11 +42,11 @@ AES-256-GCM 加解密；主密钥来自环境变量 `MEPER_MASTER_KEY`，**缺�
 
 - `ExecutionContext` / `SqlExecutionResult` 等 SPI 模型：执行记录落库需要；这是本模块唯一内部依赖。
 
-## 4. 能力包 C 交付物（P2，策略表 V2 迁移）
+## 4. 能力包 C 交付物（P2，当前从 V9 追加）
 
 > 冻结前提：[policy.md](./policy.md) §3 的模型与决策契约。字段清单以 policy.md 为准，本节只定模块侧交付。
 
-- `V6__permission_model.sql`（暂名）：身份表、角色/身份-角色映射、权限域、资源策略（含 revision / status DRAFT-PUBLISHED-DISABLED）、策略发布快照、审批单（含 `via_agent` 预留列）；**V2 被 0.1 模型配置表 `V2__model_provider.sql`、V3 被对话消息表 `V3__chat_session.sql`（`meper_chat_message`，会话持久化 + subject 隔离 + seq 懒加载分页）占用**（见 [../plans/p01-agent-chat-mvp.md](../plans/p01-agent-chat-mvp.md)）；
+- `V9__permission_model.sql`（暂名）：身份表、角色/身份-角色映射、权限域、资源策略（含 revision / status DRAFT-PUBLISHED-DISABLED）、策略发布快照、审批单（含 `via_agent` 预留列）；**V2 被 0.1 模型配置表 `V2__model_provider.sql`、V3 被对话消息表 `V3__chat_session.sql`（`meper_chat_message`，会话持久化 + subject 隔离 + seq 懒加载分页）占用**（见 [../plans/p01-agent-chat-mvp.md](../plans/p01-agent-chat-mvp.md)）；V4–V6 为消息扩展、V7 为 Wiki、V8 为数据集/空间；开工前核对最新序号；
 - 密码哈希：`PasswordHashService`（bcrypt，`spring-security-crypto` 单依赖；2026-09-21 决策，见 [../plans/p2-permission-implementation-plan.md](../plans/p2-permission-implementation-plan.md) §10）；
 - 对应 Repository：身份、权限域、策略草稿/发布/停用、快照读取（按 revision）、审批；
 - 仓储测试：空字段语义（默认拒绝下的存储形态）、revision 单调、草稿不可被决策读取；
@@ -64,3 +66,13 @@ AES-256-GCM 加解密；主密钥来自环境变量 `MEPER_MASTER_KEY`，**缺�
 - 凭据密文随机 IV、认证标签校验失败显式报错；
 - 每次能力包引入的新表有迁移测试（Flyway 从零跑到最新）；
 - 审计与日志无凭据、无完整敏感结果（评审 + 抽查测试）。
+
+
+## DataWiki 首版（2026-10-12）
+
+实现边界、接口、页面与验收见 [DataWiki 实施计划](../plans/datawiki-implementation.md)。本阶段提前交付语义目录，执法状态仍为 BOOTSTRAP_ADMIN_UNRESTRICTED；权限 P2 的多用户资源过滤未切换。
+
+
+## 数据集与对话式 Wiki（2026-10-12）
+
+本轮增加默认模型、知识空间绑定、批量发布与对话草稿，分析支持受限跨库查询和固定服务端合并。边界与验收见 [第二轮实现](../plans/dataset-knowledge-v2.md)。权限执法仍为引导管理员阶段。

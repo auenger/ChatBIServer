@@ -1,5 +1,7 @@
 # meper-chatbi-web
 
+> P2 当前设计依据：[2026-10-13 适配修订](../plans/p2-permission-adaptation-20261013.md)。本文旧 contractVersion 1、版本校验、权限入口与批次条款如有冲突，以修订稿为准；设计修订不代表运行时已实现。
+
 > 能力包：B 基本数据库操作（P1 ✅）｜能力包 C 承接：身份扩展 + 策略管理 API（P2）｜依赖：domain、policy、query-enforcement、agent（0.1 起）
 > 模块约束原文：`com.meper.chatbi.web.package-info`
 
@@ -42,7 +44,7 @@ B/S API 层：把领域服务暴露为 REST API。**禁止**：依赖 connector-
 ## 4. 能力包 C 承接（P2 身份扩展 + 管理 API）
 
 - 登录改造：`Identity` 表校验（bcrypt 类哈希）替换 BootstrapAdmin 硬编码；会话 token 持久化或维持内存（决策随多实例需求）；
-- 超级管理员：内置身份随 V2 迁移 seed（初始凭据复用 `MEPER_BOOTSTRAP_ADMIN_PASSWORD` 式环境变量机制）；其请求照常走决策短路与审计（`SUPER_ADMIN_BYPASS`），**web 层不做任何免检特殊分支**；
+- 超级管理员：内置身份随新增权限迁移 seed（当前从 V9 追加）（初始凭据复用 `MEPER_BOOTSTRAP_ADMIN_PASSWORD` 式环境变量机制）；其请求照常走决策短路与审计（`SUPER_ADMIN_BYPASS`），**web 层不做任何免检特殊分支**；
 - 身份管理 API：`/api/identities` CRUD、角色分配；
 - 策略管理 API：权限域/资源策略的草稿-发布-停用、有效权限**模拟预检**（干跑 `PolicyDecisionService`）、审批列表/通过/驳回；
 - 管理 API 自身的访问控制：P2 以 `admin` 角色拦截（Interceptor 层做**角色**检查是会话语义，不是资源授权；资源授权仍在决策层）；
@@ -77,3 +79,15 @@ G2 5.4.8 的生命周期补丁通过 `pnpm-workspace.yaml` 与 `patches/` 固定
 - 无 JDBC import / 无 connector-jdbc 依赖（静态合同检查）；
 - 每个端点：认证覆盖、错误映射、审计（预检/格式化/执行/管理操作均已写审计）；
 - P2 后：策略拒绝可区分语义（非笼统 403）；引导管理员机制演进为内置超级管理员（跳过策略决策用于测试/应急，见 policy.md §7 已决策 3），原引导管理员环境变量迁移为超级管理员初始凭据。
+
+
+## DataWiki 首版（2026-10-12）
+
+实现边界、接口、页面与验收见 [DataWiki 实施计划](../plans/datawiki-implementation.md)。本阶段提前交付语义目录，执法状态仍为 BOOTSTRAP_ADMIN_UNRESTRICTED；权限 P2 的多用户资源过滤未切换。
+
+
+## 数据集与对话式 Wiki（2026-10-12）
+
+本轮增加默认模型、知识空间绑定、批量发布与对话草稿，分析支持受限跨库查询和固定服务端合并。边界与验收见 [第二轮实现](../plans/dataset-knowledge-v2.md)。权限执法仍为引导管理员阶段。
+
+**DataWiki 工具栏（2026-10-13）**：右上角按工具操作（专注编辑、空间设置、同步结构）与创作操作（新建文档、AI 补充知识）分组；统一按钮尺寸与语义图标，AI 入口使用星芒图标和蓝紫渐变，窄屏自动换行。

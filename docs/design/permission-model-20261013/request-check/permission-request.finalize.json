@@ -1,0 +1,990 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "startedAt": "2026-10-13T05:44:44.397Z",
+  "specification": {
+    "path": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/request.json",
+    "sha256": "a66bdc268e101f73b6818c69ff1f1699efba62c6a35e1ab22533ace15eabe003",
+    "bytes": 6081
+  },
+  "artifact": {
+    "path": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/permission-request.html",
+    "sha256": "620121ae7a28b02e914f1622309042dd2d083c16af6c2ef6f66a6b5e21d4ddb4",
+    "bytes": 765676
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/Users/ryan/.nvm/versions/node/v22.22.0/bin/node",
+        "/Users/ryan/.codex/skills/archify/bin/archify.mjs",
+        "deliver",
+        "sequence",
+        "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/request.json",
+        "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/permission-request.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "a66bdc268e101f73b6818c69ff1f1699efba62c6a35e1ab22533ace15eabe003",
+          "bytes": 6081
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 1388,
+      "command": [
+        "/Users/ryan/.nvm/versions/node/v22.22.0/bin/node",
+        "/Users/ryan/.codex/skills/archify/bin/archify.mjs",
+        "deliver",
+        "sequence",
+        "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/request.json",
+        "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/permission-request.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "3bdc0e6e-18ec-416e-9135-db1da22a2103",
+        "ok": true,
+        "command": "deliver",
+        "type": "sequence",
+        "input": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/request.json",
+        "output": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/permission-request.html",
+        "specification": {
+          "sha256": "a66bdc268e101f73b6818c69ff1f1699efba62c6a35e1ab22533ace15eabe003",
+          "bytes": 6081
+        },
+        "artifact": {
+          "sha256": "620121ae7a28b02e914f1622309042dd2d083c16af6c2ef6f66a6b5e21d4ddb4",
+          "bytes": 765676
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "stderr": "(node:60045) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:60042) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)"
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 726,
+      "command": [
+        "/Users/ryan/.nvm/versions/node/v22.22.0/bin/node",
+        "/Users/ryan/.codex/skills/archify/bin/archify.mjs",
+        "check",
+        "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/permission-request.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/permission-request.html",
+        "artifact": {
+          "sha256": "620121ae7a28b02e914f1622309042dd2d083c16af6c2ef6f66a6b5e21d4ddb4",
+          "bytes": 765676
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "metrics": {
+            "properCrossings": 0,
+            "resolvedCrossovers": 0,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": 47,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 7,
+            "maxBends": 0,
+            "routesOverSuggestedBends": 0,
+            "maxStretch": 1,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": 107.3,
+            "minInteriorSegmentPx": null,
+            "shortSegmentCount": 0,
+            "shortEndpointSegmentCount": 0,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [],
+            "detours": []
+          },
+          "leadingSpace": {
+            "measured": false,
+            "reviewSuggested": false
+          },
+          "sequenceColumnSpace": {
+            "measured": true,
+            "columnFit": "spread",
+            "participantCount": 7,
+            "occupiedRight": 880,
+            "viewBoxLeft": 0,
+            "canvasWidth": 920,
+            "emptyRightPx": 40,
+            "emptyRightRatio": 0.043,
+            "typicalParticipantWidth": 90,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "legacy-930",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 930,
+            "actualBudgetPx": 930,
+            "limit": "legacy",
+            "requestedTargetPx": null,
+            "requestedTargetMet": null,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "node",
+              "id": "client"
+            },
+            "minimumSourceTextPx": 7,
+            "minimumProjectedTextPx": 7,
+            "semanticTextCount": 32
+          },
+          "issues": []
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "3bdc0e6e-18ec-416e-9135-db1da22a2103"
+      },
+      "stderr": "(node:60063) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:60060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)"
+    },
+    "browser-check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 2897,
+      "command": [
+        "/Users/ryan/.nvm/versions/node/v22.22.0/bin/node",
+        "/Users/ryan/.codex/skills/archify/bin/archify.mjs",
+        "browser-check",
+        "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/permission-request.html",
+        "--json",
+        "--require-provenance",
+        "--out-dir",
+        "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/request-check"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "pass",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "3bdc0e6e-18ec-416e-9135-db1da22a2103",
+        "artifact": {
+          "path": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/permission-request.html",
+          "sha256": "620121ae7a28b02e914f1622309042dd2d083c16af6c2ef6f66a6b5e21d4ddb4",
+          "bytes": 765676
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        },
+        "diagnostics": [],
+        "containment": {
+          "status": "pass",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 1516,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 960,
+              "diagramWidth": 789,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 68,
+                "diagramChromePx": 78,
+                "svgPx": 1358,
+                "cardsPx": 0,
+                "viewBoxHeight": 1583
+              },
+              "viewBoxWidth": 920,
+              "minimumProjectedNodeTextPx": 6.003260869565217,
+              "minimumProjectedNonEdgeTextPx": 6.003260869565217,
+              "minimumProjectedEdgeTextPx": 9.433695652173913,
+              "minimumProjectedNodeText": "已认证用户",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "client"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1582,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 960,
+              "diagramWidth": 789,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 76,
+                "diagramChromePx": 84,
+                "svgPx": 1358,
+                "cardsPx": 0,
+                "viewBoxHeight": 1583
+              },
+              "viewBoxWidth": 920,
+              "minimumProjectedNodeTextPx": 6.003260869565217,
+              "minimumProjectedNonEdgeTextPx": 6.003260869565217,
+              "minimumProjectedEdgeTextPx": 9.433695652173913,
+              "minimumProjectedNodeText": "已认证用户",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "client"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1582,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 960,
+              "diagramWidth": 789,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 76,
+                "diagramChromePx": 84,
+                "svgPx": 1358,
+                "cardsPx": 0,
+                "viewBoxHeight": 1583
+              },
+              "viewBoxWidth": 920,
+              "minimumProjectedNodeTextPx": 6.003260869565217,
+              "minimumProjectedNonEdgeTextPx": 6.003260869565217,
+              "minimumProjectedEdgeTextPx": 9.433695652173913,
+              "minimumProjectedNodeText": "已认证用户",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "client"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1600,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 960,
+              "diagramWidth": 789,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 84,
+                "diagramChromePx": 94,
+                "svgPx": 1358,
+                "cardsPx": 0,
+                "viewBoxHeight": 1583
+              },
+              "viewBoxWidth": 920,
+              "minimumProjectedNodeTextPx": 6.003260869565217,
+              "minimumProjectedNonEdgeTextPx": 6.003260869565217,
+              "minimumProjectedEdgeTextPx": 9.433695652173913,
+              "minimumProjectedNodeText": "已认证用户",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "client"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "themeStates": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            }
+          ]
+        },
+        "readability": {
+          "status": "pass",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 1516,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 960,
+              "diagramWidth": 789,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 68,
+                "diagramChromePx": 78,
+                "svgPx": 1358,
+                "cardsPx": 0,
+                "viewBoxHeight": 1583
+              },
+              "viewBoxWidth": 920,
+              "minimumProjectedNodeTextPx": 6.003260869565217,
+              "minimumProjectedNonEdgeTextPx": 6.003260869565217,
+              "minimumProjectedEdgeTextPx": 9.433695652173913,
+              "minimumProjectedNodeText": "已认证用户",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "client"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1582,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 960,
+              "diagramWidth": 789,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 76,
+                "diagramChromePx": 84,
+                "svgPx": 1358,
+                "cardsPx": 0,
+                "viewBoxHeight": 1583
+              },
+              "viewBoxWidth": 920,
+              "minimumProjectedNodeTextPx": 6.003260869565217,
+              "minimumProjectedNonEdgeTextPx": 6.003260869565217,
+              "minimumProjectedEdgeTextPx": 9.433695652173913,
+              "minimumProjectedNodeText": "已认证用户",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "client"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1582,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 960,
+              "diagramWidth": 789,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 76,
+                "diagramChromePx": 84,
+                "svgPx": 1358,
+                "cardsPx": 0,
+                "viewBoxHeight": 1583
+              },
+              "viewBoxWidth": 920,
+              "minimumProjectedNodeTextPx": 6.003260869565217,
+              "minimumProjectedNonEdgeTextPx": 6.003260869565217,
+              "minimumProjectedEdgeTextPx": 9.433695652173913,
+              "minimumProjectedNodeText": "已认证用户",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "client"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1600,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 960,
+              "diagramWidth": 789,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 84,
+                "diagramChromePx": 94,
+                "svgPx": 1358,
+                "cardsPx": 0,
+                "viewBoxHeight": 1583
+              },
+              "viewBoxWidth": 920,
+              "minimumProjectedNodeTextPx": 6.003260869565217,
+              "minimumProjectedNonEdgeTextPx": 6.003260869565217,
+              "minimumProjectedEdgeTextPx": 9.433695652173913,
+              "minimumProjectedNodeText": "已认证用户",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "client"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "viewerChrome": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 1516,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 960,
+              "diagramWidth": 789,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 68,
+                "diagramChromePx": 78,
+                "svgPx": 1358,
+                "cardsPx": 0,
+                "viewBoxHeight": 1583
+              },
+              "viewBoxWidth": 920,
+              "minimumProjectedNodeTextPx": 6.003260869565217,
+              "minimumProjectedNonEdgeTextPx": 6.003260869565217,
+              "minimumProjectedEdgeTextPx": 9.433695652173913,
+              "minimumProjectedNodeText": "已认证用户",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "client"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1582,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 960,
+              "diagramWidth": 789,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 76,
+                "diagramChromePx": 84,
+                "svgPx": 1358,
+                "cardsPx": 0,
+                "viewBoxHeight": 1583
+              },
+              "viewBoxWidth": 920,
+              "minimumProjectedNodeTextPx": 6.003260869565217,
+              "minimumProjectedNonEdgeTextPx": 6.003260869565217,
+              "minimumProjectedEdgeTextPx": 9.433695652173913,
+              "minimumProjectedNodeText": "已认证用户",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "client"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1582,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 960,
+              "diagramWidth": 789,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 76,
+                "diagramChromePx": 84,
+                "svgPx": 1358,
+                "cardsPx": 0,
+                "viewBoxHeight": 1583
+              },
+              "viewBoxWidth": 920,
+              "minimumProjectedNodeTextPx": 6.003260869565217,
+              "minimumProjectedNonEdgeTextPx": 6.003260869565217,
+              "minimumProjectedEdgeTextPx": 9.433695652173913,
+              "minimumProjectedNodeText": "已认证用户",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "client"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1600,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 960,
+              "diagramWidth": 789,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 84,
+                "diagramChromePx": 94,
+                "svgPx": 1358,
+                "cardsPx": 0,
+                "viewBoxHeight": 1583
+              },
+              "viewBoxWidth": 920,
+              "minimumProjectedNodeTextPx": 6.003260869565217,
+              "minimumProjectedNonEdgeTextPx": 6.003260869565217,
+              "minimumProjectedEdgeTextPx": 9.433695652173913,
+              "minimumProjectedNodeText": "已认证用户",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "client"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "directory": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/request-check",
+          "receipt": "permission-request.browser-check.json",
+          "files": []
+        }
+      }
+    }
+  },
+  "diagnostics": [],
+  "evidence": {
+    "receipt": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/request-check/permission-request.finalize.json",
+    "summaryReceipt": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/request-check/permission-request.finalize-summary.json",
+    "browserCheckReceipt": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/request-check/permission-request.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "finishedAt": "2026-10-13T05:44:50.399Z",
+  "durationMs": 6002,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.0.1",
+    "availableVersion": "3.0.1",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-13T05:38:56.204Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

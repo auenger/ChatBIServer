@@ -1,6 +1,8 @@
 # meper-chatbi-query-enforcement
 
-> 能力包：C 权限建模｜阶段：P2（现仅完成分类，执法未开始）｜依赖：connector-spi + policy 决策契约（已决策放开，见 §4）
+> P2 当前设计依据：[2026-10-13 适配修订](../plans/p2-permission-adaptation-20261013.md)。本文旧 contractVersion 1、版本校验、权限入口与批次条款如有冲突，以修订稿为准；设计修订不代表运行时已实现。
+
+> 能力包：C 权限建模｜当前已实现 SqlClassifier 与 QueryScopeValidator；P2 主体策略执法未开始（2026-10-13）。实际依赖 connector-spi；policy 依赖是 P2 待落地的目标。
 > 模块约束原文：`com.meper.chatbi.query.package-info`
 
 ## 1. 定位与边界
@@ -17,6 +19,10 @@
 - `analyze(DatabaseType, script) → List<AnalyzedStatement>`：主路径 Druid 解析（DbType 按方言），语句文本为规范化输出（语义等价）；解析失败退化为「尊重引号的分号切分 + 首关键字分类」；
 - `format(DatabaseType, script)`：方言格式化，不连业务库、不改变权限语义；
 - 分类映射：SELECT／INSERT-UPDATE-DELETE-MERGE→DML／CREATE-ALTER-DROP-TRUNCATE→DDL／BEGIN-COMMIT-ROLLBACK-SAVEPOINT→TCL／其余→OTHER。
+
+**`QueryScopeValidator`（DataWiki/数据集阶段）**：按方言 AST 限制一条只读 SELECT 的表资源范围，检查 JOIN/CTE/子查询与函数白名单；由 AnalysisService 消费。此能力不包含主体权限、字段/行策略或脱敏。
+
+> P2 合同落码前须澄清“列解析失败”与“请求全部列”的区别，以及逐策略版本校验的数据结构，见[进度对齐 §4](../plans/progress-alignment-20261013.md)。
 
 ## 3. 目标契约（P2 新增）
 

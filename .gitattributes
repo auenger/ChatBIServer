@@ -1,0 +1,3 @@
+# Archify 校验回执绑定 HTML 原始字节，保留生成器的空白格式。
+docs/design/permission-model-20261013/permission-model.html whitespace=-blank-at-eol
+docs/design/permission-model-20261013/permission-request.html whitespace=-blank-at-eol

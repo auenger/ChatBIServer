@@ -1,10 +1,16 @@
 # MEPER ChatBI Server
 
+> 2026-10-13 P2 适配修订已落档：见 [P2 适配修订](docs/plans/p2-permission-adaptation-20261013.md)。当前仍为引导管理员模式；权限合同 v2、V9/V10 与全入口执法属于下一阶段实现。
+
 以 **Java 服务端作为数据库能力主体** 的 ChatBI 后端。数据库连接、驱动管理、元数据发现、SQL 查询与增删改、事务、DDL/DCL、对象管理、导入导出及方言插件等完整能力收敛在服务端；B/S 网页、业务系统 API 与 Agent 通过同一套 Java 领域接口访问，**不直接获得 JDBC 连接**。
 
-> 当前状态（2026-09-17）：**P1 核心链路与数据库操作台已实现**。包括数据源管理、Chat2DB 式库表树、对象列表、表数据/结构查看、SQL 智能编辑、预检执行和历史记录。当前执法状态仍为 `BOOTSTRAP_ADMIN_UNRESTRICTED`，表/字段/行权限在 P2 接入。
+> 当前状态（2026-10-13）：**P1、0.1 AI 对话核心、DataWiki 与数据集已实现并打包**。支持知识草稿/发布、对话补充知识和受限跨库分析；当前仍为 `BOOTSTRAP_ADMIN_UNRESTRICTED`，P2 主体/行列权限未实现。本日已补实际浏览器和 glm-5.3-flash 验收，结果与限制见 [验收记录](docs/plans/release-acceptance-20261013.md)。代码、历史规划及下一步建议见 [进度对齐](docs/plans/progress-alignment-20261013.md)。
+
+> 本次为文档与设计材料提交；上述 DataWiki/数据集实现源码仍在本地未提交工作区，已打包版本的来源以验收记录及包内 manifest 为准。预览与测试容器已停止；提交前复核的 Oracle 连接失败见进度对齐中的收口补充。
 
 ## 设计文档
+
+**当前权限模型设计（讨论稿）**：[完整设计方案与策略真值表](docs/design/permission-model-20261013/README.md) · [权限模型交互图](docs/design/permission-model-20261013/permission-model.html) · [请求授权时序图](docs/design/permission-model-20261013/permission-request.html) · [讨论页面](docs/design/permission-model-20261013/index.html) · [配置原型](docs/prototypes/general-permission-studio.html)。设计面向外部业务服务，覆盖七个权限维度；P2 尚未实现，待讨论决策未冻结。HTML 下载后可直接用浏览器打开；GitHub 文件页面只展示源码。
 
 | 文档 | 内容 |
 | --- | --- |
@@ -12,6 +18,7 @@
 | [Java数据库能力架构方案.md](./Java数据库能力架构方案.md) | 目标架构、能力目录、技术栈、统一操作管线、权限模型 |
 | [Chat2DB-Java能力借鉴实施方案.md](./Chat2DB-Java能力借鉴实施方案.md) | 源码借鉴清单、必须改造的风险、阶段计划（G0→P6）、验证计划 |
 | [docs/modules/](./docs/modules/README.md) | 模块开发文档：每模块契约/边界/能力矩阵/DoD，按能力包组织（独立拆分开发的工作界面） |
+| [通用权限模型设计方案](docs/design/permission-model-20261013/README.md) | 当前 P2 讨论入口：接入信任、主体、实体关系、资源、行列策略、执行范围与撤权交付 |
 
 ## 当前已实现功能
 
@@ -57,7 +64,7 @@
 - P2 表/字段/行/操作权限、策略版本、撤权后结果治理与审批链路。
 - P3 结构化 DML、批量编辑、事务/幂等和写权限控制。
 - P4 DDL/DCL、账号、例程、导入导出等专用管理能力。
-- P5 Session Wiki、Agent Run 和授权工具交付。
+- 完整 P5 的 AgentDefinition、Run 状态机、授权工具交付与审批提案。DataWiki 与只读分析已提前实现。
 
 ## 技术栈
 
@@ -89,9 +96,11 @@ meper-chatbi-server
 
 ### 模块依赖方向（硬规则）
 
-- `web → domain / policy / query-enforcement`，**web 无 JDBC 直连**
+- `web → domain / policy / query-enforcement / agent`，**web 无 JDBC 直连**
 - `query-enforcement → connector-spi`
-- `domain → connector-spi / connector-jdbc / query-enforcement / control-storage`（装配与仓储；详见 [docs/modules/domain.md](./docs/modules/domain.md)）
+- `domain → connector-spi / connector-jdbc / query-enforcement / control-storage / session-wiki`（装配与仓储；详见 [docs/modules/domain.md](./docs/modules/domain.md)）
+- `agent → domain / control-storage / query-enforcement / connector-spi / session-wiki`
+- `session-wiki → control-storage`
 - `connector-jdbc / dialect-* → connector-spi`
 - `start` 只做装配，依赖所有模块
 - `connector-spi` 不依赖 Spring / Web / 驱动
@@ -105,7 +114,7 @@ meper-chatbi-server
 # 1. 控制库（MySQL 8.4；业务库按需再起）
 docker run -d --name meper-control -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=meper_control -p 3307:3306 mysql:8.4
 
-# 2. 全量构建 + 测试（当前 58 个测试，方言矩阵用 Testcontainers）
+# 2. 全量构建 + 测试（79 个测试，2026-10-13，方言矩阵用 Testcontainers）
 mvn -B -ntp package
 
 # 3. 启动后端（主密钥缺失会拒绝启动；首次提交会先 install 到本地仓库）
@@ -183,7 +192,7 @@ mvn -B -ntp test -pl meper-chatbi-web -am
 | P2 | 查询和权限：元数据过滤、身份模型、表/字段/行策略、受控查询 |
 | P3 | 数据增删改：DML、批量、事务、幂等、审批 |
 | P4 | 对象与账号全能力：DDL/DCL、例程、导入导出、管理员高级 SQL（工作台基础执行已在 P1 提前提供，逐语句 autocommit） |
-| P5 | Session Wiki 与 Agent |
+| P5 | DataWiki/只读分析已提前实现；AgentDefinition、Run、授权与审批交付待开发 |
 | P6 | 方言扩展 |
 
 详细完成条件见[实施方案 §3](./Chat2DB-Java能力借鉴实施方案.md)。
@@ -213,3 +222,13 @@ mvn -B -ntp test -pl meper-chatbi-web -am
 - Agent 工具仅经 QueryEnforcement 执行，提案不等于执行许可
 
 完整清单见两份设计文档。
+
+
+### DataWiki 首版
+
+主导航「DataWiki」：同步结构、编辑表字段业务说明、创建指标/术语/关联规则、草稿发布及版本历史。Agent 经 wiki_glob/grep/read 按需检索正式知识；语义保存在 ChatBI 控制库，不修改原业务库。当前仍为引导管理员阶段，完整权限过滤待 P2。操作步骤见 [实施与人工验收](docs/plans/datawiki-implementation.md)。
+
+
+### 数据集与对话式知识维护
+
+主导航「数据集」组合多个数据库的具体表及 Wiki；AI 对话可选择数据库/数据集，跨库结果由服务端关联和精确计算。「模型设置」可指定默认模型；DataWiki 支持对话补充草稿、统一发布、发布记录和辅助栏收缩。实现与验收见 [第二轮计划](docs/plans/dataset-knowledge-v2.md)。

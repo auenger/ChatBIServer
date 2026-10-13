@@ -1,0 +1,330 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "MEPER 通用权限模型 · 讨论稿 / 尚未实现",
+    "locale": "zh-CN",
+    "output": "docs/design/permission-model-20261013/permission-model.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "调用应用",
+      "sublabel": "应用身份与代调用者",
+      "pos": [
+        40,
+        60
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "tag": "TrustedClient / actor"
+    },
+    {
+      "id": "trust",
+      "type": "security",
+      "label": "信任配置",
+      "sublabel": "签发方、受众与模型白名单",
+      "pos": [
+        430,
+        60
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "tag": "Issuer / audience"
+    },
+    {
+      "id": "source",
+      "type": "external",
+      "label": "身份来源",
+      "sublabel": "业务目录、可信声明或提供者",
+      "pos": [
+        820,
+        60
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "tag": "逻辑来源 ≠ 资源库"
+    },
+    {
+      "id": "subject",
+      "type": "security",
+      "label": "解析后的主体",
+      "sublabel": "来源限定的标识与类型化属性",
+      "pos": [
+        40,
+        290
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "tag": "SubjectRef / freshness"
+    },
+    {
+      "id": "model",
+      "type": "backend",
+      "label": "身份模型",
+      "sublabel": "发布版本与受限目录读取计划",
+      "pos": [
+        430,
+        290
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "tag": "AccessModel"
+    },
+    {
+      "id": "relations",
+      "type": "backend",
+      "label": "实体与关系定义",
+      "sublabel": "键、属性、外键或关联表路径",
+      "pos": [
+        820,
+        290
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "tag": "Entity / Relationship"
+    },
+    {
+      "id": "domain",
+      "type": "security",
+      "label": "权限域 · 建议",
+      "sublabel": "客户端、模型与资源适用边界",
+      "pos": [
+        40,
+        520
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "tag": "跨数据源边界待讨论"
+    },
+    {
+      "id": "policy",
+      "type": "security",
+      "label": "策略与主体绑定",
+      "sublabel": "操作、字段用途、行规则、限额",
+      "pos": [
+        430,
+        520
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "tag": "Policy / Binding"
+    },
+    {
+      "id": "resource",
+      "type": "database",
+      "label": "受控资源",
+      "sublabel": "库表列、数据集、Wiki 与历史",
+      "pos": [
+        820,
+        520
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "tag": "ResourceRef / lineage"
+    },
+    {
+      "id": "scope",
+      "type": "security",
+      "label": "执行范围上限",
+      "sublabel": "应用、Agent、数据集与任务",
+      "pos": [
+        40,
+        750
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "tag": "ExecutionScope"
+    },
+    {
+      "id": "decision",
+      "type": "backend",
+      "label": "授权决策",
+      "sublabel": "默认拒绝；允许取并、约束最严",
+      "pos": [
+        430,
+        750
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "tag": "PolicyDecision"
+    },
+    {
+      "id": "stamp",
+      "type": "security",
+      "label": "授权戳与交付依赖",
+      "sublabel": "策略版本、身份新鲜度及血缘",
+      "pos": [
+        820,
+        750
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "tag": "Stamp / scopeVersion"
+    }
+  ],
+  "connections": [
+    {
+      "id": "client-trust",
+      "from": "client",
+      "to": "trust",
+      "label": "验证调用",
+      "variant": "default"
+    },
+    {
+      "id": "trust-source",
+      "from": "trust",
+      "to": "source",
+      "label": "限定来源",
+      "variant": "security"
+    },
+    {
+      "id": "source-relations",
+      "from": "source",
+      "to": "relations",
+      "label": "目录映射",
+      "variant": "default"
+    },
+    {
+      "id": "relations-model",
+      "from": "relations",
+      "to": "model",
+      "label": "组成模型",
+      "variant": "default"
+    },
+    {
+      "id": "trust-model",
+      "from": "trust",
+      "to": "model",
+      "label": "允许使用",
+      "variant": "security"
+    },
+    {
+      "id": "model-subject",
+      "from": "model",
+      "to": "subject",
+      "label": "解析主体",
+      "variant": "default"
+    },
+    {
+      "id": "subject-domain",
+      "from": "subject",
+      "to": "domain",
+      "label": "主体上下文",
+      "variant": "default"
+    },
+    {
+      "id": "domain-policy",
+      "from": "domain",
+      "to": "policy",
+      "label": "限定适用",
+      "variant": "default"
+    },
+    {
+      "id": "resource-policy",
+      "from": "resource",
+      "to": "policy",
+      "label": "精确目标",
+      "variant": "default"
+    },
+    {
+      "id": "domain-scope",
+      "from": "domain",
+      "to": "scope",
+      "label": "域内范围",
+      "variant": "security"
+    },
+    {
+      "id": "policy-decision",
+      "from": "policy",
+      "to": "decision",
+      "label": "同目标合并",
+      "variant": "security"
+    },
+    {
+      "id": "scope-decision",
+      "from": "scope",
+      "to": "decision",
+      "label": "共同收窄",
+      "variant": "security"
+    },
+    {
+      "id": "decision-stamp",
+      "from": "decision",
+      "to": "stamp",
+      "label": "允许后固化",
+      "variant": "emphasis"
+    },
+    {
+      "id": "resource-stamp",
+      "from": "resource",
+      "to": "stamp",
+      "label": "依赖血缘",
+      "variant": "default"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "设计状态与讨论边界",
+      "items": [
+        "全部节点表达目标设计；当前服务仍为 BOOTSTRAP_ADMIN_UNRESTRICTED。",
+        "权限域跨数据源复用是建议；显式 DENY 与外部撤权窗口尚未冻结。",
+        "图来自项目设计说明；不提供已提交代码的来源验证。"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "接入通用性",
+      "items": [
+        "平台隔离域由受信配置选择；来源内 sub 不作为全局用户名。",
+        "身份目录可与业务资源库分离；不强制用户表、组织表或 tenant_id。",
+        "业务服务保留登录与账号生命周期；平台管理身份单独认证。"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "已确认的授权约束",
+      "items": [
+        "同资源、同操作的已发布匹配策略：列交集、行规则 AND、脱敏并集、限额最小。",
+        "Agent、客户端和数据集只收窄；管理操作授权不隐含业务读取权。",
+        "空允许字段、解析失败、必需属性缺失均拒绝。"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "发布与交付",
+      "items": [
+        "草稿不生效；发布校验映射唯一性、关系能力、资源字段与类型。",
+        "授权戳包括策略完整版本向量、模型 revision、外部身份新鲜度。",
+        "执行、模型输入、结果消费和历史回放分别复验；已交付字节无法收回。"
+      ]
+    }
+  ]
+}

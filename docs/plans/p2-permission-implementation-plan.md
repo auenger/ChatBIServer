@@ -1,9 +1,13 @@
 # P2 权限建模实施计划
 
-> 状态：**已评审（2026-09-21，§10 决策点全部关闭），可按批次开工**（每批次一个提交单元，`mvn -B -ntp package` 全绿后提交）
-> 前提：[policy.md](../modules/policy.md) §3 决策契约已冻结（contractVersion "1"），§7 三条方向性决策已关闭（2026-09-18）。
+> **后续方向修正（2026-10-13）**：用户明确以外部业务服务接入为主要场景。身份/权限域/迁移与首批实施顺序须先按 [通用权限模型复核](p2-general-permission-model-review-20261013.md)细化；本地账号不再作为业务主体模型的前提。本文全入口执法要求保留，新合同尚未冻结。
+
+> 状态：**历史 v1 基线，尚未实现；2026-10-13 适配修订已完成**。当前开工入口为 [P2 适配修订](p2-permission-adaptation-20261013.md)，其 contractVersion 2、权限版本、Wiki/数据集/历史入口、迁移与批次顺序覆盖本文相应条款。原 §10 原则在无冲突处继续有效。
+> 历史前提：[policy.md](../modules/policy.md) §3 决策契约已冻结（contractVersion "1"），§7 三条方向性决策已关闭（2026-09-18）。
 > 本计划把 [modules/README.md](../modules/README.md) §3 的「三条并行线」转成单线推进的 8 个批次，并落到具体类名、表结构与测试清单。
 > 计划中的所有类名、插入点行号均按 2026-09-21 代码核实。
+
+> 2026-10-12 序号更正：V1–V6 已由现有能力占用，V7 用于 DataWiki、V8 用于数据集/默认模型；本计划中的权限迁移编号属于历史草案，开工时按最新版本追加（当前应为 V9）。
 
 ## 0. 范围
 
@@ -18,7 +22,7 @@
 | # | 批次 | 模块 | 关键交付 | 验收 |
 | --- | --- | --- | --- | --- |
 | 1 | 决策契约落码 | policy、query-enforcement | `PolicyDecisionService` / `DecisionQuery` / `TableDecision` / `TableOperation` | 编译全绿，无行为变更 |
-| 2 | V6 存储迁移 | control-storage | `V6__permission_model.sql`（7 表）+ 5 个 Repository + 哈希服务 | 迁移测试 + 仓储单测 |
+| 2 | V9 存储迁移 | control-storage | `V9__permission_model.sql`（7 表）+ 5 个 Repository + 哈希服务 | 迁移测试 + 仓储单测 |
 | 3 | 决策内核 | policy | `PolicyDecisionServiceImpl`（默认拒绝 4 规则 + §3.1 叠加 6 规则 + 超管短路）+ `IdentityAuthService` | policy.md §6 清单全覆盖单测 |
 | 4 | 身份登录改造 | web | 登录走 identity 表 + 超管 seed + 会话携带角色 | 行为兼容：admin 原账号密码可登录 |
 | 5 | 执法管线 | query-enforcement | `StatementResolver` / `EnforcementPipeline` / `ResultGovernance` / `MetadataFilter` | query-enforcement.md §5 清单单测（mock 决策） |
@@ -59,9 +63,9 @@ public record TableDecision(
 
 **验收**：全量构建全绿；现有行为零变化。
 
-## 3. 批次 2：V6 存储迁移
+## 3. 批次 2：V9 存储迁移
 
-**`V6__permission_model.sql`**（沿用 V1 风格：utf8mb4、DATETIME(6)、显式约束命名；tenant_id 统一预留，阶段 1 恒 `default`；**V2 被 0.1 模型配置表、V3 被对话消息表占用**，见 [p01-agent-chat-mvp.md](./p01-agent-chat-mvp.md)）：
+**`V9__permission_model.sql`**（沿用 V1 风格：utf8mb4、DATETIME(6)、显式约束命名；tenant_id 统一预留，阶段 1 恒 `default`；**V2 被 0.1 模型配置表、V3 被对话消息表占用**，见 [p01-agent-chat-mvp.md](./p01-agent-chat-mvp.md)）：
 
 ```sql
 -- 身份
@@ -79,7 +83,7 @@ CREATE TABLE meper_identity (
     CONSTRAINT uq_identity_tenant_username UNIQUE (tenant_id, username)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- 角色 / 身份-角色映射（V2 迁移 seed 内置角色：admin=管理面访问、member=普通用户；均非免检通道）
+-- 角色 / 身份-角色映射（权限迁移 seed 内置角色：admin=管理面访问、member=普通用户；均非免检通道）
 CREATE TABLE meper_role (
     id BIGINT NOT NULL AUTO_INCREMENT,
     tenant_id VARCHAR(64) NOT NULL DEFAULT 'default',
@@ -299,11 +303,13 @@ CREATE TABLE meper_operation_approval (
 
 - policy.md §8：契约冻结已升版记录 ✓ / §6 清单 ✓ / 快照隔离与 revision 再校验 ✓ / 撤权即时生效 ✓ / 超管短路审计 ✓ / §3.1 六条 ✓
 - query-enforcement.md §7：管线全覆盖 ✓ / 无旁路静态检查（web/domain 无 JDBC import）✓ / 三类拒绝可区分 ✓ / 同一 contractVersion ✓
-- control-storage.md §6：V2 迁移测试 ✓ / 仓储单测 ✓ / 审计无凭据 ✓
+- control-storage.md §6：新增权限迁移测试 ✓ / 仓储单测 ✓ / 审计无凭据 ✓
 - domain.md §8：执法状态不再出现 `BOOTSTRAP_ADMIN_UNRESTRICTED`（新记录）✓ / 无 Controller 层权限判断 ✓
 - web.md §6：策略拒绝可区分 ✓ / 引导管理员演进为超管 seed ✓
 
 ## 10. 已决策记录（2026-09-21，评审通过，全部关闭）
+
+下表保留历史决策。第 9 项迁移号已由页首的 V9 更正取代；新增能力的适配问题不在当时评审范围内。
 
 | # | 决策点 | 结论 |
 | --- | --- | --- |
@@ -324,7 +330,7 @@ P1.x 前置补丁已完成（2026-09-21，提交 `861925e`）：`JdbcSqlExecutor
 | 批次 | 提交信息（拟） |
 | --- | --- |
 | 1 | `feat(policy): P2 决策契约类型落码（contractVersion 1）` |
-| 2 | `feat(storage): V6 权限模型迁移与仓储（身份/权限域/策略/快照/审批）` |
+| 2 | `feat(storage): V9 权限模型迁移与仓储（身份/权限域/策略/快照/审批）` |
 | 3 | `feat(policy): 决策内核 —— 默认拒绝、多策略叠加、超管短路` |
 | 4 | `feat(web): 身份登录接入 identity 表与超管 seed` |
 | 5 | `feat(query): 目标资源解析、执法管线与结果治理` |

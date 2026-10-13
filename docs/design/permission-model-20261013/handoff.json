@@ -1,0 +1,51 @@
+{
+  "archifyVersion": "3.0.1",
+  "designStatus": "DISCUSSION_NOT_IMPLEMENTED",
+  "artifacts": [
+    {
+      "diagram_type": "architecture",
+      "output": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/permission-model.html",
+      "specification_sha256": "53ae0c3a25a69abfc248074c90e7c95e34dac69e825f6f8138f6c158b1d56b44",
+      "artifact_sha256": "f8150090f4a78300433018d0709229c345cb94778befb09f6f59313333550f4e",
+      "validation": "9/9 showcase; 0 errors; 0 warnings",
+      "browser_evidence": "passed",
+      "visual_review": "passed",
+      "visual_review_scope": "1440x900 dark and 2048x1320 light screenshots inspected; intrinsic vertical scrolling",
+      "correction_rounds": 0,
+      "receipt": "docs/design/permission-model-20261013/permission-model.finalize-summary.json",
+      "gates": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      }
+    },
+    {
+      "diagram_type": "sequence",
+      "output": "/Users/ryan/mycode/MEPERChatBIServer/docs/design/permission-model-20261013/permission-request.html",
+      "specification_sha256": "a66bdc268e101f73b6818c69ff1f1699efba62c6a35e1ab22533ace15eabe003",
+      "artifact_sha256": "620121ae7a28b02e914f1622309042dd2d083c16af6c2ef6f66a6b5e21d4ddb4",
+      "validation": "9/9 showcase; 0 errors; 0 warnings",
+      "browser_evidence": "passed",
+      "visual_review": "passed",
+      "visual_review_scope": "1440x900 dark and 2048x1320 light screenshots inspected; intrinsic vertical scrolling",
+      "correction_rounds": 2,
+      "receipt": "docs/design/permission-model-20261013/request-check/permission-request.finalize-summary.json",
+      "gates": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      }
+    }
+  ],
+  "indexCheck": {
+    "widths": [
+      1440,
+      390
+    ],
+    "horizontalOverflow": false,
+    "pageErrors": [],
+    "linksChecked": 4
+  }
+}

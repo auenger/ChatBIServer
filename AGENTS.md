@@ -1,5 +1,9 @@
 # AGENTS.md — AI 协作指南
 
+> 2026-10-13 P2 适配修订已落档：见 [P2 适配修订](docs/plans/p2-permission-adaptation-20261013.md)。当前仍为引导管理员模式；权限合同 v2、V9/V10 与全入口执法属于下一阶段实现。
+
+> 当前权限建模讨论入口：[通用权限模型设计方案](docs/design/permission-model-20261013/README.md)（七维模型、交互图与策略真值表）。以外部业务服务与可配置身份关系为主线；权限域、策略组合扩展、外部撤权窗口尚未冻结，落码前先完成合同讨论。
+
 面向在此仓库工作的 AI 编码代理（Claude Code 等）与人类协作者。改动前请先读本文、[docs/README.md](./docs/README.md)（文档核心索引）与两份设计文档。
 
 ## 项目是什么
@@ -15,9 +19,12 @@ Chat2DB 参考源码位于同级目录 `../Chat2DB-permission-aware-chatbi`（�
 
 ## 当前阶段与边界
 
+当前代码、历史规划与验收边界统一见 [docs/plans/progress-alignment-20261013.md](./docs/plans/progress-alignment-20261013.md)。其中记录尚待收口的架构差异；目标约束仍有效，未因本次文档对齐而放宽。
+
 - **P1 核心链路已实现**：connector-spi 契约（ExecutionContext/CapabilityDescriptor/SqlDialect/SqlExecutor）、4 方言（URL/分页/探活/元数据命名空间布局）、HikariCP 池注册表（key = datasourceId + credentialVersion，轮换逐出）、SqlClassifier（Druid 拆分分类 + 方言格式化）、**JdbcMetadataReader（JDBC 标准元数据：库表树/表结构/表数据分页，MySQL 走 catalog、其余走 schema，系统库按方言过滤）**、数据源管理 + 工作台 + 元数据 API、AES-256-GCM 凭据加密（主密钥 `MEPER_MASTER_KEY` 缺失即拒绝启动）、控制库 Flyway schema（meper_ 前缀 5 表）、React+antd 前端（webapp/：登录/数据源管理/**workspace 懒加载库表树、双击展开、对象列表、表数据/结构、多标签页与状态保持、SQL 元数据补全/检查/格式化/两阶段执行**/独立工作台）。
 - **执法状态恒为 BOOTSTRAP_ADMIN_UNRESTRICTED**：阶段 1 无策略约束，响应显式携带该标记；ExecutionContext 只能由 domain 的 ExecutionContextFactory 签发，P2 接入后在 WorkbenchService/DataSourceService 的执行路径插入策略决策，不得在 Controller 层加判断。
-- **0.1 Agent chat MVP 开发中（2026-09-23 起，见 docs/plans/p01-agent-chat-mvp.md）**：Spring AI 1.1.8（Boot 3 兼容线）引入 agent 模块 `gateway` 子包——**spring-ai 类型不得出现在其他模块**（静态约束）；starter 自动配置以 `spring.ai.model.chat=none` 关闭，ChatModel 由 `ModelGateway` 按 provider 配置手动构建（启动期零 apiKey 依赖）；模型配置存控制库 `V2__model_provider.sql`，apiKey AES-256-GCM 加密、API/日志不回显；`execute_query` 工具经 `WorkbenchService` 执行（SELECT-only + maxRows 200），agent 不持有 JDBC。
+- **0.1 Agent chat MVP 核心已实现（2026-10-13 对齐，真实模型验收待补；见 docs/plans/p01-agent-chat-mvp.md）**：Spring AI 1.1.8（Boot 3 兼容线）引入 agent 模块 `gateway` 子包——**spring-ai 类型不得出现在其他模块**（静态约束）；starter 自动配置以 `spring.ai.model.chat=none` 关闭，ChatModel 由 `ModelGateway` 按 provider 配置手动构建（启动期零 apiKey 依赖）；模型配置存控制库 `V2__model_provider.sql`，apiKey AES-256-GCM 加密、API/日志不回显；`execute_query` 工具经 `WorkbenchService` 执行（SELECT-only + maxRows 200），agent 不持有 JDBC。
+- **DataWiki / 数据集（2026-10-12）**：V7/V8 控制库存结构镜像、语义、知识空间、数据集和默认模型；结构自动可检索、业务语义批量发布；知识编辑 Agent 仅写草稿，跨库分析逐库经 Workbench 执行并由服务端精确合并。当前仍为引导管理员模式，P2 主体/字段执法未切换。
 - 尚未迁入任何 Chat2DB 源码；迁入按实施方案 §3 的阶段推进，不要跳阶段引入半成品能力。
 - **首批目标数据库已定（2026-09-15，2026-09-16 补版本矩阵）**：MySQL 5.7/8.4.x、SQL Server 2019/2022、PostgreSQL 16、Oracle 19c/23ai。JDBC 驱动内置在对应 dialect 模块（版本：mysql-connector-j / mssql-jdbc / postgresql 由 Spring Boot BOM 管理，ojdbc17 由根 pom `ojdbc.version` 锁定）；**不做自定义驱动 JAR 上传**，若未来引入必须先满足实施方案 §4 的驱动来源/校验/隔离要求。
 - **MySQL 5.7 + mysql-connector-j 9.7.0**：官方不再声明支持 5.7，但实测连通正常（Testcontainers 验证）。方言实现里不得因此使用 5.7 独有行为；若发现协议级问题，降级驱动到 8.0.33。
@@ -53,10 +60,10 @@ mvn -B -ntp spring-boot:run -pl meper-chatbi-start
 | meper-chatbi-dialect-oracle | Oracle 方言 + 内置 ojdbc17 | connector-spi |
 | meper-chatbi-policy | 身份映射、表/字段/行/操作策略、审批 | control-storage（仓储，P2 起；已决策放开，见 policy.md §7） |
 | meper-chatbi-query-enforcement | SQL/对象操作分类、权限校验、结果治理 | connector-spi |
-| meper-chatbi-domain | 数据源、对象操作、任务、Agent、Wiki 工作流 | connector-spi、connector-jdbc、query-enforcement、control-storage（装配与仓储；DomainConfig 装配连接器/分类器实现，见 domain.md §7） |
+| meper-chatbi-domain | 数据源、对象操作、任务、Agent、Wiki 工作流 | connector-spi、connector-jdbc、query-enforcement、control-storage、session-wiki（DataWiki 编排；DomainConfig 装配连接器/分类器实现，见 domain.md §7） |
 | meper-chatbi-control-storage | Repository、配置版本、审计与任务存储 | connector-spi（ExecutionRecord 关联 ExecutionContext） |
-| meper-chatbi-session-wiki | 授权语义目录、有限会话历史 | （暂无内部依赖） |
-| meper-chatbi-agent | Agent 定义、Run、工具入口与交付 | control-storage（模型 provider 配置仓储，0.1 起）；P5 起按 agent.md §3 扩展 |
+| meper-chatbi-session-wiki | DataWiki 语义管理、发布、受限文件检索 | control-storage（传递 connector-spi；DataWiki 起） |
+| meper-chatbi-agent | Agent 定义、Run、工具入口与交付 | control-storage、domain、query-enforcement、connector-spi、session-wiki（模型配置、数据/Wiki工具） |
 | meper-chatbi-web | B/S API、Trusted API、MCP 适配 | domain、policy、query-enforcement、agent（0.1 起：模型配置/chat API） |
 | meper-chatbi-start | 装配、配置、健康检查 | 全部模块 |
 

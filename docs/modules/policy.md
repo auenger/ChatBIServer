@@ -1,5 +1,7 @@
 # meper-chatbi-policy
 
+> P2 当前设计依据：[2026-10-13 适配修订](../plans/p2-permission-adaptation-20261013.md)。本文旧 contractVersion 1、版本校验、权限入口与批次条款如有冲突，以修订稿为准；设计修订不代表运行时已实现。
+
 > 能力包：C 权限建模｜阶段：P2 ❌ 未开始（现仅 package-info 约束）｜依赖：control-storage（仓储，已决策放开，见 §7）
 > 模块约束原文：`com.meper.chatbi.policy.package-info`
 
@@ -12,13 +14,15 @@
 - 决策只读**已发布快照**（PUBLISHED revision），草稿（DRAFT）与停用（DISABLED）不参与决策；
 - Agent 的工具权限永远是主体权限的收窄（收窄逻辑在 agent 模块，本模块只提供主体决策）。
 
+> 当前迁移号与合同待澄清项见[进度对齐 §3–4](../plans/progress-alignment-20261013.md)；§7 保留历史决定，不表示其中旧迁移序号仍可使用。
+
 ## 2. 领域模型（P2 交付，存储见 control-storage.md §4）
 
 | 模型 | 要点 |
 | --- | --- |
 | `Identity` | 本地用户（P2）：username、passwordHash、displayName、status；外部主体映射字段预留（P2 先不接外部 IdP） |
 | `Role` / `IdentityRole` | 角色；P2 内置普通角色；`admin` 角色用于管理面访问控制（**不是**免检通道） |
-| 超级管理员 | **内置身份**（随 V2 迁移 seed，初始凭据复用引导管理员的环境变量机制）：唯一可跳过策略决策的主体，用于测试与应急；短路在决策接口内实现、审计不豁免（见 §3 判定规则 0） |
+| 超级管理员 | **内置身份**（随新增权限迁移 seed（当前下一号 V9），初始凭据复用引导管理员的环境变量机制）：唯一可跳过策略决策的主体，用于测试与应急；短路在决策接口内实现、审计不豁免（见 §3 判定规则 0） |
 | `PermissionDomain` | 权限域：主体/角色 × 数据源 × 命名空间（库/Schema）范围；无匹配权限域 = 无权限 |
 | `ResourcePolicy` | 表级策略：`SELECT / INSERT / UPDATE / DELETE` 四操作开关；字段矩阵（可读 readable / 可筛选 filterable / 可新增 insertable / 可修改 updatable / 脱敏 masked）；行规则 rowFilter；maxRows |
 | `PolicySnapshot` | 发布快照：revision 单调递增；决策与「交付前再校验」都基于快照 |

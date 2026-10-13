@@ -1,10 +1,12 @@
 # 0.1 Agent Chat MVP 规划（chat + NL2SQL + 执行）
 
-> 状态：**已确认（2026-09-23），开发中**。批次 A→D 顺序推进，每批全绿提交。
+> 状态（2026-10-13 对齐）：**核心实现已交付**，A–D 为历史实施划分；真实模型业务闭环验收记录待补。后续 DataWiki/数据集扩展及残余边界见[进度对齐](progress-alignment-20261013.md)。
 > 定位：P5 之前的最小横切验证——打通「自然语言 → 模型 → SQL → 受控执行 → 结果」闭环；同时提前落定 Spring AI 集成与模型配置存储（P5 批次 1 的前置）。
 > 借鉴：Chat2DB 参考（branch feature/permission-aware-chatbi）的基本 chat 能力，调研结论见附录。
 
 ## 0. 范围
+
+以下为 0.1 初始范围。Wiki 检索和知识草稿编辑已在 10 月后续阶段实现；“P2 自动接入”仅描述查询复用 Workbench 的接线点，完整 P2 仍须覆盖知识、元数据和历史等入口。
 
 **做**：模型配置管理（独立设置页，OpenAI 兼容 + Anthropic 两种协议）、chat 对话（SSE 流式）、3 个数据工具（schema 发现 ×2 + 查询执行 ×1）与内置图表技能读取工具、SELECT 自动执行、前端模型设置页与对话页（表格复制 + GPT-Vis 图表）。
 
@@ -23,7 +25,7 @@
 | 模型配置存储 | 控制库 **`V2__model_provider.sql`**；apiKey AES-256-GCM（`MEPER_MASTER_KEY`）加密，页面/日志/API **不回显** |
 | 执行通道 | `execute_query` → `WorkbenchService.execute`（审计、执行记录、`ExecutionLimits` 全保留）——**agent 零 JDBC**（红线） |
 | 安全白名单 | `SqlClassifier` 分类：仅 `SELECT` 自动执行；maxRows 固定 **200**；非 SELECT 回显不执行 |
-| 会话 | 内存（`TokenStore` 模式，重启失效），0.1 不持久化；窗口裁剪最近 N 轮 |
+| 会话 | 聊天消息持久化至控制库，内存保留最近 20 条并可回源；认证 TokenStore 仍为内存、重启失效 |
 | 审计 | `AGENT_CHAT`（对话）/ `AGENT_TOOL_CALL`（工具调用），复用 `AuditRepository` |
 | Spring AI 隔离 | 类型不出 agent 模块 `gateway` 子包（对齐 p5-agent-design.md §3） |
 
@@ -55,9 +57,11 @@
 
 ## 6. 迁移序号说明
 
-0.1 占用 **`V2__model_provider.sql`**（模型配置表）、**`V3__chat_session.sql`**（对话消息表）、**`V4__chat_message_usage.sql`**（usage 列）、**`V5__chat_message_reasoning.sql`**（思维链列）；P2 权限模型顺延为 **`V6__permission_model.sql`**。规则不变：只增不改。
+0.1 占用 **`V2__model_provider.sql`**（模型配置表）、**`V3__chat_session.sql`**（对话消息表）、**`V4__chat_message_usage.sql`**（usage 列）、**`V5__chat_message_reasoning.sql`**（思维链列）、**`V6__chat_message_tools.sql`**（工具记录）。后续 V7/V8 已由 Wiki/数据集占用，P2 当前从 **V9** 起追加，开工再核对。规则不变：只增不改。
 
 ## 7. 已决策记录（2026-09-23，与用户确认）
+
+以下按决策发生时间保留，旧迁移序号以 §6 的当前清单为准；第 5 项“工具活动不落库”已由 V6 工具记录持久化扩展。
 
 1. **SELECT 自动执行**：模型生成 SELECT 直接执行返回数据；非 SELECT 拦截回显；
 2. **前端纳入 0.1**：模型设置页 + 对话页；

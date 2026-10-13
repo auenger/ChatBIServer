@@ -1,6 +1,8 @@
 # meper-chatbi-domain
 
-> 能力包：B 基本数据库操作（P1 ✅）｜后续承接：D 结构化 DML（P3）、C 权限建模接线（P2）｜依赖：connector-spi、connector-jdbc、query-enforcement、control-storage
+> P2 当前设计依据：[2026-10-13 适配修订](../plans/p2-permission-adaptation-20261013.md)。本文旧 contractVersion 1、版本校验、权限入口与批次条款如有冲突，以修订稿为准；设计修订不代表运行时已实现。
+
+> 能力包：B 基本数据库操作（P1 ✅）｜后续承接：D 结构化 DML（P3）、C 权限建模接线（P2）｜依赖：connector-spi、connector-jdbc、query-enforcement、control-storage、session-wiki
 > 模块约束原文：`com.meper.chatbi.domain.package-info`
 
 ## 1. 定位与边界
@@ -43,6 +45,8 @@
 | query-enforcement | `SqlClassifier` 分类与格式化（P2 起为执法管线） |
 | control-storage | 数据源/凭据/执行/审计仓储 |
 
+> 2026-10-13 核对：MetadataService 当前直接持有 JDBC Connection，方法未传主体上下文；与本文无 JDBC import 的目标 DoD 尚有差距。P2 需同时覆盖表数据/计数、Wiki/数据集与历史入口，详见[进度对齐 §4–5](../plans/progress-alignment-20261013.md)。
+
 ## 4. 能力包 C 接线点（P2 权限建模，已预留）
 
 改动集中在本模块三个位置，**不得在 Controller 层加权限判断**：
@@ -73,3 +77,13 @@
 - 新用例有 `ExecutionContext`（经工厂）且写审计；
 - 不出现方言 SQL / JDBC import（静态检查项）；
 - P2 接线后：无策略数据源（未登记权限域）默认拒绝，执法状态不再出现 `BOOTSTRAP_ADMIN_UNRESTRICTED`（阶段 1 数据除外）。
+
+
+## DataWiki 首版（2026-10-12）
+
+实现边界、接口、页面与验收见 [DataWiki 实施计划](../plans/datawiki-implementation.md)。本阶段提前交付语义目录，执法状态仍为 BOOTSTRAP_ADMIN_UNRESTRICTED；权限 P2 的多用户资源过滤未切换。
+
+
+## 数据集与对话式 Wiki（2026-10-12）
+
+本轮增加默认模型、知识空间绑定、批量发布与对话草稿，分析支持受限跨库查询和固定服务端合并。边界与验收见 [第二轮实现](../plans/dataset-knowledge-v2.md)。权限执法仍为引导管理员阶段。

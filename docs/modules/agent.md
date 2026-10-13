@@ -1,6 +1,9 @@
 # meper-chatbi-agent
 
-> 能力包：F Agent｜阶段：P5 ❌（现仅 package-info 约束）｜**设计已定稿**（2026-09-23，见 [../plans/p5-agent-design.md](../plans/p5-agent-design.md)）｜依赖：暂无（目标：经 query-enforcement 执行；权限为主体权限的收窄）
+> P2 当前设计依据：[2026-10-13 适配修订](../plans/p2-permission-adaptation-20261013.md)。本文旧 contractVersion 1、版本校验、权限入口与批次条款如有冲突，以修订稿为准；设计修订不代表运行时已实现。
+
+> 能力包：F Agent｜0.1 对话、模型、知识工具及受限跨库分析已实现；完整 P5 的 AgentDefinition/Run/审批待开发（2026-10-13）。实际依赖：domain、control-storage、query-enforcement、connector-spi、session-wiki。
+> [P5 设计](../plans/p5-agent-design.md)保留目标契约；当前实现与已知差异见[进度对齐](../plans/progress-alignment-20261013.md)，包括 Spring AI 尚未完全隔离到 gateway 子包。
 > 模块约束原文：`com.meper.chatbi.agent.package-info`
 
 ## 1. 定位与边界
@@ -77,3 +80,13 @@ interface AgentTool {                                           // 全部工具�
 - 收窄验证：主体可读但 Agent 定义未含的对象，工具不可达；
 - 提案-审批-执行闭环：提案不产生任何业务库副作用；
 - Run 历史有预算上限；审计记录工具调用与交付状态。
+
+
+## DataWiki 首版（2026-10-12）
+
+实现边界、接口、页面与验收见 [DataWiki 实施计划](../plans/datawiki-implementation.md)。本阶段提前交付语义目录，执法状态仍为 BOOTSTRAP_ADMIN_UNRESTRICTED；权限 P2 的多用户资源过滤未切换。
+
+
+## 数据集与对话式 Wiki（2026-10-12）
+
+本轮增加默认模型、知识空间绑定、批量发布与对话草稿，分析支持受限跨库查询和固定服务端合并。边界与验收见 [第二轮实现](../plans/dataset-knowledge-v2.md)。权限执法仍为引导管理员阶段。

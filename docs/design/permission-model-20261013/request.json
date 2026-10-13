@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "MEPER 请求授权与交付 · P2 目标时序 / 尚未实现",
+    "locale": "zh-CN",
+    "output": "docs/design/permission-model-20261013/permission-request.html",
+    "quality_profile": "showcase",
+    "column_fit": "spread"
+  },
+  "participants": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "业务应用",
+      "sublabel": "已认证用户"
+    },
+    {
+      "id": "domain",
+      "type": "backend",
+      "label": "领域编排",
+      "sublabel": "身份 / 上下文"
+    },
+    {
+      "id": "identity",
+      "type": "security",
+      "label": "身份提供者",
+      "sublabel": "受限目录计划"
+    },
+    {
+      "id": "policy",
+      "type": "security",
+      "label": "策略决策",
+      "sublabel": "操作 / 数据 / 上限"
+    },
+    {
+      "id": "query",
+      "type": "backend",
+      "label": "查询执法",
+      "sublabel": "解析 / 改写 / 治理"
+    },
+    {
+      "id": "connector",
+      "type": "database",
+      "label": "连接器",
+      "sublabel": "唯一业务库执行"
+    },
+    {
+      "id": "delivery",
+      "type": "security",
+      "label": "交付复验",
+      "sublabel": "模型 / SSE / 历史"
+    }
+  ],
+  "segments": [
+    {
+      "from": 150,
+      "to": 615,
+      "label": "建立可信身份与上下文"
+    },
+    {
+      "from": 635,
+      "to": 995,
+      "label": "解析、决策与受控执行"
+    },
+    {
+      "from": 1015,
+      "to": 1485,
+      "label": "治理、复验与交付"
+    }
+  ],
+  "messages": [
+    {
+      "id": "request",
+      "from": "client",
+      "to": "domain",
+      "y": 170,
+      "label": "应用凭证 + 身份断言",
+      "variant": "security"
+    },
+    {
+      "id": "resolve",
+      "from": "domain",
+      "to": "identity",
+      "y": 304,
+      "label": "信任校验通过才解析主体",
+      "variant": "security",
+      "note": "先验证来源、受众、时效与重放；失败即终止"
+    },
+    {
+      "id": "directory",
+      "from": "identity",
+      "to": "connector",
+      "y": 371,
+      "label": "目录白名单计划",
+      "variant": "security"
+    },
+    {
+      "id": "directory-result",
+      "from": "connector",
+      "to": "identity",
+      "y": 438,
+      "label": "唯一且有效的身份",
+      "variant": "return"
+    },
+    {
+      "id": "subject",
+      "from": "identity",
+      "to": "domain",
+      "y": 505,
+      "label": "主体、关系、新鲜度",
+      "variant": "return"
+    },
+    {
+      "id": "parse",
+      "from": "domain",
+      "to": "query",
+      "y": 639,
+      "label": "签发可信上下文后解析资源",
+      "variant": "default",
+      "note": "仅 domain 工厂签发主体上下文"
+    },
+    {
+      "id": "usage",
+      "from": "query",
+      "to": "domain",
+      "y": 706,
+      "label": "字段用途 / 行列血缘",
+      "variant": "return"
+    },
+    {
+      "id": "decision",
+      "from": "domain",
+      "to": "policy",
+      "y": 773,
+      "label": "主体 + 操作 + 资源 + 范围",
+      "variant": "security"
+    },
+    {
+      "id": "granted",
+      "from": "policy",
+      "to": "domain",
+      "y": 840,
+      "label": "允许 / 约束 / 授权戳",
+      "variant": "return"
+    },
+    {
+      "id": "plan",
+      "from": "domain",
+      "to": "query",
+      "y": 907,
+      "label": "仅允许时生成受控执行计划",
+      "variant": "security"
+    },
+    {
+      "id": "execute",
+      "from": "query",
+      "to": "connector",
+      "y": 974,
+      "label": "绑定参数 + 行列规则 + 限额",
+      "variant": "emphasis"
+    },
+    {
+      "id": "rows",
+      "from": "connector",
+      "to": "query",
+      "y": 1041,
+      "label": "受控查询结果",
+      "variant": "return"
+    },
+    {
+      "id": "govern",
+      "from": "query",
+      "to": "delivery",
+      "y": 1108,
+      "label": "血缘治理后的结果与授权戳",
+      "variant": "security"
+    },
+    {
+      "id": "fresh",
+      "from": "delivery",
+      "to": "identity",
+      "y": 1175,
+      "label": "复验外部身份新鲜度",
+      "variant": "security"
+    },
+    {
+      "id": "fresh-result",
+      "from": "identity",
+      "to": "delivery",
+      "y": 1242,
+      "label": "有效 / 变化 / 失败",
+      "variant": "return"
+    },
+    {
+      "id": "revision",
+      "from": "delivery",
+      "to": "policy",
+      "y": 1309,
+      "label": "复验当前授权版本",
+      "variant": "security"
+    },
+    {
+      "id": "revision-result",
+      "from": "policy",
+      "to": "delivery",
+      "y": 1376,
+      "label": "有效 / 变化 / 失败",
+      "variant": "return"
+    },
+    {
+      "id": "send",
+      "from": "delivery",
+      "to": "client",
+      "y": 1443,
+      "label": "全部有效才交付并记录审计",
+      "variant": "emphasis"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "目标流程与失败语义",
+      "items": [
+        "这张图描述拟实现的成功路径，不表示当前已接线。",
+        "任何身份、解析、策略或交付检查失败，终止对应操作并审计；不进入后续步骤。",
+        "preview 只做预检；execute 每次重新解析和授权。"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "目录读取的引导边界",
+      "items": [
+        "身份提供者由 domain 编排，policy 保持纯决策。",
+        "目录只经连接器执行 IDENTITY_RESOLUTION 的发布白名单计划；执行层验证用途与范围。",
+        "目录读取不依赖尚未解析的最终用户权限，也不能使用临时超管或任意 SQL。"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "复验门槛",
+      "items": [
+        "工具执行前、进入模型前、最终交付和结果 handle 消费前都复验。",
+        "SSE 本地授权版本逐帧检查；外部变化需通知 / 轮询窗口或严格缓冲策略。",
+        "历史检查所有者和全部来源；失效正文整体拒绝回放。"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MEPER · 通用权限模型讨论稿</title>
+<style>
+:root{--ink:#1e2530;--muted:#657080;--line:#e4e7ec;--bg:#f6f7f9;--accent:#b32b32}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}a{color:var(--accent);text-underline-offset:3px}header{background:white;border-bottom:1px solid var(--line);padding:25px max(24px,calc((100vw - 1280px)/2))}.brand{font-size:12px;letter-spacing:.12em;color:var(--muted)}h1{font-size:29px;line-height:1.3;margin:10px 0}header p{margin:8px 0;color:var(--muted);max-width:950px}main{max-width:1328px;margin:auto;padding:24px}nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}nav a,.button{display:inline-block;background:white;border:1px solid var(--line);border-radius:7px;padding:9px 15px;text-decoration:none;color:var(--ink);font:inherit}.primary{background:var(--accent);border-color:var(--accent);color:white}.status{font-size:12px;padding:4px 9px;border-radius:5px;background:#fff0e6;color:#87430d}section{scroll-margin-top:20px;margin:26px 0}.lead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}h2{font-size:21px;margin:0}h3{margin:0 0 7px;font-size:17px}.note{border-left:3px solid var(--accent);background:white;padding:16px 20px;margin:18px 0}.note p{margin:0}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{background:white;border:1px solid var(--line);border-radius:8px;padding:20px}.num{color:var(--accent);font-size:12px;font-weight:600;margin-bottom:8px}.card p{margin:0;color:var(--muted);font-size:14px}.wide{grid-column:span 3}iframe{display:block;width:100%;height:1040px;background:white;border:1px solid var(--line);border-radius:8px}.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:white}table{border-collapse:collapse;width:100%;min-width:640px;text-align:left}th,td{padding:13px 17px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f0f2f5;font-size:13px;color:#505b69}tr:last-child td{border-bottom:0}.discuss{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}footer{border-top:1px solid var(--line);margin-top:35px;padding:18px 0;color:var(--muted);font-size:13px}code{font-family:ui-monospace,monospace;font-size:.9em}button{cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #c35c62;outline-offset:3px}@media(max-width:800px){.grid,.discuss{grid-template-columns:1fr}.wide{grid-column:auto}h1{font-size:24px}main{padding:16px}iframe{height:900px}}@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style></head><body>
+<header><div class="brand">MEPER CHATBI / PERMISSION DESIGN / 2026.10.13</div><h1>通用权限模型设计方案 <span class="status">讨论稿 · P2 尚未实现</span></h1><p>面向已有业务服务：通过配置接入不同身份目录和数据源，明确谁可以对什么资源做什么，以及权限变化后怎样停止交付。</p><nav aria-label="阅读导航"><a class="primary" href="#model">模型关系图</a><a href="#request">请求授权时序</a><a href="#rules">策略组合规则</a><a href="#discussion">待讨论决策</a><a href="README.md">完整设计说明</a><a href="../../prototypes/general-permission-studio.html">配置原型</a></nav></header>
+<main>
+<div class="note"><p><strong>阅读口径：</strong>图展示目标设计。当前服务仍运行于 <code>BOOTSTRAP_ADMIN_UNRESTRICTED</code>；“默认拒绝、同表约束取最严、Agent 只收窄”是已确认约束；跨数据源权限域、显式 DENY 和外部撤权窗口是待讨论项。</p></div>
+<section aria-labelledby="dimensions"><div class="lead"><h2 id="dimensions">需要建模的七个维度</h2><span class="muted">先明确关系，再讨论配置页面与存储</span></div><div class="grid">
+<article class="card"><div class="num">01 / TRUST</div><h3>平台隔离与接入信任</h3><p>接入应用、签发方、受众及模型/域白名单。平台隔离域由可信配置确定，业务租户属性另行映射。</p></article>
+<article class="card"><div class="num">02 / SUBJECT</div><h3>主体与代理调用</h3><p>平台管理员、业务用户和服务主体分别建模；实际调用者 actor 与被代表主体 subject 都进入审计。</p></article>
+<article class="card"><div class="num">03 / IDENTITY MODEL</div><h3>属性与实体关系</h3><p>配置用户、角色、组、组织和自定义实体的键与关系路径。身份目录可以独立于业务资源库。</p></article>
+<article class="card"><div class="num">04 / RESOURCE</div><h3>资源与产品操作</h3><p>库表列、数据集、Wiki、模型配置与历史分别表达操作授权。管理、使用、编辑和发布互不隐含。</p></article>
+<article class="card"><div class="num">05 / DATA POLICY</div><h3>行列与字段用途</h3><p>投影、过滤、关联/分组/计算、脱敏和限额。行规则将实际资源字段绑定到类型化主体属性。</p></article>
+<article class="card"><div class="num">06 / EXECUTION SCOPE</div><h3>执行范围上限</h3><p>客户端、Agent、数据集、会话和任务共同收窄已有数据权限；数据集成员配置本身不能授予查询权。</p></article>
+<article class="card wide"><div class="num">07 / CHANGE & DELIVERY</div><h3>发布、撤权与敏感交付</h3><p>草稿与发布版分离，记录策略完整版本、身份模型版本与外部身份新鲜度。执行、模型输入、结果消费和历史回放分别复验；外部撤权需明确检测窗口。</p></article>
+</div></section>
+<section id="model"><div class="lead"><h2>权限对象如何关联</h2><a class="button" href="permission-model.html" target="_blank" rel="noopener">独立打开交互图 ↗</a></div><p class="muted">点击节点查看详情，搜索或聚焦关系；主体与资源通过模型、域和策略连接。箭头表达设计关系，不等同于 Maven 依赖。</p><iframe src="permission-model.html" title="通用权限模型交互图" loading="lazy"></iframe></section>
+<section id="request"><div class="lead"><h2>一次请求怎样获得许可并交付</h2><a class="button" href="permission-request.html" target="_blank" rel="noopener">独立打开时序图 ↗</a></div><p class="muted">展示拟实现的成功路径。任一检查失败即终止对应操作；preview 不产生执行许可。身份目录读取也由发布白名单计划与执行层用途校验限制。</p><iframe src="permission-request.html" title="授权与结果交付时序图" loading="lazy"></iframe></section>
+<section id="rules"><div class="lead"><h2>策略组合：先保留已确认基线</h2><a href="README.md#3-策略组合基线与真值表">完整真值表</a></div><p class="muted">适用集合限定为同资源、同请求操作、同域的匹配已发布策略。下表是设计示例。</p><div class="tablebox"><table><thead><tr><th>场景</th><th>策略 A / B</th><th>有效结果</th></tr></thead><tbody>
+<tr><td>两个角色</td><td>A 可读 id、amount；B 可读 id</td><td>可读列交集：id</td></tr>
+<tr><td>字段无交集</td><td>A 可读 id；B 可读 amount</td><td>拒绝 SELECT</td></tr>
+<tr><td>两个行条件</td><td>A 本人；B 本区域</td><td>本人 AND 本区域</td></tr>
+<tr><td>脱敏与限额</td><td>A phone 脱敏 / 200 行；B 不脱敏 / 50 行</td><td>phone 仍脱敏，最多 50 行</td></tr>
+<tr><td>必需属性缺失</td><td>本人规则要求 businessKey，但主体未解析出该属性</td><td>拒绝，不能省略行条件</td></tr>
+<tr><td>执行上限</td><td>主体 200 行；Agent 100；数据集 50</td><td>取最小 50，资源范围取交集</td></tr>
+<tr><td>显式 DENY / 跨域合并</td><td>候选新增语义</td><td>待讨论，尚未冻结</td></tr>
+</tbody></table></div><div class="note"><p><strong>需要理解的效果：</strong>增加角色可能让权限更严格。若改成“角色授权取并 + 强制约束取交集”，需要新合同和迁移规则。</p></div></section>
+<section id="discussion"><div class="lead"><h2>建议依次讨论的四个决策</h2><span class="muted">当前建议，不代表已冻结</span></div><div class="discuss">
+<article class="card"><div class="num">A</div><h3>权限域怎样组织？</h3><p>建议同一身份模型可复用多个域，一个域可以包含多个资源数据源；首批一次执行明确一个域，域间合并另行设计。</p></article>
+<article class="card"><div class="num">B</div><h3>多角色权限怎样叠加？</h3><p>先保留最严合并；单独决定是否引入显式拒绝，以及是否需要区分角色授予和强制约束两层。</p></article>
+<article class="card"><div class="num">C</div><h3>外部撤权怎样及时生效？</h3><p>建议严格模式缓冲敏感输出后复验；实时 SSE 需要通知或轮询，并明确最大检测窗口与解析失败行为。</p></article>
+<article class="card"><div class="num">D</div><h3>首批支持哪些关系？</h3><p>建议先支持直接外键、单关联表路径和类型化属性；组织递归、复杂多跳与自定义表达式按能力合同扩展。</p></article>
+</div></section>
+<footer>由 Archify 3.0.1 生成交互图；本页汇集设计讨论材料。图的自动校验验证结构和产物，权限正确性仍需后续合同与真实数据库验收。<br>JSON 与校验回执保存在同目录；完整方案见 <a href="README.md">README.md</a>。</footer>
+</main></body></html>
