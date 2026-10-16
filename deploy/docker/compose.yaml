@@ -1,6 +1,6 @@
 services:
   backend:
-    image: meper-chatbi-backend:${MEPER_IMAGE_TAG:-0.1.0-20261009}
+    image: meper-chatbi-backend:${MEPER_IMAGE_TAG:-0.1.0-20261013}
     platform: linux/amd64
     restart: unless-stopped
     environment:
@@ -27,7 +27,7 @@ services:
         max-file: "3"
 
   frontend:
-    image: meper-chatbi-frontend:${MEPER_IMAGE_TAG:-0.1.0-20261009}
+    image: meper-chatbi-frontend:${MEPER_IMAGE_TAG:-0.1.0-20261013}
     platform: linux/amd64
     restart: unless-stopped
     ports:

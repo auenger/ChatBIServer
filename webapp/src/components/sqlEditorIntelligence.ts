@@ -125,7 +125,7 @@ export function registerSqlCompletionProvider(options: {
   const { monaco, editor, getContext, loadTableDetail } = options;
   return monaco.languages.registerCompletionItemProvider('sql', {
     triggerCharacters: ['.', ' ', '(', ','],
-    provideCompletionItems: async (model, position) => {
+    provideCompletionItems: async (model: MonacoModel, position: { lineNumber: number; column: number }) => {
       if (model !== editor.getModel()) return { suggestions: [] };
       const context = getContext();
       const word = model.getWordUntilPosition(position);

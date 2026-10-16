@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Descriptions, Spin, Table, Tabs, Tag, Typography, message } from 'antd';
+import { Button, Descriptions, Spin, Table, Tabs, Tag, Typography, message } from 'antd';
+import { history } from 'umi';
 import { KeyOutlined } from '@ant-design/icons';
 import type { DataSourceProfile, TableDetail } from '@/service/api';
 import { metadataApi } from '@/service/api';
@@ -35,6 +36,7 @@ export default function TableStructureView({ profile, namespace, table }: Props)
     <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', height: '100%' }}>
       <div style={{ display: 'flex', alignItems: 'center', minHeight: 38, padding: '0 10px', borderBottom: '1px solid #f0f0f0' }}>
         <Typography.Text strong>{namespace}.{table}</Typography.Text>
+        <Button size="small" style={{ marginLeft: 'auto' }} onClick={() => history.push(`/datawiki?ds=${profile.id}&namespace=${encodeURIComponent(namespace)}&table=${encodeURIComponent(table)}`)}>业务说明</Button>
         <Tag style={{ marginLeft: 8 }} color={detail.type === 'VIEW' ? 'cyan' : 'green'}>{detail.type}</Tag>
       </div>
 
@@ -69,7 +71,7 @@ export default function TableStructureView({ profile, namespace, table }: Props)
           {
             title: '列名',
             dataIndex: 'name',
-            render: (name: string, row) => (
+            render: (name: string, row: TableDetail['columns'][number]) => (
               <span>
                 {row.primaryKey && (
                   <KeyOutlined style={{ color: '#faad14', marginRight: 6 }} title="主键" />

@@ -20,7 +20,7 @@ public class ModelProviderService {
 
     /** 对外视图：永不含 apiKey。 */
     public record ModelProviderView(Long id, String name, String protocol, String baseUrl,
-                                    String model, Map<String, Object> params, boolean enabled) {
+                                    String model, Map<String, Object> params, boolean enabled, boolean isDefault) {
     }
 
     /** 登记/更新请求；apiKey 仅登记必填，更新传 null 表示保留原密钥。 */
@@ -46,21 +46,31 @@ public class ModelProviderService {
         return repository.insert(record, cipher.encrypt(request.apiKey().toCharArray()));
     }
 
+    @org.springframework.transaction.annotation.Transactional
     public void update(long id, SaveRequest request) {
+        repository.lockDefault();
         requireExisting(id);
         validate(request, false);
         var secret = request.apiKey() == null || request.apiKey().isBlank()
                 ? null : cipher.encrypt(request.apiKey().toCharArray());
-        repository.update(id, record(request, request.enabled() != null && request.enabled()), secret);
+        boolean enabled=request.enabled()==null?repository.findById(id).orElseThrow().enabled():request.enabled();
+        checkDefaultChange(id,enabled);
+        repository.update(id, record(request, enabled), secret);
     }
 
+    @org.springframework.transaction.annotation.Transactional
     public void setEnabled(long id, boolean enabled) {
+        repository.lockDefault();
         requireExisting(id);
+        checkDefaultChange(id,enabled);
         repository.setEnabled(id, enabled);
     }
 
+    @org.springframework.transaction.annotation.Transactional
     public void delete(long id) {
+        repository.lockDefault();
         requireExisting(id);
+        checkDefaultChange(id,false);
         repository.delete(id);
     }
 
@@ -69,7 +79,7 @@ public class ModelProviderService {
     }
 
     public List<ModelProviderView> list() {
-        return repository.list().stream().map(ModelProviderService::view).toList();
+        return repository.list().stream().map(this::view).toList();
     }
 
     public ProbeResult test(long id) {
@@ -78,6 +88,19 @@ public class ModelProviderService {
                 .orElseThrow(() -> new IllegalStateException("模型配置缺少密钥: " + id))));
     }
 
+    @org.springframework.transaction.annotation.Transactional
+    public void setDefault(long id) {repository.setDefault(id);}
+    public long resolve(Long requested) {
+        Long id=requested==null?repository.defaultId():requested;
+        if(id==null) throw new IllegalStateException("请先在模型设置中配置默认模型");
+        var record=repository.findById(id).orElseThrow(()->new IllegalStateException("默认模型已不存在，请重新配置"));
+        if(!record.enabled()) throw new IllegalStateException("所选模型已停用，请明确选择其他模型");
+        return id;
+    }
+    private void checkDefaultChange(long id,boolean enabled) {
+        if(!enabled&&java.util.Objects.equals(repository.defaultId(),id))
+            throw new IllegalStateException("请先将其他启用模型设为默认，再停用或删除当前默认模型");
+    }
     /** 解密取凭据（批次 C 的 chat 链路复用；仅限服务端内部，禁止透出）。 */
     public ModelProviderCredential credentialOf(long id) {
         var record = repository.findById(id).orElseThrow(() -> new NoSuchElementException("模型配置不存在: " + id));
@@ -140,9 +163,9 @@ public class ModelProviderService {
                 request.baseUrl().trim(), request.model().trim(), request.params(), enabled, null);
     }
 
-    private static ModelProviderView view(ModelProviderRecord record) {
+    private ModelProviderView view(ModelProviderRecord record) {
         return new ModelProviderView(record.id(), record.name(), record.protocol(),
-                record.baseUrl(), record.model(), record.params(), record.enabled());
+                record.baseUrl(), record.model(), record.params(), record.enabled(), java.util.Objects.equals(record.id(),repository.defaultId()));
     }
 
     private void requireExisting(long id) {

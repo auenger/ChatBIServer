@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, ConfigProvider, Popconfirm, Tooltip } from 'antd';
 import {
-  CodeOutlined, CommentOutlined, DatabaseOutlined, LogoutOutlined, RobotOutlined,
+  CodeOutlined, CommentOutlined, DatabaseOutlined, LogoutOutlined, RobotOutlined, BookOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { createStyles } from 'antd-style';
 import { Outlet, history, useLocation } from 'umi';
@@ -69,6 +69,8 @@ const useStyles = createStyles(({ token }) => ({
 const NAV_ITEMS = [
   { key: '/datasources', icon: <DatabaseOutlined />, label: '数据源' },
   { key: '/workspace', icon: <CodeOutlined />, label: '工作台' },
+  { key: '/datasets', icon: <DatabaseOutlined />, label: '数据集' },
+  { key: '/datawiki', icon: <BookOutlined />, label: 'DataWiki' },
   { key: '/agentchat', icon: <CommentOutlined />, label: 'AI 对话' },
   { key: '/modelproviders', icon: <RobotOutlined />, label: '模型设置' },
 ];
@@ -76,6 +78,7 @@ const NAV_ITEMS = [
 export default function MainLayout() {
   const { styles, cx } = useStyles();
   const location = useLocation();
+  const [collapsed, setCollapsed] = useState(() => localStorage.getItem('meper.nav.collapsed') === 'true');
   const auth = useAuthModel();
 
   useEffect(() => {
@@ -88,7 +91,9 @@ export default function MainLayout() {
 
   const isFullHeight = location.pathname.startsWith('/workspace')
     || location.pathname.startsWith('/workbench')
-    || location.pathname.startsWith('/agentchat');
+    || location.pathname.startsWith('/agentchat')
+    || location.pathname.startsWith('/datawiki');
+  useEffect(()=>{const focus=()=>{setCollapsed(true);localStorage.setItem('meper.nav.collapsed','true');};window.addEventListener('meper.layout.focus',focus);return()=>window.removeEventListener('meper.layout.focus',focus);},[]);
   const activeKey = NAV_ITEMS.find((item) => location.pathname.startsWith(item.key))?.key ?? '/datasources';
 
   const logout = async () => {
@@ -142,16 +147,18 @@ export default function MainLayout() {
           </Popconfirm>
         </header>
         <div className={styles.body}>
-          <aside className={styles.sidebar}>
+          <aside className={styles.sidebar} style={{ width: collapsed ? 60 : 222 }}>
+            <Button type="text" aria-label={collapsed ? '展开主菜单' : '收起主菜单'} style={{ margin: '0 10px 12px' }} icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>} onClick={() => { const next = !collapsed; setCollapsed(next); localStorage.setItem('meper.nav.collapsed', String(next)); }}/>
             {NAV_ITEMS.map((item) => (
               <button
                 key={item.key}
                 type="button"
+                title={collapsed ? item.label : undefined}
                 className={cx(styles.navItem, activeKey === item.key && styles.navItemActive)}
                 onClick={() => history.push(item.key)}
               >
                 <span className={styles.navItemIcon}>{item.icon}</span>
-                {item.label}
+                {!collapsed && item.label}
               </button>
             ))}
           </aside>

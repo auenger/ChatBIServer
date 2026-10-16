@@ -29,28 +29,42 @@ import java.util.Map;
 public class AgentChatController {
 
     public record ChatRequest(String sessionId, Long providerId, Long datasourceId,
-                              String namespace, String message) {
+                              String namespace, String message, String scopeType, Long scopeId) {
     }
 
     private final AgentChatService chatService;
+    private final com.meper.chatbi.agent.chat.ScopedChatService scoped;
     private final ChatSessionRepository chatSessions;
 
-    public AgentChatController(AgentChatService chatService, ChatSessionRepository chatSessions) {
+    public AgentChatController(AgentChatService chatService, ChatSessionRepository chatSessions,com.meper.chatbi.agent.chat.ScopedChatService scoped) {
         this.chatService = chatService;
-        this.chatSessions = chatSessions;
+        this.chatSessions = chatSessions;this.scoped=scoped;
     }
 
     @PostMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter stream(@RequestAttribute(AuthInterceptor.PRINCIPAL_ATTR) String principal,
                              @RequestBody ChatRequest request) {
-        if (request.providerId() == null || request.datasourceId() == null
-                || request.message() == null || request.message().isBlank()) {
-            throw new IllegalArgumentException("providerId、datasourceId、message 均不能为空");
-        }
-        SseEmitter emitter = new SseEmitter(300_000L);
-        Flux<ChatEvent> events = chatService.chatStream(principal, request.sessionId(),
-                request.providerId(), request.datasourceId(), request.namespace(), request.message());
-        events.subscribe(
+        String type=request.scopeType()==null?"DATABASE":request.scopeType();
+        Long id=request.scopeId()==null?request.datasourceId():request.scopeId();
+        if(id==null||id<=0)throw new IllegalArgumentException("请选择数据库或数据集");
+        return emit(scoped.analyze(principal,request.sessionId(),request.providerId(),type,id,request.namespace(),request.message()));
+    }
+    public record KnowledgeRequest(String sessionId,Long providerId,long spaceId,List<Long> pageIds,List<Long> focusPageIds,String message) { }
+    @PostMapping(value="/knowledge/stream",produces=MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter knowledge(@RequestAttribute(AuthInterceptor.PRINCIPAL_ATTR) String principal,@RequestBody KnowledgeRequest r){return emit(scoped.knowledge(principal,r.sessionId(),r.providerId(),r.spaceId(),r.pageIds(),r.focusPageIds(),r.message()));}
+    public record KnowledgeBatch(String sessionId,List<com.meper.chatbi.wiki.WikiModels.PublishItem> items) { }
+    @PostMapping("/knowledge/publish-batch")
+    public com.meper.chatbi.wiki.WikiModels.PublishBatch publishKnowledge(@RequestAttribute(AuthInterceptor.PRINCIPAL_ATTR) String p,@RequestBody KnowledgeBatch b){return scoped.publishDrafts(p,b.sessionId(),b.items());}
+    @GetMapping("/sessions/{id}/context")
+    public com.meper.chatbi.storage.model.DatasetRecords.ChatScope context(@RequestAttribute(AuthInterceptor.PRINCIPAL_ATTR) String p,@PathVariable String id){return scoped.context(p,id);}
+    @GetMapping("/knowledge/reference")
+    public com.meper.chatbi.wiki.WikiModels.ReadResult reference(@RequestAttribute(AuthInterceptor.PRINCIPAL_ATTR) String p,@RequestParam String scopeType,@RequestParam long scopeId,@RequestParam String scopeVersion,@RequestParam long pageId,@RequestParam String path,@RequestParam long revision,@RequestParam(defaultValue="1") int start){return scoped.readReference(p,scopeType,scopeId,scopeVersion,pageId,path,revision,start);}
+    private SseEmitter emit(Flux<ChatEvent> events) {
+        SseEmitter emitter=new SseEmitter(300_000L);
+        var ref=new java.util.concurrent.atomic.AtomicReference<reactor.core.Disposable>();
+        Runnable dispose=()->{var subscription=ref.get();if(subscription!=null)subscription.dispose();};
+        emitter.onCompletion(dispose);emitter.onTimeout(dispose);emitter.onError(e->dispose.run());
+        var subscription=events.subscribe(
                 event -> {
                     try {
                         emitter.send(SseEmitter.event().name(event.type())
@@ -61,6 +75,7 @@ public class AgentChatController {
                 },
                 emitter::completeWithError,
                 emitter::complete);
+        ref.set(subscription);
         return emitter;
     }
 
@@ -76,8 +91,9 @@ public class AgentChatController {
 
     /** 当前主体的会话列表（最近在前，最多 50 个）。 */
     @GetMapping("/sessions")
-    public List<SessionSummaryView> sessions(@RequestAttribute(AuthInterceptor.PRINCIPAL_ATTR) String principal) {
+    public List<SessionSummaryView> sessions(@RequestAttribute(AuthInterceptor.PRINCIPAL_ATTR) String principal,@RequestParam(defaultValue="ANALYSIS") String mode) {
         return chatSessions.listSessions(principal).stream()
+                .filter(s -> {try{return scoped.context(principal,s.sessionId()).mode().equals(mode);}catch(java.util.NoSuchElementException e){return mode.equals("ANALYSIS");}})
                 .map(s -> new SessionSummaryView(s.sessionId(), s.title(), s.messageCount(), s.lastAt()))
                 .toList();
     }

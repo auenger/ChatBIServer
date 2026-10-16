@@ -3,6 +3,8 @@ package com.meper.chatbi.agent.chat;
 import com.meper.chatbi.agent.definition.ModelProviderService;
 import com.meper.chatbi.agent.gateway.SpringAiModelGateway;
 import com.meper.chatbi.agent.gateway.ChatResponseEvents;
+import com.meper.chatbi.agent.gateway.AgentWikiTools;
+import com.meper.chatbi.wiki.WikiService;
 import com.meper.chatbi.domain.DataSourceService;
 import com.meper.chatbi.domain.MetadataService;
 import com.meper.chatbi.domain.WorkbenchService;
@@ -45,12 +47,14 @@ public class AgentChatService {
     private final SqlClassifier classifier;
     private final AuditRepository audits;
     private final ChatSessionRepository chatMessages;
+    private final WikiService wiki;
+    @org.springframework.beans.factory.annotation.Autowired private com.meper.chatbi.storage.repository.DatasetRepository scopeRepository;
 
     public AgentChatService(ModelProviderService providers, SpringAiModelGateway gateway,
                             ChatSessionStore sessions, DataSourceService dataSources,
                             MetadataService metadata, WorkbenchService workbench,
                             SqlClassifier classifier, AuditRepository audits,
-                            ChatSessionRepository chatMessages) {
+                            ChatSessionRepository chatMessages, WikiService wiki) {
         this.providers = providers;
         this.gateway = gateway;
         this.sessions = sessions;
@@ -60,10 +64,19 @@ public class AgentChatService {
         this.classifier = classifier;
         this.audits = audits;
         this.chatMessages = chatMessages;
+        this.wiki = wiki;
     }
 
     public Flux<ChatEvent> chatStream(String principal, String sessionId, long providerId,
                                       long datasourceId, String namespace, String userMessage) {
+        return chatCustom(principal,sessionId,providerId,datasourceId,namespace,userMessage,SystemPrompts.CHAT,
+                ctx -> new Object[]{new AgentDbTools(ctx,dataSources,metadata,workbench,classifier),new AgentWikiTools(ctx,wiki)});
+    }
+
+    /** 工具与提示由服务端按分析/知识编辑用途绑定，模型不能选择额外能力。 */
+    public Flux<ChatEvent> chatCustom(String principal,String sessionId,long providerId,long datasourceId,
+            String namespace,String userMessage,String systemPrompt,
+            java.util.function.Function<ChatToolContext,Object[]> toolFactory) {
         String sid = sessionId == null || sessionId.isBlank() ? UUID.randomUUID().toString() : sessionId;
         var profile = dataSources.get(datasourceId);
         String ns = namespace == null || namespace.isBlank() ? profile.databaseName() : namespace;
@@ -84,16 +97,18 @@ public class AgentChatService {
                 },
                 summary -> {
                     synchronized (toolLog) {
+                        boolean assigned=false;
                         for (int i = toolLog.size() - 1; i >= 0; i--) {
                             if (toolLog.get(i).result() == null) {
                                 toolLog.set(i, new ToolCallRecord(toolLog.get(i).request(), summary));
-                                break;
+                                assigned=true;break;
                             }
                         }
+                        if(!assigned&&summary.startsWith("WIKI_DRAFT_CHANGE:"))toolLog.add(new ToolCallRecord("DataWiki 草稿变更",summary));
                     }
                     toolSink.tryEmitNext(ChatEvent.toolResult(sid, summary));
                 });
-        var tools = new AgentDbTools(ctx, dataSources, metadata, workbench, classifier);
+        Object[] tools = toolFactory.apply(ctx);
 
         boolean continuing = sessions.exists(sid, principal);
         List<Message> history = continuing
@@ -108,7 +123,7 @@ public class AgentChatService {
         StringBuilder thinking = new StringBuilder();
         AtomicReference<Usage> lastUsage = new AtomicReference<>();
         Flux<ChatEvent> body = ChatClient.builder(model).build().prompt()
-                .system(SystemPrompts.CHAT)
+                .system(systemPrompt)
                 .messages(history)
                 .user(userMessage)
                 .tools(tools)
@@ -172,6 +187,7 @@ public class AgentChatService {
     /** 删除会话（库 + 内存缓存），仅限主体自己的会话。 */
     public void deleteSession(String principal, String sessionId) {
         int deleted = chatMessages.deleteSession(principal, sessionId);
+        if(scopeRepository!=null)scopeRepository.deleteChatScope(sessionId,principal);
         sessions.evict(sessionId, principal);
         if (deleted == 0) {
             throw new NoSuchElementException("会话不存在");

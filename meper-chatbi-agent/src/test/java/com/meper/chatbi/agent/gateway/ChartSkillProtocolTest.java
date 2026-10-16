@@ -69,7 +69,7 @@ class ChartSkillProtocolTest {
             var workbench = mock(WorkbenchService.class);
             var service = new AgentChatService(providers, new SpringAiModelGateway(), mock(ChatSessionStore.class),
                     dataSources, metadata, workbench, mock(SqlClassifier.class), mock(AuditRepository.class),
-                    mock(ChatSessionRepository.class));
+                    mock(ChatSessionRepository.class), mock(com.meper.chatbi.wiki.WikiService.class));
             List<ChatEvent> events = service.chatStream("admin", "chart-test", 2L, 1L, null, "使用我提供的数据画图")
                     .collectList().block(Duration.ofSeconds(10));
             assertEquals(2, requests.size());

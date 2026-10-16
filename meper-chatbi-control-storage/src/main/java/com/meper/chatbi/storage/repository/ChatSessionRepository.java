@@ -132,6 +132,10 @@ public class ChatSessionRepository {
         return listMessages(subject, sessionId, null, 1).stream().findFirst();
     }
 
+    public int nextSequence(String subject,String sessionId) {
+        return jdbc.sql("SELECT COALESCE(MAX(seq),-1)+1 FROM meper_chat_message WHERE subject=:subject AND session_id=:session")
+                .param("subject",subject).param("session",sessionId).query(Integer.class).single();
+    }
     public int countMessages(String subject, String sessionId) {
         Long count = jdbc.sql("SELECT COUNT(*) FROM meper_chat_message WHERE subject = :subject AND session_id = :sessionId")
                 .param("subject", subject)

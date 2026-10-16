@@ -54,7 +54,7 @@ class AgentChatThinkingTest {
                 new ChatResponse(List.of(answer))));
         var service = new AgentChatService(providers, gateway, sessions, dataSources,
                 mock(MetadataService.class), mock(WorkbenchService.class), mock(SqlClassifier.class),
-                mock(AuditRepository.class), mock(ChatSessionRepository.class));
+                mock(AuditRepository.class), mock(ChatSessionRepository.class), mock(com.meper.chatbi.wiki.WikiService.class));
 
         var events = service.chatStream("admin", "s", 2L, 1L, null, "有哪些表")
                 .collectList().block(Duration.ofSeconds(5));

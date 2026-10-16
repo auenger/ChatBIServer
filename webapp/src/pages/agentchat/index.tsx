@@ -1,20 +1,24 @@
+import { useLocation } from 'umi';
+import { datasetApi, chatScopeApi, type DatasetView } from '@/service/datasets';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Input, Progress, Select, Space, Tooltip, Typography, message } from 'antd';
-import { ClearOutlined, DeleteOutlined, HistoryOutlined, SendOutlined, BulbOutlined, ToolOutlined } from '@ant-design/icons';
+import { ClearOutlined, DeleteOutlined, HistoryOutlined } from '@ant-design/icons';
 import { createStyles } from 'antd-style';
-import ChatMarkdown from '@/components/ChatMarkdown';
+import ChatMessageBubble, { type ChatMessageView } from '@/components/ChatMessageBubble';
+import ChatComposer from '@/components/ChatComposer';
+import ChatModelSelect from '@/components/ChatModelSelect';
+import { createChatStreamBuffer } from '@/service/chatStreamBuffer';
+import { streamEvents } from '@/service/sse';
+import WikiReferenceDrawer from '@/components/WikiReferenceDrawer';
+import type { WikiReference } from '@/service/wiki';
 import { Popconfirm } from 'antd';
 import type { ChatSessionSummary, DataSourceProfile, ModelProviderView } from '@/service/api';
 import { chatApi, chatApiExtra, datasourceApi, modelProviderApi } from '@/service/api';
-import { getToken } from '@/service/base';
 
 /** 上下文窗口（token）：按用户约定按 100 万上下文模型计算比例。 */
 const CONTEXT_WINDOW = 1_000_000;
 /** 历史懒加载每页条数。 */
 const HISTORY_PAGE = 20;
-/** SSE 直连后端：dev 下绕过 webpack dev server 代理（其压缩中间件会把流式攒批成一次性输出）。 */
-const SSE_BASE = process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : '';
-
 const useStyles = createStyles({
   wrap: { display: 'flex', height: '100%' },
   sidebar: {
@@ -33,79 +37,19 @@ const useStyles = createStyles({
     borderBottom: '1px solid #f0f0f0', background: '#fff', flexWrap: 'wrap',
   },
   messages: { flex: 1, overflowY: 'auto', padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: 12 },
-  userBubble: {
-    alignSelf: 'flex-end', maxWidth: '72%', background: '#1677ff', color: '#fff',
-    padding: '8px 12px', borderRadius: '12px 12px 2px 12px', whiteSpace: 'pre-wrap', wordBreak: 'break-word',
-  },
-  assistantBubble: {
-    alignSelf: 'flex-start', maxWidth: '85%', minWidth: 0, background: '#fff', border: '1px solid #f0f0f0',
-    padding: '8px 12px', borderRadius: '12px 12px 12px 2px', wordBreak: 'break-word',
-  },
-  mdBody: {
-    fontSize: 14, lineHeight: 1.6,
-    '& p': { margin: '4px 0' },
-    // 表格：边框 + 表头底色 + 斑马纹 + 悬停 + 横向滚动（宽表不撑破气泡）
-    '& table': {
-      borderCollapse: 'collapse', margin: '8px 0', fontSize: 13,
-      display: 'block', overflowX: 'auto', maxWidth: '100%',
-    },
-    '& th, & td': { border: '1px solid #e5e7eb', padding: '6px 12px', textAlign: 'left' },
-    '& thead th': { background: '#fafafa', fontWeight: 600, whiteSpace: 'nowrap' },
-    '& tbody tr:nth-child(even)': { background: '#fafafa' },
-    '& tbody tr:hover': { background: '#f0f7ff' },
-    // 代码块与行内代码
-    '& pre': { background: '#f6f8fa', padding: '10px 12px', borderRadius: 6, overflowX: 'auto', margin: '6px 0' },
-    '& code': { background: '#f0f2f5', padding: '1px 5px', borderRadius: 4, fontSize: 13 },
-    '& pre code': { background: 'transparent', padding: 0 },
-    '& ul, & ol': { paddingLeft: 20, margin: '4px 0' },
-    '& blockquote': { borderLeft: '3px solid #d9d9d9', margin: '6px 0', paddingLeft: 10, color: '#595959' },
-  },
-  toolTag: { alignSelf: 'flex-start' },
-  reasoningInline: {
-    marginBottom: 6, fontSize: 12, color: '#8c8c8c',
-    background: '#fafafa', border: '1px dashed #e8e8e8', borderRadius: 8, padding: '4px 10px',
-    '& code': { background: 'transparent', padding: 0, fontSize: 12 },
-  },
-  reasoningText: { whiteSpace: 'pre-wrap', borderLeft: '2px solid #e0e0e0', paddingLeft: 8, marginTop: 4, maxHeight: 180, overflowY: 'auto' },
   composer: { padding: '12px 16px', borderTop: '1px solid #f0f0f0', background: '#fff' },
 });
 
-interface ChatMsg {
-  role: 'user' | 'assistant';
-  content: string;
-  reasoning?: string;
-  tools?: { request: string; result?: string | null }[];
-  seq?: number;
-}
-
-/** 解析 fetch 流式响应的 SSE（EventSource 不支持 POST，自行按空行分帧）。 */
-async function consumeSse(resp: Response, onEvent: (event: string, data: string) => void) {
-  const reader = resp.body!.getReader();
-  const decoder = new TextDecoder();
-  let buffer = '';
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-    const frames = buffer.split('\n\n');
-    buffer = frames.pop() ?? '';
-    for (const frame of frames) {
-      let event = 'message';
-      const dataLines: string[] = [];
-      for (const line of frame.split('\n')) {
-        if (line.startsWith('event:')) event = line.slice(6).trim();
-        else if (line.startsWith('data:')) dataLines.push(line.slice(5));
-      }
-      if (dataLines.length > 0 || event !== 'message') {
-        onEvent(event, dataLines.join('\n'));
-      }
-    }
-  }
-}
+interface ChatMsg extends ChatMessageView { seq?:number }
 
 /** AI 对话页（0.1）：持久化会话列表 + SSE 流式对话 + 真实 usage 上下文比例 + 历史懒加载。 */
 export default function AgentChatPage() {
   const { styles, cx } = useStyles();
+  const location=useLocation();
+  const [scopeKind,setScopeKind]=useState<'DATABASE'|'DATASET'>(()=>new URLSearchParams(location.search).has('dataset')?'DATASET':'DATABASE');
+  const [datasets,setDatasets]=useState<DatasetView[]>([]);
+  const [datasetId,setDatasetId]=useState<number|null>(null);
+  const [wikiReference, setWikiReference] = useState<WikiReference|null>(null);
   const [providers, setProviders] = useState<ModelProviderView[]>([]);
   const [datasources, setDatasources] = useState<DataSourceProfile[]>([]);
   const [providerId, setProviderId] = useState<number | null>(null);
@@ -134,15 +78,17 @@ export default function AgentChatPage() {
   useEffect(() => {
     (async () => {
       try {
-        const [ps, ds] = await Promise.all([modelProviderApi.list(), datasourceApi.list()]);
+        const [ps, ds, sets] = await Promise.all([modelProviderApi.list(), datasourceApi.list(), datasetApi.list()]);
+        setDatasets(sets);
+        const selected=Number(new URLSearchParams(location.search).get('dataset'));
+        setDatasetId(sets.some(d=>d.dataset.id===selected)?selected:sets.find(d=>d.dataset.enabled)?.dataset.id??null);
         const enabled = ps.filter((p) => p.enabled);
         setProviders(enabled);
         setDatasources(ds);
-        if (enabled.length > 0) setProviderId(enabled[0].id);
-        else message.info('尚未登记可用模型，请先到「模型设置」登记');
+        if (!enabled.some(p=>p.isDefault)) message.info('请选择本次模型，或在「模型设置」指定默认模型');
         if (ds.length > 0) {
           setDatasourceId(ds[0].id);
-          setNamespace(ds[0].databaseName ?? '');
+          setNamespace(ds[0].type==='MYSQL'?(ds[0].databaseName??''):'');
         }
         await loadSessions();
       } catch (e) {
@@ -162,6 +108,7 @@ export default function AgentChatPage() {
     sessionRef.current = sessionId;
     setLoadingHistory(true);
     try {
+      try{const c=await chatScopeApi.get(sessionId);setScopeKind(c.scopeType);if(c.scopeType==='DATASET')setDatasetId(c.scopeId);else setDatasourceId(c.scopeId);setProviderId(c.providerId);setNamespace(c.namespace??'');}catch{ /* 旧会话由服务端兼容检查，用户可明确重新选择范围 */ }
       const page = await chatApi.messages(sessionId, undefined, HISTORY_PAGE);
       setMessages(page.map((m) => ({
         role: m.role === 'USER' ? 'user' : 'assistant',
@@ -188,7 +135,7 @@ export default function AgentChatPage() {
     try {
       const page = await chatApi.messages(activeSession, oldest.seq, HISTORY_PAGE);
       const scrollTop = topRef.current?.parentElement?.scrollTop ?? 0;
-      setMessages((m) => [...page.map((x) => ({
+      setMessages((m) => [...page.map<ChatMsg>((x) => ({
         role: x.role === 'USER' ? 'user' : 'assistant',
         content: x.content,
         reasoning: x.reasoning ?? undefined,
@@ -220,94 +167,24 @@ export default function AgentChatPage() {
   const send = async () => {
     const text = draft.trim();
     if (!text || streaming) return;
-    if (!providerId || !datasourceId) {
-      message.warning('请先选择模型与数据源');
+    if (!(scopeKind==='DATASET'?datasetId:datasourceId) || (providerId===null&&!providers.some(p=>p.isDefault))) {
+      message.warning('请选择分析范围，并配置默认模型或选择本次模型');
       return;
     }
     setDraft('');
     setStreaming(true);
     setMessages((m) => [...m, { role: 'user', content: text }, { role: 'assistant', content: '' }]);
-    // token 缓冲节流：80ms 批量刷一次，降低 markdown 全量重渲染频率（表格成型更平滑）
-    let tokenBuffer = '';
-    let reasoningBuffer = '';
-    let toolBuffer: { request: string; result?: string | null }[] = [];
-    let flushTimer: ReturnType<typeof setTimeout> | null = null;
-    const flushBuffers = () => {
-      if (flushTimer) {
-        clearTimeout(flushTimer);
-        flushTimer = null;
-      }
-      if (tokenBuffer) {
-        const chunk = tokenBuffer;
-        tokenBuffer = '';
-        setMessages((m) => {
-          const next = [...m];
-          next[next.length - 1] = { ...next[next.length - 1], content: next[next.length - 1].content + chunk };
-          return next;
-        });
-      }
-      if (reasoningBuffer) {
-        const chunk = reasoningBuffer;
-        reasoningBuffer = '';
-        setMessages((m) => {
-          const next = [...m];
-          const last = next[next.length - 1];
-          next[next.length - 1] = { ...last, reasoning: (last.reasoning ?? '') + chunk };
-          return next;
-        });
-      }
-      if (toolBuffer.length > 0) {
-        const items = toolBuffer;
-        toolBuffer = [];
-        setMessages((m) => {
-          const next = [...m];
-          const last = next[next.length - 1];
-          next[next.length - 1] = { ...last, tools: [...(last.tools ?? []), ...items] };
-          return next;
-        });
-      }
-    };
+    const buffer=createChatStreamBuffer(delta=>setMessages(old=>{const next=[...old];const last=next[next.length-1];if(!last)return old;next[next.length-1]={...last,content:last.content+delta.content,reasoning:(last.reasoning??'')+delta.reasoning,...(delta.tools?{tools:delta.tools}:{})};return next;}));
+    const flushBuffers=buffer.flush;
     try {
-      const resp = await fetch(`${SSE_BASE}/api/agent/chat/stream`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
-        body: JSON.stringify({
-          sessionId: sessionRef.current, providerId, datasourceId, namespace: namespace || null, message: text,
-        }),
-      });
-      if (!resp.ok || !resp.body) {
-        const err = await resp.json().catch(() => ({ message: resp.statusText }));
-        throw new Error(err.message ?? `HTTP ${resp.status}`);
-      }
-      await consumeSse(resp, (event, data) => {
+      await streamEvents('/agent/chat/stream',{
+        sessionId:sessionRef.current,providerId,scopeType:scopeKind,scopeId:scopeKind==='DATASET'?datasetId:datasourceId,datasourceId:scopeKind==='DATABASE'?datasourceId:null,namespace:scopeKind==='DATABASE'?(namespace||null):null,message:text,
+      },(event,data)=>{
+        buffer.handle(event,data);
         if (event === 'start') {
+          chatScopeApi.get(data).then(c=>setProviderId(c.providerId)).catch(()=>{});
           sessionRef.current = data;
           setActiveSession(data);
-        } else if (event === 'token') {
-          tokenBuffer += data;
-          if (!flushTimer) {
-            flushTimer = setTimeout(flushBuffers, 80);
-          }
-        } else if (event === 'reasoning') {
-          reasoningBuffer += data;
-          if (!flushTimer) {
-            flushTimer = setTimeout(flushBuffers, 80);
-          }
-        } else if (event === 'tool') {
-          toolBuffer.push({ request: data });
-          if (!flushTimer) {
-            flushTimer = setTimeout(flushBuffers, 80);
-          }
-        } else if (event === 'toolResult') {
-          for (let i = toolBuffer.length - 1; i >= 0; i--) {
-            if (toolBuffer[i].result === undefined || toolBuffer[i].result === null) {
-              toolBuffer[i].result = data;
-              break;
-            }
-          }
-          if (!flushTimer) {
-            flushTimer = setTimeout(flushBuffers, 80);
-          }
         } else if (event === 'usage') {
           try {
             const u = JSON.parse(data) as { promptTokens: number; completionTokens: number };
@@ -328,8 +205,10 @@ export default function AgentChatPage() {
       loadSessions();
     } catch (e) {
       flushBuffers();
+      setMessages(old=>{const next=[...old];const last=next[next.length-1];if(!last)return old;next[next.length-1]={...last,content:last.content+(last.content?'\n\n':'')+`回复中断：${(e as Error).message}`};return next;});
       message.error((e as Error).message);
     } finally {
+      buffer.dispose();
       setStreaming(false);
     }
   };
@@ -338,6 +217,7 @@ export default function AgentChatPage() {
 
   return (
     <div className={styles.wrap}>
+      <WikiReferenceDrawer reference={wikiReference} onClose={()=>setWikiReference(null)} />
       <div className={styles.sidebar}>
         <div style={{ padding: 12 }}>
           <Button block icon={<ClearOutlined />} onClick={startNew}>新对话</Button>
@@ -384,27 +264,25 @@ export default function AgentChatPage() {
       <div className={styles.chat}>
         <div className={styles.header}>
           <Typography.Text strong>AI 对话</Typography.Text>
-          <Select
-            style={{ minWidth: 190 }} placeholder="模型" value={providerId}
-            onChange={setProviderId}
-            options={providers.map((p) => ({ value: p.id, label: `${p.name}（${p.model}）` }))}
-          />
-          <Select
+          <div style={{width:210}}><ChatModelSelect providers={providers} value={providerId} disabled={streaming} onChange={id=>{setProviderId(id);startNew();}}/></div>
+          <Select style={{width:110}} value={scopeKind} disabled={streaming} options={[{value:'DATABASE',label:'数据库'},{value:'DATASET',label:'数据集'}]} onChange={kind=>{setScopeKind(kind);startNew();}}/>
+          {scopeKind==='DATASET'?<Select style={{minWidth:190}} value={datasetId} disabled={streaming} placeholder="选择数据集" options={datasets.filter(d=>d.dataset.enabled).map(d=>({value:d.dataset.id,label:d.dataset.name}))} onChange={id=>{setDatasetId(id);startNew();}}/>:<Select
+            disabled={streaming}
             style={{ minWidth: 170 }} placeholder="数据源" value={datasourceId}
             onChange={(v) => {
               setDatasourceId(v);
               startNew();
               const ds = datasources.find((d) => d.id === v);
-              setNamespace(ds?.databaseName ?? '');
+              setNamespace(ds?.type==='MYSQL'?(ds.databaseName??''):'');
             }}
             options={datasources.map((d) => ({ value: d.id, label: d.name }))}
-          />
-          <Tooltip title="库（MySQL）/ Schema（PostgreSQL 等），留空 = 数据源默认库">
+          />}
+          {scopeKind==='DATABASE'&&<Tooltip title="库（MySQL）/ Schema（PostgreSQL 等），留空 = 数据源默认库">
             <Input
-              style={{ width: 150 }} placeholder="库名/Schema" value={namespace}
-              onChange={(e) => setNamespace(e.target.value)}
+              style={{ width: 150 }} placeholder="默认库/Schema（可留空）" value={namespace}
+              disabled={streaming} onChange={(e) => {setNamespace(e.target.value);startNew();}}
             />
-          </Tooltip>
+          </Tooltip>}
           <Tooltip
             title={usage
               ? `最近一轮真实用量：输入 ${usage.promptTokens} + 输出 ${usage.completionTokens} tokens（按 100 万上下文窗口计）`
@@ -434,56 +312,11 @@ export default function AgentChatPage() {
               用自然语言问数据问题，例如「有哪些表？」「users 表里有多少行？」
             </Typography.Text>
           )}
-          {messages.map((m, i) =>
-            m.role === 'user' ? (
-              <div key={i} className={styles.userBubble}>{m.content}</div>
-            ) : (
-              <div key={i} className={styles.assistantBubble}>
-                {m.reasoning && (
-                  <details className={styles.reasoningInline} open={!m.content}>
-                    <summary><BulbOutlined /> 思考过程</summary>
-                    <div className={styles.reasoningText}>{m.reasoning}</div>
-                  </details>
-                )}
-                {(m.tools ?? []).map((t, ti) => (
-                  <div key={`t${ti}`} className={styles.reasoningInline}>
-                    <div><ToolOutlined /> <code>{t.request}</code></div>
-                    {t.result && (
-                      <div style={{ paddingLeft: 18, color: t.result.startsWith('失败') ? '#cf1322' : '#52c41a' }}>
-                        → {t.result}
-                      </div>
-                    )}
-                  </div>
-                ))}
-                {m.content && (
-                  <div className={styles.mdBody}>
-                    <ChatMarkdown content={m.content} streaming={streaming && i === messages.length - 1} />
-                  </div>
-                )}
-              </div>
-            ),
-          )}
+          {messages.map((m,i)=><ChatMessageBubble key={m.seq??i} message={m} streaming={streaming&&i===messages.length-1} onReference={setWikiReference}/>)}
           <div ref={bottomRef} />
         </div>
         <div className={styles.composer}>
-          <Space.Compact style={{ width: '100%' }}>
-            <Input.TextArea
-              value={draft}
-              onChange={(e) => setDraft(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
-                  e.preventDefault();
-                  send();
-                }
-              }}
-              placeholder="问一个数据问题…（Enter 发送，Shift+Enter 换行）"
-              autoSize={{ minRows: 1, maxRows: 5 }}
-              disabled={streaming}
-            />
-            <Button type="primary" icon={<SendOutlined />} loading={streaming} onClick={send}>
-              发送
-            </Button>
-          </Space.Compact>
+          <ChatComposer value={draft} onChange={setDraft} onSend={send} streaming={streaming} placeholder="问一个数据问题…"/>
         </div>
       </div>
     </div>

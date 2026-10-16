@@ -69,24 +69,12 @@ public class ChatSessionStore {
 
     /** 下一序号：内存 size；miss 时按库计数（对齐已有持久化历史）并回填内存窗口。 */
     private int nextSeq(String sessionId, String principal, long datasourceId, long providerId, String namespace) {
-        Session session = sessions.get(sessionId);
-        if (session != null && session.principal().equals(principal)) {
-            synchronized (session.messages()) {
-                return session.messages().size();
-            }
+        if(!sessions.containsKey(sessionId)&&repository.firstMessage(principal,sessionId).isPresent()) {
+            var recent=repository.listMessages(principal,sessionId,null,WINDOW);Deque<Message> messages=new ArrayDeque<>();
+            for(var r:recent)messages.addLast(ChatMessageRecord.ROLE_USER.equals(r.role())?new UserMessage(r.content()):new AssistantMessage(r.content()));
+            sessions.put(sessionId,new Session(principal,datasourceId,providerId,namespace,messages));
         }
-        if (repository.firstMessage(principal, sessionId).isPresent()) {
-            int count = repository.countMessages(principal, sessionId);
-            List<ChatMessageRecord> recent = repository.listMessages(principal, sessionId, null, WINDOW);
-            Deque<Message> deque = new ArrayDeque<>();
-            for (ChatMessageRecord r : recent) {
-                deque.addLast(ChatMessageRecord.ROLE_USER.equals(r.role())
-                        ? new UserMessage(r.content()) : new AssistantMessage(r.content()));
-            }
-            sessions.put(sessionId, new Session(principal, datasourceId, providerId, namespace, deque));
-            return count;
-        }
-        return 0;
+        return repository.nextSequence(principal,sessionId);
     }
 
     /** 历史消息（窗口内、不含本轮输入）；内存 miss 从库回源。 */
@@ -95,6 +83,7 @@ public class ChatSessionStore {
         if (!exists(sessionId, principal)) {
             throw new NoSuchElementException("会话不存在");
         }
+        if(!sessions.containsKey(sessionId))nextSeq(sessionId,principal,datasourceId,providerId,namespace);
         Session session = sessions.get(sessionId);
         synchronized (session.messages()) {
             return new ArrayList<>(session.messages());

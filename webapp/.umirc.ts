@@ -16,6 +16,8 @@ export default defineConfig({
         { path: '/workspace', component: 'workspace' },
         { path: '/workbench', component: 'workbench' },
         { path: '/agentchat', component: 'agentchat' },
+        { path: '/datawiki', component: 'datawiki' },
+        { path: '/datasets', component: 'datasets' },
         { path: '/modelproviders', component: 'modelproviders' },
       ],
     },

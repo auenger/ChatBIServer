@@ -3,6 +3,7 @@ target/
 *.class
 meper-chatbi-backend-*.tar
 dist/docker/
+dist/acceptance/
 
 # IDE
 .idea/
@@ -25,3 +26,4 @@ webapp/.umi-production/
 # local config (不允许提交真实凭据)
 application-local.yml
 application-local.yaml
+.collaborator

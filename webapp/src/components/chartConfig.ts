@@ -58,13 +58,15 @@ export function validateChartConfig(input: unknown): ChatChartConfig {
   }
   const config: ChatChartConfig = { type, data };
   for (const key of ['title', 'axisXTitle', 'axisYTitle'] as const) {
-    if (input[key] !== undefined) {
-      if (typeof input[key] !== 'string' || input[key].length > 200) throw new Error('图表标题格式错误');
-      config[key] = input[key];
+    const value = input[key];
+    if (value !== undefined) {
+      if (typeof value !== 'string' || value.length > 200) throw new Error('图表标题格式错误');
+      config[key] = value;
     }
   }
   for (const key of ['stack', 'group'] as const) {
-    if (typeof input[key] === 'boolean') config[key] = input[key];
+    const value = input[key];
+    if (typeof value === 'boolean') config[key] = value;
   }
   if (type === 'pie' && typeof input.innerRadius === 'number'
       && input.innerRadius >= 0 && input.innerRadius < 1) config.innerRadius = input.innerRadius;

@@ -33,6 +33,11 @@ public class AuditRepository {
                 .update();
     }
 
+    public record WikiBatchAudit(String batchId,String occurredAt,String detail) { }
+    public java.util.List<WikiBatchAudit> wikiBatches(String subject) {
+        return jdbc.sql("SELECT resource_id,occurred_at,detail FROM meper_audit_log WHERE subject=:subject AND action='WIKI_PUBLISH_BATCH' ORDER BY id DESC LIMIT 100")
+                .param("subject",subject).query((rs,n)->new WikiBatchAudit(rs.getString("resource_id"),rs.getString("occurred_at"),rs.getString("detail"))).list();
+    }
     private String toJson(Map<String, Object> detail) {
         if (detail == null || detail.isEmpty()) {
             return null;

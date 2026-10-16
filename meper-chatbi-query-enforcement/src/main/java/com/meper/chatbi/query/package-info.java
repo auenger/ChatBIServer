@@ -8,5 +8,6 @@
  *
  * <p>{@code Connection.setReadOnly(true)} 只是连接提示，不是授权机制；
  * 真正边界是策略决策、受限数据库凭据、操作分类与执行前校验。
+ * <p>QueryScopeValidator 对全部表源作显式范围检查，解析失败拒绝；不能将数据集范围校验声称为主体策略执法。
  */
 package com.meper.chatbi.query;

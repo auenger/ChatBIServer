@@ -1,4 +1,4 @@
-import { get, post, del } from './base';
+import { get, post, put, del } from './base';
 
 // ---------- 类型（与后端 API 契约一一对应） ----------
 
@@ -194,6 +194,7 @@ export const metadataApi = {
 export type ModelProtocol = 'OPENAI_COMPATIBLE' | 'ANTHROPIC';
 
 export interface ModelProviderView {
+  isDefault: boolean;
   id: number;
   name: string;
   protocol: ModelProtocol;

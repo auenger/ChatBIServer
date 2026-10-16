@@ -125,7 +125,7 @@ export default function DatasourcesPage() {
     },
     {
       title: '操作',
-      width: 300,
+      width: 390,
       render: (_: unknown, record: DataSourceProfile) => (
         <Space>
           <Button
@@ -143,6 +143,7 @@ export default function DatasourcesPage() {
           >
             打开
           </Button>
+          <Button size="small" onClick={() => history.push(`/datawiki?ds=${record.id}&configureWiki=1`)}>知识配置</Button>
           <Button size="small" icon={<KeyOutlined />} onClick={() => setRotateTarget(record)}>
             轮换
           </Button>

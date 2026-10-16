@@ -15,6 +15,10 @@
 
 ## 1. 全部文档一览
 
+**ChatBI 整体推进规划（2026-10-15，六项方向已确认）**：[打开 HTML](plans/chatbi-roadmap-20261015.html)。展示当前能力、已确认决策、M0–M5 整体路线、模块落点、验收门禁和下一工作包。按“只读优先、模型复用/跨源域/单域执行、最严合并、重读与敏感正文缓冲复验、数据库目录映射、只读阶段运行治理”推进；技术合同、人员与工期待实施细化。
+
+**ChatBI 推进计划讨论页（2026-10-15）**：[打开 HTML](prototypes/chatbi-roadmap-discussion.html)。汇总当前进度、六阶段建议路线与六项待定决策；支持本地保存备注、导出 JSON/Markdown 和打印。属于讨论工作稿，不代表已确认合同或实施排期。
+
 **通用权限交互原型**：[打开 HTML](prototypes/general-permission-studio.html) · [演示路径与边界](prototypes/README.md)。用于讨论外部身份映射与通用授权，全部为本地模拟。
 
 **通用权限模型设计讨论稿（Archify）**：[打开讨论入口](design/permission-model-20261013/index.html) · [完整方案与策略真值表](design/permission-model-20261013/README.md)。包含模型关系与请求授权交互图，标明已确认约束和待讨论决策；表达 P2 目标设计，尚未实现。

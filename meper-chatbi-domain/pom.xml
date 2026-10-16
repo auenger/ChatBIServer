@@ -15,6 +15,7 @@
   <description>数据源、对象操作、任务、Agent、Wiki 工作流</description>
 
   <dependencies>
+    <dependency><groupId>com.meper</groupId><artifactId>meper-chatbi-session-wiki</artifactId></dependency>
     <dependency>
       <groupId>com.meper</groupId>
       <artifactId>meper-chatbi-connector-spi</artifactId>

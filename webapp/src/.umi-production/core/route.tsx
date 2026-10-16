@@ -4,7 +4,7 @@
 import React from 'react';
 
 export async function getRoutes() {
-  const routes = {"1":{"path":"/login","id":"1"},"2":{"path":"/","id":"2"},"3":{"path":"/","redirect":"/workspace","parentId":"2","id":"3"},"4":{"path":"/datasources","parentId":"2","id":"4"},"5":{"path":"/workspace","parentId":"2","id":"5"},"6":{"path":"/workbench","parentId":"2","id":"6"}} as const;
+  const routes = {"1":{"path":"/login","id":"1"},"2":{"path":"/","id":"2"},"3":{"path":"/","redirect":"/workspace","parentId":"2","id":"3"},"4":{"path":"/datasources","parentId":"2","id":"4"},"5":{"path":"/workspace","parentId":"2","id":"5"},"6":{"path":"/workbench","parentId":"2","id":"6"},"7":{"path":"/agentchat","parentId":"2","id":"7"},"8":{"path":"/datawiki","parentId":"2","id":"8"},"9":{"path":"/datasets","parentId":"2","id":"9"},"10":{"path":"/modelproviders","parentId":"2","id":"10"}} as const;
   return {
     routes,
     routeComponents: {
@@ -14,6 +14,10 @@ export async function getRoutes() {
 '4': React.lazy(() => import(/* webpackChunkName: "p__datasources__index" */'@/pages/datasources/index.tsx')),
 '5': React.lazy(() => import(/* webpackChunkName: "p__workspace__index" */'@/pages/workspace/index.tsx')),
 '6': React.lazy(() => import(/* webpackChunkName: "p__workbench__index" */'@/pages/workbench/index.tsx')),
+'7': React.lazy(() => import(/* webpackChunkName: "p__agentchat__index" */'@/pages/agentchat/index.tsx')),
+'8': React.lazy(() => import(/* webpackChunkName: "p__datawiki__index" */'@/pages/datawiki/index.tsx')),
+'9': React.lazy(() => import(/* webpackChunkName: "p__datasets__index" */'@/pages/datasets/index.tsx')),
+'10': React.lazy(() => import(/* webpackChunkName: "p__modelproviders__index" */'@/pages/modelproviders/index.tsx')),
 },
   };
 }

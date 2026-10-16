@@ -29,6 +29,17 @@ public class ModelProviderRepository {
         this.objectMapper = objectMapper;
     }
 
+    public Long defaultId() {
+        return jdbc.sql("SELECT provider_id FROM meper_model_default WHERE singleton_id=1")
+                .query((rs,n)->rs.getObject(1,Long.class)).optional().orElse(null);
+    }
+    public void lockDefault() {jdbc.sql("SELECT singleton_id FROM meper_model_default WHERE singleton_id=1 FOR UPDATE").query(Integer.class).single();}
+    public void setDefault(long id) {
+        jdbc.sql("SELECT singleton_id FROM meper_model_default WHERE singleton_id=1 FOR UPDATE").query(Integer.class).single();
+        var provider=findById(id).orElseThrow(()->new NoSuchElementException("模型配置不存在"));
+        if(!provider.enabled()) throw new IllegalStateException("默认模型必须已启用");
+        jdbc.sql("UPDATE meper_model_default SET provider_id=:id WHERE singleton_id=1").param("id",id).update();
+    }
     /** 新增配置，返回生成 id。 */
     public long insert(ModelProviderRecord record, AesGcmCipherService.EncryptedSecret apiKey) {
         KeyHolder keys = new GeneratedKeyHolder();

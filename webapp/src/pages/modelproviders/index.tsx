@@ -1,6 +1,7 @@
+import { modelDefaultApi } from '@/service/datasets';
 import { useCallback, useEffect, useState } from 'react';
 import {
-  Button, Collapse, Form, Input, InputNumber, message, Modal, Popconfirm, Select, Space, Switch, Table, Tag, Typography,
+  Button, Collapse, Form, Grid, Input, InputNumber, message, Modal, Popconfirm, Select, Space, Switch, Table, Tag, Tooltip, Typography,
 } from 'antd';
 import { ApiOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 import { createStyles } from 'antd-style';
@@ -8,7 +9,11 @@ import type { ModelProtocol, ModelProviderSave, ModelProviderView } from '@/serv
 import { modelProviderApi, modelProviderApiExtra } from '@/service/api';
 
 const useStyles = createStyles({
-  toolbar: { display: 'flex', justifyContent: 'space-between', marginBottom: 16 },
+  toolbar: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap', marginBottom: 20 },
+  page: { width: '100%', maxWidth: 1440, minWidth: 0, margin: '0 auto' },
+  providerName: { display: 'flex', alignItems: 'center', gap: 8, minWidth: 0, '& .ant-tag': { flexShrink: 0, marginInlineEnd: 0 } },
+  nameText: { flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 500 },
+  actions: { display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'nowrap', whiteSpace: 'nowrap' },
 });
 
 const PROTOCOL_LABEL: Record<ModelProtocol, string> = {
@@ -38,6 +43,7 @@ interface FormValues {
 /** 模型设置页（0.1，借鉴 dsh ui-settings-models）：CRUD / 启停 / 连通测试 / 预设模板 / 模型列表拉取。 */
 export default function ModelProvidersPage() {
   const { styles } = useStyles();
+  const screens = Grid.useBreakpoint();
   const [providers, setProviders] = useState<ModelProviderView[]>([]);
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState<ModelProviderView | null>(null);
@@ -177,10 +183,10 @@ export default function ModelProvidersPage() {
   const protocol = Form.useWatch('protocol', form);
 
   return (
-    <div style={{ padding: 24, maxWidth: 960, margin: '0 auto' }}>
+    <div className={styles.page}>
       <div className={styles.toolbar}>
         <Typography.Title level={4} style={{ margin: 0 }}>模型设置</Typography.Title>
-        <Space>
+        <Space wrap>
           <Button icon={<ReloadOutlined />} onClick={load}>刷新</Button>
           <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>登记模型</Button>
         </Space>
@@ -190,34 +196,36 @@ export default function ModelProvidersPage() {
         loading={loading}
         dataSource={providers}
         pagination={false}
+        tableLayout="fixed"
+        scroll={{ x: 1320 }}
         columns={[
-          { title: '名称', dataIndex: 'name' },
+          { title: '名称', dataIndex: 'name', width: 240, render: (name: string, p: ModelProviderView) => <div className={styles.providerName}><Tooltip title={name}><span className={styles.nameText}>{name}</span></Tooltip>{p.isDefault && <Tag color="green">默认模型</Tag>}</div> },
           {
             title: '协议', dataIndex: 'protocol', width: 130,
             render: (p: ModelProtocol) => <Tag color={p === 'ANTHROPIC' ? 'orange' : 'green'}>{PROTOCOL_LABEL[p]}</Tag>,
           },
-          { title: '接入点', dataIndex: 'baseUrl', ellipsis: true },
-          { title: '模型', dataIndex: 'model', width: 180 },
+          { title: '接入点', dataIndex: 'baseUrl', width: 260, ellipsis: { showTitle: false }, render: (url: string) => <Tooltip title={url}>{url}</Tooltip> },
+          { title: '模型', dataIndex: 'model', width: 190, ellipsis: { showTitle: false }, render: (model: string) => <Tooltip title={model}>{model}</Tooltip> },
           {
-            title: '密钥', width: 110,
+            title: '密钥', width: 120,
             render: () => <Typography.Text type="secondary">已加密存储</Typography.Text>,
           },
           {
             title: '启用', dataIndex: 'enabled', width: 80,
-            render: (_: boolean, p) => <Switch size="small" checked={p.enabled} onChange={(v) => doToggle(p, v)} />,
+            render: (_: boolean, p) => <Switch size="small" disabled={p.isDefault} checked={p.enabled} onChange={(v) => doToggle(p, v)} />,
           },
           {
-            title: '操作', width: 200,
+            title: '操作', width: 300, fixed: screens.lg ? 'right' : undefined,
             render: (_: unknown, p) => (
-              <Space>
+              <div className={styles.actions}>
                 <Button size="small" icon={<ApiOutlined />} loading={testingId === p.id} onClick={() => doTest(p.id)}>
                   测试
                 </Button>
-                <Button size="small" onClick={() => openEdit(p)}>编辑</Button>
-                <Popconfirm title="删除该模型配置？" onConfirm={async () => { await modelProviderApi.remove(p.id); load(); }}>
-                  <Button size="small" danger>删除</Button>
+                <Button size="small" disabled={!p.enabled || p.isDefault} onClick={async()=>{try{await modelDefaultApi.set(p.id);message.success('已设为默认模型');load();}catch(e){message.error((e as Error).message);}}}>设为默认</Button><Button size="small" onClick={() => openEdit(p)}>编辑</Button>
+                <Popconfirm title="删除该模型配置？" disabled={p.isDefault} onConfirm={async () => { await modelProviderApi.remove(p.id); load(); }}>
+                  <Button size="small" danger disabled={p.isDefault}>删除</Button>
                 </Popconfirm>
-              </Space>
+              </div>
             ),
           },
         ]}

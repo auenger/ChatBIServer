@@ -58,6 +58,9 @@ public class ModelProviderController {
         providers.delete(id);
     }
 
+    @PostMapping("/{id}/default")
+    public void setDefault(@PathVariable long id) {providers.setDefault(id);}
+
     @PostMapping("/{id}/test")
     public ProbeResult test(@PathVariable long id) {
         return providers.test(id);

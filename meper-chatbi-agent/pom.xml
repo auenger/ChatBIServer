@@ -15,6 +15,7 @@
   <description>Agent 定义、Run、工具入口与交付</description>
 
   <dependencies>
+    <dependency><groupId>com.meper</groupId><artifactId>meper-chatbi-session-wiki</artifactId></dependency>
     <!-- 模型配置持久化（V2 表仓储 + AES-256-GCM 密钥服务） -->
     <dependency>
       <groupId>com.meper</groupId>

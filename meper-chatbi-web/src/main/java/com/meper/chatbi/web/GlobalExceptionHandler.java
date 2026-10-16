@@ -22,6 +22,11 @@ public class GlobalExceptionHandler {
     public record ApiError(String code, String message) {
     }
 
+    @ExceptionHandler(com.meper.chatbi.wiki.WikiAccess.Denied.class)
+    public ResponseEntity<ApiError> wikiDenied(com.meper.chatbi.wiki.WikiAccess.Denied e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiError("WIKI_FORBIDDEN",e.getMessage()));
+    }
+
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<ApiError> unauthorized(UnauthorizedException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
